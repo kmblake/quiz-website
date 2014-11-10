@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class NewAccountServlet
@@ -41,12 +42,14 @@ public class NewAccountServlet extends HttpServlet {
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		if (manager.accountExists(user)) {
-			RequestDispatcher dispatch = request.getRequestDispatcher("nameinuse.jsp");
+			RequestDispatcher dispatch = request.getRequestDispatcher("name_in_use.jsp");
 			dispatch.forward(request, response);
 		}
 		else {
 			manager.createAccount(user, password);
-			RequestDispatcher dispatch = request.getRequestDispatcher("welcome.jsp");
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
 			dispatch.forward(request, response);	
 		}
 	}
