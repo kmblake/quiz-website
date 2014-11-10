@@ -10,7 +10,6 @@ public class AccountManager {
 	public AccountManager(DBConnection database) {
 		this.database = database;
 		this.stmt = database.getStatement();
-
 	}
 	
 	public boolean accountExists(String user) {

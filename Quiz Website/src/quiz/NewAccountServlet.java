@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class NewAccountServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/NewAccountServlet")
+public class NewAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoginServlet() {
+	public NewAccountServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -40,13 +40,14 @@ public class LoginServlet extends HttpServlet {
 		AccountManager manager = (AccountManager)this.getServletContext().getAttribute("manager");
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
-		if (manager.passwordMatches(user, password)) {
-			RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+		if (manager.accountExists(user)) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("nameinuse.jsp");
 			dispatch.forward(request, response);
 		}
 		else {
-			RequestDispatcher dispatch = request.getRequestDispatcher("login_fail.html");
-			dispatch.forward(request, response);
+			manager.createAccount(user, password);
+			RequestDispatcher dispatch = request.getRequestDispatcher("welcome.jsp");
+			dispatch.forward(request, response);	
 		}
 	}
 
