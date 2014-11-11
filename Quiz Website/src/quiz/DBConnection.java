@@ -17,7 +17,7 @@ public class DBConnection {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			this.con = DriverManager.getConnection
-					( "jdbc:mysql://" + server, account ,password);
+					( "jdbc:mysql://" + server, account, password);
 			stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
 			
