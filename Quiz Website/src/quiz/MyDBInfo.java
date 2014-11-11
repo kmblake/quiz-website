@@ -9,7 +9,7 @@ package quiz;
 public class MyDBInfo {
 	
 	public static final String MYSQL_USERNAME = "ccs108bachen";
-	public static final String MYSQL_PASSWORD = "";
+	public static final String MYSQL_PASSWORD = "oanazich";
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user-master.stanford.edu";
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_bachen";
 
