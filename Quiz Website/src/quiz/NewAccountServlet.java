@@ -39,6 +39,8 @@ public class NewAccountServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		AccountManager manager = (AccountManager)this.getServletContext().getAttribute("manager");
+		String first = request.getParameter("first");
+		String last = request.getParameter("last");
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		if (manager.accountExists(user)) {
@@ -46,7 +48,7 @@ public class NewAccountServlet extends HttpServlet {
 			dispatch.forward(request, response);
 		}
 		else {
-			manager.createAccount(user, password);
+			manager.createAccount(first, last, user, password);
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
