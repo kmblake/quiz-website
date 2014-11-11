@@ -84,14 +84,38 @@ public class Quiz {
 		return rs.getBoolean("practice_mode");
 	}
 	
+	/**
+	 * Comparator class for sorting questions into the right order if they have an order.
+	 * @author Eric
+	 */
+	
+	private class CustomComparator implements Comparator<QuestionInfo> {
+		public int compare(QuestionInfo questionOne, QuestionInfo questionTwo) {
+			return questionOne.getQuestionNumber() - questionTwo.getQuestionNumber();
+		}
+	}
+	
+	
 	private void setQuestions(int quizID) throws SQLException {
 		ResultSet questionRS = stmt.executeQuery("select * from questions where quiz_id = '" + quizID + "'");
 		
 		ArrayList<QuestionInfo> questionInfo = new ArrayList<QuestionInfo>();
 		while(questionRS.next()) {
 			QuestionInfo newQuestion = new QuestionInfo(questionRS.getInt("id"), questionRS.getString("question_type"), questionRS.getInt("question_number"));
+			questionInfo.add(newQuestion);
 		}
 		
+		// Sort or randomize as necessary
+		if(getIfRandomized()) {
+			Collections.shuffle(questionInfo);
+		} else {
+			Collections.sort(questionInfo, new CustomComparator());
+		}
+		
+		setQuestionsArray(questionInfo);
+	}
+	
+	private void setQuestionsArray(ArrayList<QuestionInfo> questionInfo) {
 		
 	}
 	
