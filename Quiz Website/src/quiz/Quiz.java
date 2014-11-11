@@ -116,7 +116,9 @@ public class Quiz {
 	}
 	
 	private void setQuestionsArray(ArrayList<QuestionInfo> questionInfo) {
-		
+		for(int i=0; i<questionInfo.size(); i++) {
+			
+		}
 	}
 	
 	
