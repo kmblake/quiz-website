@@ -18,8 +18,37 @@ public class Quiz {
 		rs = stmt.executeQuery("select * from quizzes where id = '" + quizID + "'");
 		rs.next();
 		
-//		setQuestions(quizID);
+		setQuestions(quizID);
 	}
+	
+	
+	
+	public class QuestionInfo {
+		
+		private int questionID;
+		private String questionType;
+		private int questionNumber;
+
+		public QuestionInfo(int theQuestionID, String theQuestionType, int theQuestionNumber) {
+			questionID = theQuestionID;
+			questionType = theQuestionType;
+			questionNumber = theQuestionNumber;
+		}
+		
+		public String getQuestionType() {
+			return questionType;
+		}
+		
+		public int getQuestionID() {
+			return questionID;
+		}
+		
+		public int getQuestionNumber() {
+			return questionNumber;
+		}
+	}
+	
+	
 	
 	public String getCreatedBy() throws SQLException {
 		int createdByID = rs.getInt("created_by");
@@ -55,10 +84,16 @@ public class Quiz {
 		return rs.getBoolean("practice_mode");
 	}
 	
-//	private void setQuestions(int quizID) throws SQLException {
-//		ResultSet questionRS = stmt.executeQuery("select * from questions where quiz_id = '" + quizID + "'");
-//		
-//	}
+	private void setQuestions(int quizID) throws SQLException {
+		ResultSet questionRS = stmt.executeQuery("select * from questions where quiz_id = '" + quizID + "'");
+		
+		ArrayList<QuestionInfo> questionInfo = new ArrayList<QuestionInfo>();
+		while(questionRS.next()) {
+			QuestionInfo newQuestion = new QuestionInfo(questionRS.getInt("id"), questionRS.getString("question_type"), questionRS.getInt("question_number"));
+		}
+		
+		
+	}
 	
 	
 	
