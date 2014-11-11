@@ -85,11 +85,79 @@ DROP TABLE IF EXISTS questions;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE questions (
-    id INTEGER NOT NULL AUTO_INCREMENT,
+    question_id INTEGER NOT NULL AUTO_INCREMENT,
     quiz_id INTEGER,
-    question TEXT,
     question_number INTEGER,
-    question_type_id INTEGER,
+    question_type VARCHAR(255),
+    PRIMARY KEY(question_id)
+);
+
+DROP TABLE IF EXISTS question_response;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE question_response (
+    question_id INTEGER NOT NULL,
+    question TEXT,
+    answer TEXT,
+    PRIMARY KEY(question_id)
+);
+
+DROP TABLE IF EXISTS fill_in_the_blank;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE fill_in_the_blank (
+    question_id INTEGER NOT NULL,
+    question TEXT,
+    answer TEXT,
+    PRIMARY KEY(question_id)
+);
+
+DROP TABLE IF EXISTS multiple_choice;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE multiple_choice (
+    question_id INTEGER NOT NULL,
+    question TEXT,
+    PRIMARY KEY(question_id)
+);
+
+DROP TABLE IF EXISTS multiple_choice_answers;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE multiple_choice_answers (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    question_id INTEGER,
+    answer TEXT,
+    correct BOOLEAN,
+    PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS picture_response;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE picture_response (
+    question_id INTEGER,
+    image_url TEXT,
+    answer TEXT,
+    PRIMARY KEY(question_id)
+);
+
+DROP TABLE IF EXISTS multiple_answer;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE multiple_answer (
+    question_id INTEGER,
+    question TEXT,
+    PRIMARY KEY(question_id)
+);
+
+DROP TABLE IF EXISTS multiple_answer_answers;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE multiple_answer_answers (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    question_id INTEGER,
+    answer TEXT,
     PRIMARY KEY(id)
 );
 
@@ -98,21 +166,10 @@ DROP TABLE IF EXISTS question_types;
 
 CREATE TABLE question_types (
     id INTEGER NOT NULL AUTO_INCREMENT,
+    type VARCHAR(255),
     type_name VARCHAR(255),
     PRIMARY KEY(id)
 );
 
-INSERT INTO question_types (type_name) VALUES
-  ("Question-Response"), ("Fill in the Blank"), ("Multiple Choice"), ("Picture-Response"),
-  ("Multiple Answer"), ("Multiple Choice with Mulitple Answers");
-
-DROP TABLE IF EXISTS answers;
- -- remove table if it already exists and start from scratch
-
-CREATE TABLE answers (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    question_id INTEGER,
-    answer TEXT,
-    correct BOOLEAN,
-    PRIMARY KEY(id)
-);
+INSERT INTO question_types (type, type_name) VALUES
+  ("question_response", "Question-Response"), ("fill_in_blank", "Fill in the Blank"), ("multiple_choice", "Multiple Choice"), ("picture_response", "Picture-Response"), ("multiple_answer", "Multiple Answer"), ("multiple_choice", "Multiple Choice with Mulitple Answers");
