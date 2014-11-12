@@ -50,14 +50,15 @@ public class CreateQuizServlet extends HttpServlet {
 					request.getParameter("immediate_feedback") != null, request.getParameter("practice_mode") != null);
 //			QuestionType[] questionTypes = QuestionType.getQuestionTypes(stmt);
 //			request.setAttribute("question_types", questionTypes);
-			request.getSession().setAttribute("currentQuizId", quizId);
+			request.getSession().setAttribute("quiz-id", quizId);
+			request.getSession().setAttribute("question-num", 1);
 			RequestDispatcher dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
 			dispatch.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			request.setAttribute("SQLerror", "Oops, it looks like there was an error and your quiz didn't save.  Please try again.");
-			RequestDispatcher dispatch = request.getRequestDispatcher("create_quiz.jsp");
+			request.setAttribute("SQLerror", "Oops, it looks like there was an error and your question didn't save.  Please try again.");
+			RequestDispatcher dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
 			dispatch.forward(request, response);
 		}
 		

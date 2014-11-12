@@ -1,5 +1,6 @@
+<%@ page import ="quiz.QuestionResponse" %>
 <form action="AddQuestionServlet" method="post">
-	<input id="question-type" type="hidden" name="question-type" value="1">
+	<input type="hidden" name="question-type" value="<%= QuestionResponse.type_id %>">
 	<ul class="stripped">
 		<li class="form-item">Question:</li>
 		<li class="form-item"><textarea style="font-weight: normal" rows="4" cols="79" name="question"></textarea>

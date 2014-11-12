@@ -18,7 +18,13 @@
     <h1>Create A Quiz</h1>
     <p>Step 2: Add Questions</p>
   </div>
-  <h3>Question <span id="questionNumber">1</span></h3>
+  <h3>Question <span id="questionNumber"><%= request.getSession().getAttribute("question-num") %></span></h3>
+  <div>
+	<% String errorText = (String) request.getAttribute("SQLerror"); %>
+	<% if (errorText != null ) { %>
+		<div class="alert alert-danger"><%= errorText %></div>
+	<% } %>
+  </div>
   <div class="select-box form-group">
   <% QuestionType[] types = QuestionType.getQuestionTypes((Statement) getServletContext().getAttribute("statement")); %>
 	  <select class="form-control" id="question-selector">
