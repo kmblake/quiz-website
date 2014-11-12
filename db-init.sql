@@ -85,6 +85,7 @@ CREATE TABLE quizzes (
 DROP TABLE IF EXISTS questions;
  -- remove table if it already exists and start from scratch
 
+-- what happens if they don't select randomize and questions don't have an order specificied?
 CREATE TABLE questions (
     question_id INTEGER NOT NULL AUTO_INCREMENT,
     quiz_id INTEGER,

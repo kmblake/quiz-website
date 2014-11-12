@@ -116,8 +116,25 @@ public class Quiz {
 	}
 	
 	private void setQuestionsArray(ArrayList<QuestionInfo> questionInfo) {
+		ArrayList<Question> questionsArray = new ArrayList<Question>();
 		for(int i=0; i<questionInfo.size(); i++) {
+			QuestionInfo currQuestionInfo = questionInfo.get(i);
 			
+			int questionID = currQuestionInfo.getQuestionID();
+			String questionType = currQuestionInfo.getQuestionType();
+			int questionNumber = currQuestionInfo.getQuestionNumber();
+			
+			if(questionType.equals("question_response")) {
+				questionsArray.add(new QuestionResponse(questionID, questionType, questionNumber));
+			} else if(questionType.equals("fill_in_the_blank")) {
+				
+			} else if(questionType.equals("multiple_choice")) {
+				
+			} else if(questionType.equals("picture_response")) {
+				
+			} else if(questionType.equals("multiple_answer")) {
+				
+			}
 		}
 	}
 	
