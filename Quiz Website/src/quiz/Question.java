@@ -1,9 +1,6 @@
 package quiz;
 
-public class Question {
-
+public abstract class Question {
 	
-	public Question(String questionType) {
-		
-	}
+	public abstract String getType();
 }
