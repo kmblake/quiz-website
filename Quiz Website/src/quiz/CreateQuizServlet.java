@@ -45,11 +45,12 @@ public class CreateQuizServlet extends HttpServlet {
 //		dispatch.forward(request, response);
 		try {
 			
-			Quiz q = new Quiz(con, request.getParameter("title"), request.getParameter("description"), username,
+			int quizId = Quiz.createQuiz(con, request.getParameter("title"), request.getParameter("description"), username,
 					request.getParameter("randomized") != null, request.getParameter("multiple_pages") != null,
 					request.getParameter("immediate_feedback") != null, request.getParameter("practice_mode") != null);
 //			QuestionType[] questionTypes = QuestionType.getQuestionTypes(stmt);
 //			request.setAttribute("question_types", questionTypes);
+			request.getSession().setAttribute("currentQuizId", quizId);
 			RequestDispatcher dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
 			dispatch.forward(request, response);
 		} catch (SQLException e) {

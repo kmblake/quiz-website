@@ -4,8 +4,9 @@ $(document).ready(function() {
 	$( "#question-selector" ).change(function() {
 		var questionType = $( "#question-selector" ).val();
 		// alert( "Selection changed to " + questionType );
+		var quizId = $(".container").data("quiz-id");
 
-		$.get('QuestionFormServlet', {"question-type": questionType},
+		$.get('QuestionFormServlet', {"question-type": questionType, "quiz-id": quizId},
 			function(resp) { // on sucess
 				updateForm(resp);
 			})

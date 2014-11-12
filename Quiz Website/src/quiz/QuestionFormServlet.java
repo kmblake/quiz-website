@@ -31,6 +31,7 @@ public class QuestionFormServlet extends HttpServlet {
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		String questionType = request.getParameter("question-type");
+		String quizId = request.getParameter("quiz-id");
 		RequestDispatcher dispatch = request.getRequestDispatcher(questionType + "_form.html");
 		dispatch.forward(request, response);
 
