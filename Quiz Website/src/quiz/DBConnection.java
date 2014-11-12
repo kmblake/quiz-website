@@ -33,6 +33,10 @@ public class DBConnection {
 		return stmt;
 	}
 	
+	public Connection getConnection() {
+		return con;
+	}
+	
 	public void close() {
 		try {
 			this.con.close();

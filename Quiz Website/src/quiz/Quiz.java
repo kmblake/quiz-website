@@ -22,25 +22,25 @@ public class Quiz {
 		// setQuestions(quizID);
 	}
 
-	public Quiz(Statement statement, String title, String description,String username,
+	public Quiz(Connection con, String title, String description,String username,
 			boolean randomized, boolean multiple_pages,
 			boolean immediate_feedback, boolean practice_mode) throws SQLException {
-		stmt = statement;
-		rs = stmt.executeQuery("select id from users where username = '" + username + "'");
+		rs = con.createStatement().executeQuery("select id from users where username = '" + username + "'");
 		rs.first();
 		int user_id = rs.getInt("id");
 		String created_on = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-		String values = "'" + title + "', '" + user_id + "', '" + created_on + "', '" + description + 
-		"', '" + boolToInt(randomized) + "', '" + boolToInt(multiple_pages) + "', '" + boolToInt(immediate_feedback) + "', '" + boolToInt(practice_mode) + "'";
-		String query = "INSERT INTO quizzes(title, created_by, created_on, " +
-		"description, randomized, multiple_pages, immediate_feedback, " +
-		"practice_mode) VALUES (" + values + ")";
-		stmt.executeUpdate(query);
-		
-	}
-	
-	private int boolToInt(boolean b) {
-		return b ? 1 : 0;
+		PreparedStatement pStmt = con.prepareStatement("INSERT INTO quizzes(title, created_by, created_on, " +
+				"description, randomized, multiple_pages, immediate_feedback, " +
+				"practice_mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		pStmt.setString(1, title);
+		pStmt.setInt(2, user_id);
+		pStmt.setString(3, created_on);
+		pStmt.setString(4, description);
+		pStmt.setBoolean(5, randomized);
+		pStmt.setBoolean(6, multiple_pages);
+		pStmt.setBoolean(7, immediate_feedback);
+		pStmt.setBoolean(8, practice_mode);
+		pStmt.executeUpdate();
 	}
 
 	public String getCreatedBy() throws SQLException {

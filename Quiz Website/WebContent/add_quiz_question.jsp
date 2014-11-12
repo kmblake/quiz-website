@@ -6,6 +6,8 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="css/stylesheet.css" rel="stylesheet">
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/create_question.js"></script>
   <title>Add Questions</title>
 </head>
 <body>
@@ -16,7 +18,7 @@
   </div>
   <div>
 	  <div class="select-box form-group">
-		  <select class="form-control">
+		  <select class="form-control" id="question-selector">
 			  <option value="" disabled selected>Select Question Type</option>
 			  <option>Question-Response</option>
 			  <option>Multiple Choice</option>

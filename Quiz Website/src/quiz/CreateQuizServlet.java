@@ -1,8 +1,7 @@
 package quiz;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,15 +35,16 @@ public class CreateQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Statement stmt = (Statement) getServletContext().getAttribute("statement");
+		DBConnection c = (DBConnection) getServletContext().getAttribute("connection");
+		Connection con = c.getConnection();
 		String username = (String) request.getSession().getAttribute("user"); //TODO: Ask Bryant about this
-		if (username == null) username = "kmblake"; //TODO: DELETE THIS LINE
+		if (username == null) username = "jdoe"; //TODO: DELETE THIS LINE
 //		request.setAttribute("SQLerror", "Oops, it looks like there was an error and your quiz didn't save.  Please try again.");
 //		RequestDispatcher dispatch = request.getRequestDispatcher("create_quiz.jsp");
 //		dispatch.forward(request, response);
 		try {
 			
-			Quiz q = new Quiz(stmt, request.getParameter("title"), request.getParameter("description"), username,
+			Quiz q = new Quiz(con, request.getParameter("title"), request.getParameter("description"), username,
 					request.getParameter("randomized") != null, request.getParameter("multiple_pages") != null,
 					request.getParameter("immediate_feedback") != null, request.getParameter("practice_mode") != null);
 			RequestDispatcher dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
