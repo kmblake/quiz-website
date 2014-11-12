@@ -1,3 +1,5 @@
+<%@ page import ="quiz.QuestionType" %>
+<%@ page import ="java.sql.Statement;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,17 +18,17 @@
     <h1>Create A Quiz</h1>
     <p>Step 2: Add Questions</p>
   </div>
-  <div>
-	  <div class="select-box form-group">
-		  <select class="form-control" id="question-selector">
-			  <option value="" disabled selected>Select Question Type</option>
-			  <option>Question-Response</option>
-			  <option>Multiple Choice</option>
-			  <option>Fill In The Blank</option>
-		  </select>
-	  </div>
-    
-
+  <h3>Question <span id="questionNumber">1</span></h3>
+  <div class="select-box form-group">
+  <% QuestionType[] types = QuestionType.getQuestionTypes((Statement) getServletContext().getAttribute("statement")); %>
+	  <select class="form-control" id="question-selector">
+		  <option value="" disabled selected>Select Question Type</option>
+		  <% for (QuestionType qt : types) { %>
+		  	<option value="<%= qt.getType() %>"><%= qt.getName() %></option>
+		  <% }  %>
+	  </select>
+  </div>
+  <div id="form-container">
   </div>
 </div>
 </body>

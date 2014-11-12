@@ -35,6 +35,7 @@ public class CreateQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Statement stmt = (Statement) getServletContext().getAttribute("statement");
 		DBConnection c = (DBConnection) getServletContext().getAttribute("connection");
 		Connection con = c.getConnection();
 		String username = (String) request.getSession().getAttribute("user"); //TODO: Ask Bryant about this
@@ -47,6 +48,8 @@ public class CreateQuizServlet extends HttpServlet {
 			Quiz q = new Quiz(con, request.getParameter("title"), request.getParameter("description"), username,
 					request.getParameter("randomized") != null, request.getParameter("multiple_pages") != null,
 					request.getParameter("immediate_feedback") != null, request.getParameter("practice_mode") != null);
+//			QuestionType[] questionTypes = QuestionType.getQuestionTypes(stmt);
+//			request.setAttribute("question_types", questionTypes);
 			RequestDispatcher dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
 			dispatch.forward(request, response);
 		} catch (SQLException e) {

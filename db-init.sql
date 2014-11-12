@@ -173,4 +173,4 @@ CREATE TABLE question_types (
 );
 
 INSERT INTO question_types (type, type_name) VALUES
-  ("question_response", "Question-Response"), ("fill_in_blank", "Fill in the Blank"), ("multiple_choice", "Multiple Choice"), ("picture_response", "Picture-Response"), ("multiple_answer", "Multiple Answer"), ("multiple_choice", "Multiple Choice with Mulitple Answers");
+  ("question_response", "Question-Response"), ("fill_in_blank", "Fill in the Blank"), ("multiple_choice", "Multiple Choice"), ("picture_response", "Picture-Response"), ("multiple_answer", "Multiple Answer"), ("multiple_choice", "Multiple Choice with Multiple Answers");
