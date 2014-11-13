@@ -46,7 +46,18 @@ public class AddQuestionServlet extends HttpServlet {
 			case QuestionResponse.type_id: 
 				QuestionResponse.storeQuestion(con, questionNumber, quizId, request.getParameter("question"), request.getParameter("answer"));
 				break;
+				
+			case FillInTheBlank.type_id:
+				FillInTheBlank.storeQuestion(con, questionNumber, quizId, request.getParameter("question"), request.getParameter("answer"));
+				break;
+			
+			case MultipleChoice.type_id:
+				String[] options = getOptions(request);
+				int answerIndex = Integer.parseInt(request.getParameter("correct-answer"));
+				MultipleChoice.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), options, answerIndex - 1);
+				break;
 			}
+				
 			questionNumber++;
 			request.getSession().setAttribute("question-num", questionNumber);
 			int done = Integer.parseInt(request.getParameter("done"));
@@ -62,6 +73,15 @@ public class AddQuestionServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private String[] getOptions(HttpServletRequest request) {
+		int numOptions = Integer.parseInt(request.getParameter("num-answers"));
+		String[] options = new String[numOptions];
+		for (int i = 1; i <= numOptions; i++) {
+			options[i - 1] = request.getParameter("option-" + i);
+		}
+		return options;
 	}
 
 }

@@ -1,8 +1,6 @@
 package quiz;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class MultipleChoice extends Question {
@@ -14,6 +12,30 @@ public class MultipleChoice extends Question {
 	private int questionID;
 	private String question;
 	private Map<String, Boolean> answer;
+	
+	public static void storeQuestion(Connection con, int quizId,
+			int questionNumber, String question,
+			String[] options, int answerIndex) throws SQLException {
+		int questionId = Question.storeQuestion(con, quizId, questionNumber, type);
+		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + type + " VALUES(?, ?);");
+		pStmt.setInt(1, questionId);
+		pStmt.setString(2, question);
+		pStmt.executeUpdate();
+		storeOptions(con, questionId, options, answerIndex);
+	}
+
+	private static void storeOptions(Connection con, int questionId, 
+		String[] options, int answerIndex) throws SQLException {
+		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + answersTable +  " VALUES(NULL, ?, ?, ?);");
+		for (int i = 0; i < options.length; i++) {
+			pStmt.setInt(1, questionId);
+			pStmt.setString(2, options[i]);
+			boolean correct = (i == answerIndex);
+			pStmt.setBoolean(3, i == answerIndex);
+			System.out.println(pStmt);
+			pStmt.executeUpdate();
+		}
+	}
 
 	public MultipleChoice(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
 		questionNumber = theQuestionNumber;
