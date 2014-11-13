@@ -13,10 +13,15 @@ $(document).ready(function() {
 			.fail(function() { // on failure
 				alert("Request failed.");
 			});
-	});  
+	}); 
 });
-
 
 function updateForm(data) {
 	$("#form-container").html(data);
 };
+
+function doneEntering() {
+	$("#done-input").val("1");
+	$("form").submit();
+};
+

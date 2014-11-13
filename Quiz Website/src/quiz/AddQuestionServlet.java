@@ -30,7 +30,6 @@ public class AddQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -50,7 +49,14 @@ public class AddQuestionServlet extends HttpServlet {
 			}
 			questionNumber++;
 			request.getSession().setAttribute("question-num", questionNumber);
-			RequestDispatcher dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
+			int done = Integer.parseInt(request.getParameter("done"));
+			RequestDispatcher dispatch;
+			if (done == 0) {
+				dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
+			} else {
+				request.getSession().removeAttribute("question-num");
+				dispatch = request.getRequestDispatcher("show_quiz.jsp");
+			}
 			dispatch.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
