@@ -1,19 +1,19 @@
 // When the page is fully loaded...
 $(document).ready(function() {
 
-	$( "#question-selector" ).change(function() {
-		var questionType = $( "#question-selector" ).val();
+	$("#question-selector").change(function() {
+		var questionType = $("#question-selector").val();
 		// alert( "Selection changed to " + questionType );
 		// var questionNum = $("#form-container").data("question-num");
 
-		$.get('QuestionFormServlet', {"question-type": questionType},
-			function(resp) { // on success
-				updateForm(resp);
-			})
-			.fail(function() { // on failure
-				alert("Request failed.");
-			});
-	}); 
+		$.get('QuestionFormServlet', {
+			"question-type" : questionType
+		}, function(resp) { // on success
+			updateForm(resp);
+		}).fail(function() { // on failure
+			alert("Request failed.");
+		});
+	});
 });
 
 function updateForm(data) {
@@ -26,14 +26,28 @@ function doneEntering() {
 };
 
 function addBlank() {
-	$("#textarea").val($("#textarea").val() + "//blank//"); 
+	$("#textarea").val($("#textarea").val() + "//blank//");
 }
 
-var last = 3;
+var lastLi = 2;
+var lastOption = 1;
 var numOptions = 0;
-function addOption() {
+function addMCOption() {
 	this.numOptions++;
-	$(".stripped li:nth-child(" + last + ")").after('<li class="form-item">Answer: <input type="text" class="answer-input name="answer-' + this.numOptions + '"></li>');
-	this.last++;
-	$("#answer-count").val(numOptions);
+	if (this.numOptions == 1) {
+		var selector = this.lastLi + 1;
+		$(".hidden").removeClass("hidden");
+	}
+	$(".stripped li:nth-child(" + this.lastLi + ")")
+			.after(
+					'<li class="form-item">Option '
+							+ this.numOptions
+							+ ':</li><li class="form-item nobold"><textarea id="textarea" rows="4" cols="79" name="option-'
+							+ this.numOptions + '"></textarea>');
+	$("#answer-select option:nth-child(" + this.lastOption + ")").after(
+			'<option value="' + this.numOptions + '">Option ' + this.numOptions
+					+ ' </option>');
+	this.lastLi+= 2;
+	this.lastOption++;
+	$("#answer-count").val(this.numOptions);
 }

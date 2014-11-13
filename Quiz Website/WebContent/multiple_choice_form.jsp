@@ -6,7 +6,13 @@
 	<ul class="stripped">
 		<li class="form-item">Question:</li>
 		<li class="form-item"><textarea id="textarea" style="font-weight: normal" rows="4" cols="79" name="statement"></textarea>
-		<li class="form-item"><button class="btn btm-sm btn-default" type="button" onclick="addMCOption();">Add Option</button></li>
+		<li class="form-item center"><button class="btn btm-sm btn-default" type="button" onclick="addMCOption();">Add Option</button></li>
+		<li class="form-item hidden">
+			Correct Answer: 
+			<select id="answer-select" class="form-control mc-options nobold">
+			  <option value="" disabled selected>Select Option</option>
+			</select>
+		</li>
 		<li class="form-item">
 			<button class="btn btn-success" type="submit">Add Another Question</button>
 			<button class="btn btn-primary align-right" type="button" onclick="doneEntering();">Done: Review Quiz</button>
