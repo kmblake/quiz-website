@@ -97,6 +97,8 @@ CREATE TABLE questions (
 DROP TABLE IF EXISTS question_response;
  -- remove table if it already exists and start from scratch
 
+
+-- type 1
 CREATE TABLE question_response (
     question_id INTEGER NOT NULL,
     question TEXT,
@@ -107,6 +109,7 @@ CREATE TABLE question_response (
 DROP TABLE IF EXISTS fill_in_the_blank;
  -- remove table if it already exists and start from scratch
 
+-- type 2
 CREATE TABLE fill_in_the_blank (
     question_id INTEGER NOT NULL,
     question TEXT,
@@ -117,6 +120,7 @@ CREATE TABLE fill_in_the_blank (
 DROP TABLE IF EXISTS multiple_choice;
  -- remove table if it already exists and start from scratch
 
+-- type 3
 CREATE TABLE multiple_choice (
     question_id INTEGER NOT NULL,
     question TEXT,

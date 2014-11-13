@@ -18,14 +18,14 @@ public class Quiz {
 		rs = stmt.executeQuery("select * from quizzes where id = '" + quizID
 				+ "'");
 		rs.next();
-		// setQuestions(quizID);
+		setQuestions(quizID);
 	}
 
 	public static int createQuiz(Connection con, String title, String description,String username,
 			boolean randomized, boolean multiple_pages,
 			boolean immediate_feedback, boolean practice_mode) throws SQLException {
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("select id from users where username = '" + username + "'");
+		Statement statement = con.createStatement();
+		ResultSet rs = statement.executeQuery("select id from users where username = '" + username + "'");
 		rs.first();
 		int user_id = rs.getInt("id");
 		String created_on = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -41,7 +41,7 @@ public class Quiz {
 		pStmt.setBoolean(7, immediate_feedback);
 		pStmt.setBoolean(8, practice_mode);
 		pStmt.executeUpdate();
-		rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
+		rs = statement.executeQuery("SELECT LAST_INSERT_ID()");
 		rs.first();
 		return rs.getInt("LAST_INSERT_ID()");
 	}
@@ -137,7 +137,7 @@ public class Quiz {
 		setQuestionsArray(questionInfo);
 	}
 	
-	private void setQuestionsArray(ArrayList<QuestionInfo> questionInfo) {
+	private void setQuestionsArray(ArrayList<QuestionInfo> questionInfo) throws SQLException {
 		ArrayList<Question> questionsArray = new ArrayList<Question>();
 		for(int i=0; i<questionInfo.size(); i++) {
 			QuestionInfo currQuestionInfo = questionInfo.get(i);
@@ -147,7 +147,7 @@ public class Quiz {
 			int questionNumber = currQuestionInfo.getQuestionNumber();
 			
 			if(questionType.equals("question_response")) {
-//				questionsArray.add(new QuestionResponse(questionID, questionNumber));
+				questionsArray.add(new QuestionResponse(stmt, questionID, questionNumber));
 			} else if(questionType.equals("fill_in_the_blank")) {
 				
 			} else if(questionType.equals("multiple_choice")) {

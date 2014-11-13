@@ -5,7 +5,19 @@ import java.sql.*;
 public class QuestionResponse extends Question {
 	public static final String type = "question_response";
 	public static final int type_id = 1;
+	private int questionNumber;
+	private int questionID;
+	private String question;
+	private String answer;
 
+	public QuestionResponse(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+		questionNumber = theQuestionNumber;
+		questionID = theQuestionID;
+		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
+		question = rs.getString("question");
+		answer = rs.getString("answer");
+	}
+	
 	@Override
 	public String getType() {
 		return type;
@@ -18,6 +30,25 @@ public class QuestionResponse extends Question {
 		pStmt.setString(2, question);
 		pStmt.setString(3, answer);
 		pStmt.executeUpdate();
+	}
+	
+
+	@Override
+	public int getQuestionNumber() {
+		return questionNumber;
+	}
+
+	@Override
+	public int getQuestionID() {
+		return questionID;
+	}
+	
+	public String getQuestion() {
+		return question;
+	}
+	
+	public String getAnswer() {
+		return answer;
 	}
 
 }
