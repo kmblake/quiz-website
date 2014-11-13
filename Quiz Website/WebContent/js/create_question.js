@@ -7,7 +7,7 @@ $(document).ready(function() {
 		// var questionNum = $("#form-container").data("question-num");
 
 		$.get('QuestionFormServlet', {"question-type": questionType},
-			function(resp) { // on sucess
+			function(resp) { // on success
 				updateForm(resp);
 			})
 			.fail(function() { // on failure
@@ -25,3 +25,15 @@ function doneEntering() {
 	$("form").submit();
 };
 
+function addBlank() {
+	$("#textarea").val($("#textarea").val() + "//blank//"); 
+}
+
+var last = 3;
+var numOptions = 0;
+function addOption() {
+	this.numOptions++;
+	$(".stripped li:nth-child(" + last + ")").after('<li class="form-item">Answer: <input type="text" class="answer-input name="answer-' + this.numOptions + '"></li>');
+	this.last++;
+	$("#answer-count").val(numOptions);
+}
