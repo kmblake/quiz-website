@@ -125,7 +125,7 @@ public class Quiz {
 			int questionNumber = currQuestionInfo.getQuestionNumber();
 			
 			if(questionType.equals("question_response")) {
-				questionsArray.add(new QuestionResponse(questionID, questionType, questionNumber));
+				questionsArray.add(new QuestionResponse(questionID, questionNumber));
 			} else if(questionType.equals("fill_in_the_blank")) {
 				
 			} else if(questionType.equals("multiple_choice")) {

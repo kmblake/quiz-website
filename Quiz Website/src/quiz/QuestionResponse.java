@@ -2,14 +2,15 @@ package quiz;
 
 public class QuestionResponse extends Question {
 
-	public QuestionResponse(int questionID, String questionType, int questionNumber) {
+	String questionType = "question_response";
+	
+	public QuestionResponse(int questionID, int questionNumber) {
 		
 	}
 	
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return questionType;
 	}
 
 	@Override
