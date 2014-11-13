@@ -149,13 +149,13 @@ public class Quiz {
 			if(questionType.equals("question_response")) {
 				questionsArray.add(new QuestionResponse(stmt, questionID, questionNumber));
 			} else if(questionType.equals("fill_in_the_blank")) {
-				
+				questionsArray.add(new FillInTheBlank(stmt, questionID, questionNumber));
 			} else if(questionType.equals("multiple_choice")) {
-				
+				questionsArray.add(new MultipleChoice(stmt, questionID, questionNumber));
 			} else if(questionType.equals("picture_response")) {
-				
+				questionsArray.add(new PictureResponse(stmt, questionID, questionNumber));
 			} else if(questionType.equals("multiple_answer")) {
-				
+				questionsArray.add(new MultipleAnswer(stmt, questionID, questionNumber));
 			}
 		}
 	}

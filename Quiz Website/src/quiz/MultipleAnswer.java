@@ -3,25 +3,27 @@ package quiz;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class MultipleChoice extends Question {
+public class MultipleAnswer extends Question {
 	
-	public static final String type = "multiple_choice";
-	private static final String answersTable = "multiple_choice_answers";
-	public static final int type_id = 3;
+	public static final String type = "multiple_answer";
+	private static final String answersTable = "multiple_answer_answers";
+	public static final int type_id = 5;
 	private int questionNumber;
 	private int questionID;
 	private String question;
-	private Map<String, Boolean> answer;
+	private ArrayList<String> answers;
 
-	public MultipleChoice(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+	public MultipleAnswer(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
 		question = rs.getString("question");
 		
-		answer = new HashMap<String, Boolean>();
+		answers = new ArrayList<String>();
 		
 		setAnswers(stmt);
 	}
@@ -29,12 +31,16 @@ public class MultipleChoice extends Question {
 	private void setAnswers(Statement stmt) throws SQLException {
 		ResultSet rs = stmt.executeQuery("select * from " + answersTable + " where question_id = '" + questionID + "'");
 		while(rs.next()) {
-			answer.put(rs.getString("answer"), rs.getBoolean("correct"));
+			answers.add(rs.getString("answer"));
 		}
 	}
 	
-	public Map<String, Boolean> getAnswers() {
-		return answer;
+	public String getQuestion() {
+		return question;
+	}
+	
+	public ArrayList<String> getAnswers() {
+		return answers;
 	}
 
 	@Override
@@ -50,10 +56,6 @@ public class MultipleChoice extends Question {
 	@Override
 	public int getQuestionID() {
 		return questionID;
-	}
-	
-	public String getQuestion() {
-		return question;
 	}
 
 }
