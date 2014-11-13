@@ -1,0 +1,33 @@
+.stripped
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form-item {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.title-input {
+	font-weight: normal;
+	width: 435px;
+}
+
+.answer-input {
+	font-weight: normal;
+	width: 439px;
+}
+
+.align-right {
+	float: right;
+}
+
+.select-box {
+	width: 500px;
+}
+
+#form-container {
+	display: inline-block;
+}
