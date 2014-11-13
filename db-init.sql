@@ -85,6 +85,7 @@ CREATE TABLE quizzes (
 DROP TABLE IF EXISTS questions;
  -- remove table if it already exists and start from scratch
 
+-- what happens if they don't select randomize and questions don't have an order specificied?
 CREATE TABLE questions (
     question_id INTEGER NOT NULL AUTO_INCREMENT,
     quiz_id INTEGER,
@@ -96,6 +97,8 @@ CREATE TABLE questions (
 DROP TABLE IF EXISTS question_response;
  -- remove table if it already exists and start from scratch
 
+
+-- type 1
 CREATE TABLE question_response (
     question_id INTEGER NOT NULL,
     question TEXT,
@@ -106,6 +109,7 @@ CREATE TABLE question_response (
 DROP TABLE IF EXISTS fill_in_the_blank;
  -- remove table if it already exists and start from scratch
 
+-- type 2
 CREATE TABLE fill_in_the_blank (
     question_id INTEGER NOT NULL,
     question TEXT,
@@ -116,6 +120,7 @@ CREATE TABLE fill_in_the_blank (
 DROP TABLE IF EXISTS multiple_choice;
  -- remove table if it already exists and start from scratch
 
+-- type 3
 CREATE TABLE multiple_choice (
     question_id INTEGER NOT NULL,
     question TEXT,
@@ -136,6 +141,7 @@ CREATE TABLE multiple_choice_answers (
 DROP TABLE IF EXISTS picture_response;
  -- remove table if it already exists and start from scratch
 
+-- type 4
 CREATE TABLE picture_response (
     question_id INTEGER,
     image_url TEXT,
@@ -146,6 +152,7 @@ CREATE TABLE picture_response (
 DROP TABLE IF EXISTS multiple_answer;
  -- remove table if it already exists and start from scratch
 
+-- type 5
 CREATE TABLE multiple_answer (
     question_id INTEGER,
     question TEXT,
@@ -174,3 +181,4 @@ CREATE TABLE question_types (
 
 INSERT INTO question_types (type, type_name) VALUES
   ("question_response", "Question-Response"), ("fill_in_the_blank", "Fill in the Blank"), ("multiple_choice", "Multiple Choice"), ("picture_response", "Picture-Response"), ("multiple_answer", "Multiple Answer"), ("multiple_choice_multiple_answer", "Multiple Choice with Multiple Answers");
+
