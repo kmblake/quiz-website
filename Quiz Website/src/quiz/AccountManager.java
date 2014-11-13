@@ -35,7 +35,7 @@ public class AccountManager {
 	public boolean accountExists(String user) {
 		ResultSet rs;
 		try {
-			rs = stmt.executeQuery("SELECT username from users WHERE user = " + user);
+			rs = stmt.executeQuery("SELECT username from users WHERE username = " + "\"" + user + "\"");
 			return rs.next();
 				
 		} catch (SQLException e) {
@@ -62,9 +62,13 @@ public class AccountManager {
 
 	
 	public boolean passwordMatches(String user, String pass) {
+		if (!accountExists(user)) return false;
+		
 		ResultSet rs;
 		try {
-			rs = stmt.executeQuery("SELECT password, salt from users WHERE user = " + user);
+			String query = "SELECT password, salt from users WHERE username = \"" + user + "\"";
+			rs = stmt.executeQuery(query);
+			
 			rs.next();
 			String hash = rs.getString("password");
 			String salt = rs.getString("salt");
@@ -89,9 +93,9 @@ public class AccountManager {
 	public void createAccount(String first, String last, String user, String pass) {
 		String salt = getRandomSalt();
 		String hash = passHash(salt + pass);
-		String query = "INSERT INTO metropolises VALUES(\"" + first +  "\",\"" + last + "\",\"" + user + "\",\"" + hash + "\",\"" + salt + "\")";
+		String update = "INSERT INTO users (first_name, last_name, username, password, salt) VALUES(\"" + first +  "\",\"" + last + "\",\"" + user + "\",\"" + hash + "\",\"" + salt + "\")";
 		try {
-			stmt.executeQuery(query);
+			stmt.executeUpdate(update);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
