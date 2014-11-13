@@ -71,6 +71,10 @@ public class Quiz {
 		}
 	}
 	
+	public ArrayList<Question> getQuestions() {
+		return questions;
+	}
+	
 	public String getCreatedBy() throws SQLException {
 		int createdByID = rs.getInt("created_by");
 		ResultSet currRS = stmt.executeQuery("select * from users where id = '"
