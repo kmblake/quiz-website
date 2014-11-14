@@ -28,3 +28,19 @@ function doneEntering() {
 function addBlank() {
 	$("#textarea").val($("#textarea").val() + "//blank//");
 }
+
+function previewImage() {
+	var url = $("#textarea").val();
+	$.ajax({
+	    url:url,
+	    type:'HEAD',
+	    error:
+	        function(){
+	    		$("#image-container").html('<div class="alert alert-danger">Please provide a valid image URL</div>');
+	        },
+	    success:
+	        function(){
+	    		$("#image-container").html('<img id="question-image" src="' + url + '" alt="Uploaded Image">');
+	        }
+	});
+}

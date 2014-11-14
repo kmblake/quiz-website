@@ -36,6 +36,16 @@
 	text-align: center;
 }
 
+.float {
+	float: left;
+	width: 50%
+}
+
+#question-image {
+	width: 500px;
+	margin: 20px;
+}
+
 #answer-select {
 	width: 300px;
 	display: inline;
