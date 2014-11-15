@@ -24,6 +24,11 @@
 	width: 439px;
 }
 
+.multi-answer-input {
+	font-weight: normal;
+	width: 426px;
+}
+
 .align-right {
 	float: right;
 }

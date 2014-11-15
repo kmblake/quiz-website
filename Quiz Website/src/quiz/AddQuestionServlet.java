@@ -56,6 +56,14 @@ public class AddQuestionServlet extends HttpServlet {
 				int answerIndex = Integer.parseInt(request.getParameter("correct-answer"));
 				MultipleChoice.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), options, answerIndex - 1);
 				break;
+				
+			case PictureResponse.type_id:
+				PictureResponse.storeQuestion(con, questionNumber, quizId, request.getParameter("question"), request.getParameter("answer"));
+				break;
+				
+			case MultipleAnswer.type_id:
+				String[] answers = getOptions(request);
+				MultipleAnswer.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
 			}
 				
 			questionNumber++;
