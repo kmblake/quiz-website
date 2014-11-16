@@ -64,7 +64,7 @@ public class AccountManager {
 	public boolean passwordMatches(String user, String pass) {
 		ResultSet rs;
 		try {
-			rs = stmt.executeQuery("SELECT username from users WHERE user = " + user);
+			rs = stmt.executeQuery("SELECT username from users WHERE username = " + user);
 			rs.next();
 			String hash = rs.getString("password");
 			return passHash(pass).equals(hash);
