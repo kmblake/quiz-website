@@ -169,6 +169,16 @@ CREATE TABLE multiple_answer_answers (
     PRIMARY KEY(id)
 );
 
+DROP TABLE IF EXISTS multiple_choice_multiple_answer;
+ -- remove table if it already exists and start from scratch
+
+-- type 6
+CREATE TABLE multiple_choice_multiple_answer (
+    question_id INTEGER NOT NULL,
+    question TEXT,
+    PRIMARY KEY(question_id)
+);
+
 DROP TABLE IF EXISTS question_types;
  -- remove table if it already exists and start from scratch
 

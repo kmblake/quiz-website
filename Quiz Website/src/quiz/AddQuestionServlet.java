@@ -64,6 +64,11 @@ public class AddQuestionServlet extends HttpServlet {
 			case MultipleAnswer.type_id:
 				String[] answers = getOptions(request);
 				MultipleAnswer.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
+				break;
+				
+			case MultipleChoiceMultipleAnswer.type_id:
+				String[] maOptions = getOptions(request);
+				MultipleChoiceMultipleAnswer.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), maOptions, request.getParameterValues("correct"));
 			}
 				
 			questionNumber++;

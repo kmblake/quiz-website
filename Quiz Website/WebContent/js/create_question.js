@@ -31,16 +31,23 @@ function addBlank() {
 
 function previewImage() {
 	var url = $("#textarea").val();
-	$.ajax({
-	    url:url,
-	    type:'HEAD',
-	    error:
-	        function(){
-	    		$("#image-container").html('<div class="alert alert-danger">Please provide a valid image URL</div>');
-	        },
-	    success:
-	        function(){
-	    		$("#image-container").html('<img id="question-image" src="' + url + '" alt="Uploaded Image">');
-	        }
-	});
+	$("#image-container").html('<img id="question-image" src="' + url + '" alt="Uploaded Image" onerror="loadError()">');
+}
+
+function loadError() {
+	$("#image-container").html('<div class="alert alert-danger">Cannot load image.  Please check the image URL.</div>');
+}
+
+function checkMultipleAnswerForm(event) {
+	var searchIDs = $("input:checkbox:checked").map(function(){
+	      return $(this).val();
+	    }).get();
+	if (searchIDs.length > 1) {
+		return true;
+	} else {
+		$("#image-container").html('<div class="alert alert-danger">You must select at least two correct answers.</div>');
+		return false;
+	}
+	console.log(searchIDs.length);
+	    
 }
