@@ -141,6 +141,7 @@ CREATE TABLE multiple_choice_answers (
 DROP TABLE IF EXISTS picture_response;
  -- remove table if it already exists and start from scratch
 
+-- type 4
 CREATE TABLE picture_response (
     question_id INTEGER,
     image_url TEXT,
@@ -151,6 +152,7 @@ CREATE TABLE picture_response (
 DROP TABLE IF EXISTS multiple_answer;
  -- remove table if it already exists and start from scratch
 
+-- type 5
 CREATE TABLE multiple_answer (
     question_id INTEGER,
     question TEXT,

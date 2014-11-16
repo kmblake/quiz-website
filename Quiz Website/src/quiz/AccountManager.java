@@ -3,17 +3,16 @@ package quiz;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.security.SecureRandom;
 
 public class AccountManager {
 	
 	public static final String ALGORITHM = "SHA";
+	public static final SecureRandom RANDOM = new SecureRandom();
 	
-	private DBConnection database;
 	private Statement stmt;
 	
-	
 	public AccountManager(DBConnection database) {
-		this.database = database;
 		this.stmt = database.getStatement();
 	}
 	
@@ -36,7 +35,7 @@ public class AccountManager {
 	public boolean accountExists(String user) {
 		ResultSet rs;
 		try {
-			rs = stmt.executeQuery("SELECT username from users WHERE user = " + user);
+			rs = stmt.executeQuery("SELECT username from users WHERE username = " + "\"" + user + "\"");
 			return rs.next();
 				
 		} catch (SQLException e) {
@@ -60,14 +59,21 @@ public class AccountManager {
 		}
 		return hash;
 	}
+
 	
 	public boolean passwordMatches(String user, String pass) {
+		if (!accountExists(user)) return false;
+		
 		ResultSet rs;
 		try {
-			rs = stmt.executeQuery("SELECT username from users WHERE username = " + user);
+
+			String query = "SELECT password, salt from users WHERE username = \"" + user + "\"";
+			rs = stmt.executeQuery(query);
+
 			rs.next();
 			String hash = rs.getString("password");
-			return passHash(pass).equals(hash);
+			String salt = rs.getString("salt");
+			return passHash(salt + pass).equals(hash);
 				
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,11 +81,22 @@ public class AccountManager {
 		return false;
 	}
 	
+	//help from here:
+	//https://crackstation.net/hashing-security.htm#properhashing
+	//http://stackoverflow.com/questions/18142745/how-do-i-generate-a-salt-in-java-for-salted-hash
+	private String getRandomSalt() {
+		byte[] bytes = new byte[20];
+		RANDOM.nextBytes(bytes);
+		String salt = hexToString(bytes);
+		return salt;
+	}
+	
 	public void createAccount(String first, String last, String user, String pass) {
-		String hash = passHash(pass);
-		String query = "INSERT INTO metropolises VALUES(\"" + first +  "\",\"" + last + "\",\"" + user + "\",\"" + hash + "\")";
+		String salt = getRandomSalt();
+		String hash = passHash(salt + pass);
+		String update = "INSERT INTO users (first_name, last_name, username, password, salt) VALUES(\"" + first +  "\",\"" + last + "\",\"" + user + "\",\"" + hash + "\",\"" + salt + "\")";
 		try {
-			stmt.executeQuery(query);
+			stmt.executeUpdate(update);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
