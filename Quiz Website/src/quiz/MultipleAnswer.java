@@ -17,9 +17,10 @@ public class MultipleAnswer extends Question {
 	private String question;
 	private ArrayList<String> answers;
 
-	public MultipleAnswer(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+	public MultipleAnswer(DBConnection con, int theQuestionID, int theQuestionNumber) throws SQLException {
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
+		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
 		question = rs.getString("question");
 		

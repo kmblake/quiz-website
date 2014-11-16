@@ -73,47 +73,47 @@ public class Quiz {
 			return questionNumber;
 		}
 
-
-		public ArrayList<Question> getQuestions() {
-			return questions;
-		}
-
-		public String getCreatedBy() throws SQLException {
-			int createdByID = rs.getInt("created_by");
-			Statement temp = con.getStatement();
-			ResultSet currRS = temp.executeQuery("select * from users where id = '"
-					+ createdByID + "'");
-			return currRS.getString("username");
-		}
-
-		public String getQuizDescription() throws SQLException {
-			return rs.getString("description");
-		}
-
-		public Date getDateCreated() throws SQLException {
-			return rs.getDate("created_on");
-		}
-
-		public boolean getIfHasMultiplePages() throws SQLException {
-			return rs.getBoolean("multiple_pages");
-		}
-
-		public boolean getIfRandomized() throws SQLException {
-			return rs.getBoolean("randomized");
-		}
-
-		public boolean getIfImmediateFeedback() throws SQLException {
-			return rs.getBoolean("immediate_feedback");
-		}
-
-		public String getTitle() throws SQLException {
-			return rs.getString("title");
-		}
-
-		public boolean getIfPracticeMode() throws SQLException {
-			return rs.getBoolean("practice_mode");
-		}
 	}
+	public ArrayList<Question> getQuestions() {
+		return questions;
+	}
+
+	public String getCreatedBy() throws SQLException {
+		int createdByID = rs.getInt("created_by");
+		Statement temp = con.getStatement();
+		ResultSet currRS = temp.executeQuery("select * from users where id = '"
+				+ createdByID + "'");
+		return currRS.getString("username");
+	}
+
+	public String getQuizDescription() throws SQLException {
+		return rs.getString("description");
+	}
+
+	public Date getDateCreated() throws SQLException {
+		return rs.getDate("created_on");
+	}
+
+	public boolean getIfHasMultiplePages() throws SQLException {
+		return rs.getBoolean("multiple_pages");
+	}
+
+	public boolean getIfRandomized() throws SQLException {
+		return rs.getBoolean("randomized");
+	}
+
+	public boolean getIfImmediateFeedback() throws SQLException {
+		return rs.getBoolean("immediate_feedback");
+	}
+
+	public String getTitle() throws SQLException {
+		return rs.getString("title");
+	}
+
+	public boolean getIfPracticeMode() throws SQLException {
+		return rs.getBoolean("practice_mode");
+	}
+
 	/**
 	 * Comparator class for sorting questions into the right order if they have an order.
 	 * @author Eric
@@ -137,7 +137,7 @@ public class Quiz {
 		}
 
 		// Sort or randomize as necessary
-		if(questionInfo.get(0).getIfRandomized()) {
+		if(getIfRandomized()) {
 			Collections.shuffle(questionInfo);
 		} else {
 			Collections.sort(questionInfo, new CustomComparator());
@@ -158,13 +158,13 @@ public class Quiz {
 			if(questionType.equals("question_response")) {
 				questionsArray.add(new QuestionResponse(con, questionID, questionNumber));
 			} else if(questionType.equals("fill_in_the_blank")) {
-				questionsArray.add(new FillInTheBlank(stmt, questionID, questionNumber));
+				questionsArray.add(new FillInTheBlank(con, questionID, questionNumber));
 			} else if(questionType.equals("multiple_choice")) {
-				questionsArray.add(new MultipleChoice(stmt, questionID, questionNumber));
+				questionsArray.add(new MultipleChoice(con, questionID, questionNumber));
 			} else if(questionType.equals("picture_response")) {
-				questionsArray.add(new PictureResponse(stmt, questionID, questionNumber));
+				questionsArray.add(new PictureResponse(con, questionID, questionNumber));
 			} else if(questionType.equals("multiple_answer")) {
-				questionsArray.add(new MultipleAnswer(stmt, questionID, questionNumber));
+				questionsArray.add(new MultipleAnswer(con, questionID, questionNumber));
 			}
 		}
 	}
