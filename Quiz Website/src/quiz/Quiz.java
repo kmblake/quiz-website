@@ -14,12 +14,13 @@ public class Quiz {
 	private Statement stmt;
 	private ResultSet rs;
 
-	public Quiz(Integer quizID, Statement statement, DBConnection con) throws SQLException {
-		stmt = statement;
+	public Quiz(Integer quizID, DBConnection con) throws SQLException {
+		stmt = con.getStatement();
 		rs = stmt.executeQuery("select * from quizzes where id = '" + quizID
 				+ "'");
 		rs.next();
 		this.con = con;
+		questions = new ArrayList<Question>();
 		setQuestions(quizID);
 	}
 
@@ -83,6 +84,7 @@ public class Quiz {
 		Statement temp = con.getStatement();
 		ResultSet currRS = temp.executeQuery("select * from users where id = '"
 				+ createdByID + "'");
+		currRS.next();
 		return currRS.getString("username");
 	}
 

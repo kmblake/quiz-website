@@ -14,16 +14,18 @@
 <body>
 <a href="create_quiz.jsp"> Create Quiz</a>
 <%
-QuizIndex index = (QuizIndex)application.getAttribute("index");
-Statement stmt = (Statement)application.getAttribute("statement");
-DBConnection con = (DBConnection) application.getAttribute("connection");
-index.loadAllQuizzes();
-for (Integer id : index.getKeys()) {
-	Quiz quiz = new Quiz(id, stmt, con);
-	
-	String link = "<a href= \"take_quiz.jsp?id=" + id + "\">" + quiz.getTitle() + "</a>";
-	out.println("<li> " + link + "</li>");
-}
+	QuizIndex index = (QuizIndex) application.getAttribute("index");
+	Statement stmt = (Statement) application.getAttribute("statement");
+	DBConnection con = (DBConnection) application
+			.getAttribute("connection");
+	index.loadAllQuizzes();
+	for (Integer id : index.getKeys()) {
+		Quiz quiz = new Quiz(id, con);
+
+		String link = "<a href= \"take_quiz.jsp?id=" + id + "\">"
+				+ quiz.getTitle() + "</a>";
+		out.println("<li> " + link + "</li>");
+	}
 %>
 </body>
 </html>

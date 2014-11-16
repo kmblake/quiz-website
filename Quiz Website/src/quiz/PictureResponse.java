@@ -47,5 +47,10 @@ public class PictureResponse extends Question {
 	public int getQuestionID() {
 		return questionID;
 	}
+	
+	public String getQuestion() {
+		//TODO
+		return "";
+	}
 
 }
