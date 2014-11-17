@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MultipleAnswer extends Question {
-	
+
 	public static final String type = "multiple_answer";
 	private static final String answersTable = "multiple_answer_answers";
 	public static final int type_id = 5;
@@ -19,17 +19,19 @@ public class MultipleAnswer extends Question {
 	private String question;
 	private ArrayList<String> answers;
 
-	public MultipleAnswer(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+	public MultipleAnswer(DBConnection con, int theQuestionID, int theQuestionNumber) throws SQLException {
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
+		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
-		question = rs.getString("question");
-		
+		if (rs.next()) {
+			question = rs.getString("question");
+		}
 		answers = new ArrayList<String>();
-		
+
 		setAnswers(stmt);
 	}
-	
+
 	public static void storeQuestion(Connection con, int quizId,
 			int questionNumber, String question,
 			String[] answers) throws SQLException {
@@ -42,7 +44,7 @@ public class MultipleAnswer extends Question {
 	}
 
 	private static void storeAnswers(Connection con, int questionId, 
-		String[] options) throws SQLException {
+			String[] options) throws SQLException {
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + answersTable +  " VALUES(NULL, ?, ?);");
 		for (int i = 0; i < options.length; i++) {
 			pStmt.setInt(1, questionId);
@@ -50,18 +52,18 @@ public class MultipleAnswer extends Question {
 			pStmt.executeUpdate();
 		}
 	}
-	
+
 	private void setAnswers(Statement stmt) throws SQLException {
 		ResultSet rs = stmt.executeQuery("select * from " + answersTable + " where question_id = '" + questionID + "'");
 		while(rs.next()) {
 			answers.add(rs.getString("answer"));
 		}
 	}
-	
+
 	public String getQuestion() {
 		return question;
 	}
-	
+
 	public ArrayList<String> getAnswers() {
 		return answers;
 	}

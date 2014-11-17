@@ -25,8 +25,10 @@ public class ContextInitializer implements ServletContextListener {
     public void contextInitialized(ServletContextEvent arg0)  { 
     	DBConnection connection = new DBConnection();
     	AccountManager manager = new AccountManager(connection);
+    	QuizIndex index = new QuizIndex(connection);
         ServletContext context = arg0.getServletContext();
         context.setAttribute("manager", manager);
+        context.setAttribute("index", index);
         context.setAttribute("connection", connection);
         context.setAttribute("statement", connection.getStatement());
     }

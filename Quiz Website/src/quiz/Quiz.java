@@ -10,14 +10,17 @@ import javax.servlet.ServletContext;
 public class Quiz {
 
 	private ArrayList<Question> questions;
+	private DBConnection con;
 	private Statement stmt;
 	private ResultSet rs;
 
-	public Quiz(int quizID, Statement statement) throws SQLException {
-		stmt = statement;
+	public Quiz(Integer quizID, DBConnection con) throws SQLException {
+		stmt = con.getStatement();
 		rs = stmt.executeQuery("select * from quizzes where id = '" + quizID
 				+ "'");
 		rs.next();
+		this.con = con;
+		questions = new ArrayList<Question>();
 		setQuestions(quizID);
 	}
 
@@ -31,7 +34,7 @@ public class Quiz {
 		String created_on = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO quizzes(title, created_by, created_on, " +
 				"description, randomized, multiple_pages, immediate_feedback, " +
-				"practice_mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		"practice_mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		pStmt.setString(1, title);
 		pStmt.setInt(2, user_id);
 		pStmt.setString(3, created_on);
@@ -43,11 +46,12 @@ public class Quiz {
 		pStmt.executeUpdate();
 		rs = statement.executeQuery("SELECT LAST_INSERT_ID()");
 		rs.first();
+
 		return rs.getInt("LAST_INSERT_ID()");
 	}
-	
+
 	public class QuestionInfo {
-		
+
 		private int questionID;
 		private String questionType;
 		private int questionNumber;
@@ -57,28 +61,30 @@ public class Quiz {
 			questionType = theQuestionType;
 			questionNumber = theQuestionNumber;
 		}
-		
+
 		public String getQuestionType() {
 			return questionType;
 		}
-		
+
 		public int getQuestionID() {
 			return questionID;
 		}
-		
+
 		public int getQuestionNumber() {
 			return questionNumber;
 		}
+
 	}
-	
 	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
-	
+
 	public String getCreatedBy() throws SQLException {
 		int createdByID = rs.getInt("created_by");
-		ResultSet currRS = stmt.executeQuery("select * from users where id = '"
+		Statement temp = con.getStatement();
+		ResultSet currRS = temp.executeQuery("select * from users where id = '"
 				+ createdByID + "'");
+		currRS.next();
 		return currRS.getString("username");
 	}
 
@@ -109,58 +115,60 @@ public class Quiz {
 	public boolean getIfPracticeMode() throws SQLException {
 		return rs.getBoolean("practice_mode");
 	}
-	
+
 	/**
 	 * Comparator class for sorting questions into the right order if they have an order.
 	 * @author Eric
 	 */
-	
+
 	private class CustomComparator implements Comparator<QuestionInfo> {
 		public int compare(QuestionInfo questionOne, QuestionInfo questionTwo) {
 			return questionOne.getQuestionNumber() - questionTwo.getQuestionNumber();
 		}
 	}
-	
-	
+
+
 	private void setQuestions(int quizID) throws SQLException {
-		ResultSet questionRS = stmt.executeQuery("select * from questions where quiz_id = '" + quizID + "'");
-		
+		Statement temp = con.getStatement();
+		ResultSet questionRS = temp.executeQuery("select * from questions where quiz_id = '" + quizID + "'");
+
 		ArrayList<QuestionInfo> questionInfo = new ArrayList<QuestionInfo>();
 		while(questionRS.next()) {
-			QuestionInfo newQuestion = new QuestionInfo(questionRS.getInt("id"), questionRS.getString("question_type"), questionRS.getInt("question_number"));
+			QuestionInfo newQuestion = new QuestionInfo(questionRS.getInt("quiz_id"), questionRS.getString("question_type"), questionRS.getInt("question_number"));
 			questionInfo.add(newQuestion);
 		}
-		
+
 		// Sort or randomize as necessary
 		if(getIfRandomized()) {
 			Collections.shuffle(questionInfo);
 		} else {
 			Collections.sort(questionInfo, new CustomComparator());
 		}
-		
+
 		setQuestionsArray(questionInfo);
 	}
-	
+
 	private void setQuestionsArray(ArrayList<QuestionInfo> questionInfo) throws SQLException {
 		ArrayList<Question> questionsArray = new ArrayList<Question>();
 		for(int i=0; i<questionInfo.size(); i++) {
 			QuestionInfo currQuestionInfo = questionInfo.get(i);
-			
+
 			int questionID = currQuestionInfo.getQuestionID();
 			String questionType = currQuestionInfo.getQuestionType();
 			int questionNumber = currQuestionInfo.getQuestionNumber();
-			
+
 			if(questionType.equals("question_response")) {
-				questionsArray.add(new QuestionResponse(stmt, questionID, questionNumber));
+				questionsArray.add(new QuestionResponse(con, questionID, questionNumber));
 			} else if(questionType.equals("fill_in_the_blank")) {
-				questionsArray.add(new FillInTheBlank(stmt, questionID, questionNumber));
+				questionsArray.add(new FillInTheBlank(con, questionID, questionNumber));
 			} else if(questionType.equals("multiple_choice")) {
-				questionsArray.add(new MultipleChoice(stmt, questionID, questionNumber));
+				questionsArray.add(new MultipleChoice(con, questionID, questionNumber));
 			} else if(questionType.equals("picture_response")) {
-				questionsArray.add(new PictureResponse(stmt, questionID, questionNumber));
+				questionsArray.add(new PictureResponse(con, questionID, questionNumber));
 			} else if(questionType.equals("multiple_answer")) {
-				questionsArray.add(new MultipleAnswer(stmt, questionID, questionNumber));
+				questionsArray.add(new MultipleAnswer(con, questionID, questionNumber));
 			}
 		}
 	}
 }
+

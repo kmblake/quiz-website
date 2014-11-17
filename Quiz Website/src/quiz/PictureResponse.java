@@ -7,22 +7,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class PictureResponse extends Question {
-	
+
 	public static final String type = "picture_response";
 	public static final int type_id = 4;
 	private int questionNumber;
 	private int questionID;
 	private String imageURL;
 	private String answer;
-	
-	public PictureResponse(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+
+
+	public PictureResponse(DBConnection con, int theQuestionID, int theQuestionNumber) throws SQLException {
+
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
+		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
-		imageURL = rs.getString("image_url");
-		answer = rs.getString("answer");
+		if (rs.next()) {
+			imageURL = rs.getString("image_url");
+			answer = rs.getString("answer");
+		}
 	}
-	
+
 	public static void storeQuestion(Connection con, int questionNumber, int quizId, String imageURL, String answer) throws SQLException {
 		int questionId = Question.storeQuestion(con, quizId, questionNumber, type);
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + type + " VALUES(?, ?, ?);");
@@ -31,11 +36,11 @@ public class PictureResponse extends Question {
 		pStmt.setString(3, answer);
 		pStmt.executeUpdate();
 	}
-	
+
 	public String getImageURL() {
 		return imageURL;
 	}
-	
+
 	public String getAnswer() {
 		return answer;
 	}
@@ -53,6 +58,11 @@ public class PictureResponse extends Question {
 	@Override
 	public int getQuestionID() {
 		return questionID;
+	}
+
+	public String getQuestion() {
+		//TODO
+		return "";
 	}
 
 }
