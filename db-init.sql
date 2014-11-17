@@ -169,6 +169,16 @@ CREATE TABLE multiple_answer_answers (
     PRIMARY KEY(id)
 );
 
+DROP TABLE IF EXISTS multiple_choice_multiple_answer;
+ -- remove table if it already exists and start from scratch
+
+-- type 6
+CREATE TABLE multiple_choice_multiple_answer (
+    question_id INTEGER NOT NULL,
+    question TEXT,
+    PRIMARY KEY(question_id)
+);
+
 DROP TABLE IF EXISTS question_types;
  -- remove table if it already exists and start from scratch
 
@@ -180,4 +190,5 @@ CREATE TABLE question_types (
 );
 
 INSERT INTO question_types (type, type_name) VALUES
-  ("question_response", "Question-Response"), ("fill_in_blank", "Fill in the Blank"), ("multiple_choice", "Multiple Choice"), ("picture_response", "Picture-Response"), ("multiple_answer", "Multiple Answer"), ("multiple_choice_multiple_answer", "Multiple Choice with Multiple Answers");
+  ("question_response", "Question-Response"), ("fill_in_the_blank", "Fill in the Blank"), ("multiple_choice", "Multiple Choice"), ("picture_response", "Picture-Response"), ("multiple_answer", "Multiple Answer"), ("multiple_choice_multiple_answer", "Multiple Choice with Multiple Answers");
+

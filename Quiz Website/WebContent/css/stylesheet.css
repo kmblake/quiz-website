@@ -10,6 +10,10 @@
   font-weight: bold;
 }
 
+.nobold {
+	font-weight: normal
+}
+
 .title-input {
 	font-weight: normal;
 	width: 435px;
@@ -20,6 +24,11 @@
 	width: 439px;
 }
 
+.multi-answer-input {
+	font-weight: normal;
+	width: 426px;
+}
+
 .align-right {
 	float: right;
 }
@@ -28,6 +37,27 @@
 	width: 500px;
 }
 
+.center {
+	text-align: center;
+}
+
+.float {
+	float: left;
+	width: 50%
+}
+
+#question-image {
+	width: 500px;
+	margin: 20px;
+}
+
+#answer-select {
+	width: 300px;
+	display: inline;
+	margin-left: 10px;
+}
+
 #form-container {
 	display: inline-block;
+	max-width: 500px
 }

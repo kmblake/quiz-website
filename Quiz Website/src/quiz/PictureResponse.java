@@ -1,5 +1,7 @@
 package quiz;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +17,7 @@ public class PictureResponse extends Question {
 
 
 	public PictureResponse(DBConnection con, int theQuestionID, int theQuestionNumber) throws SQLException {
+
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
 		Statement stmt = con.getStatement();
@@ -23,6 +26,15 @@ public class PictureResponse extends Question {
 			imageURL = rs.getString("image_url");
 			answer = rs.getString("answer");
 		}
+	}
+
+	public static void storeQuestion(Connection con, int questionNumber, int quizId, String imageURL, String answer) throws SQLException {
+		int questionId = Question.storeQuestion(con, quizId, questionNumber, type);
+		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + type + " VALUES(?, ?, ?);");
+		pStmt.setInt(1, questionId);
+		pStmt.setString(2, imageURL);
+		pStmt.setString(3, answer);
+		pStmt.executeUpdate();
 	}
 
 	public String getImageURL() {
@@ -47,7 +59,7 @@ public class PictureResponse extends Question {
 	public int getQuestionID() {
 		return questionID;
 	}
-	
+
 	public String getQuestion() {
 		//TODO
 		return "";
