@@ -1,5 +1,7 @@
 package quiz;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +22,15 @@ public class FillInTheBlank extends Question {
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
 		question = rs.getString("question");
 		answer = rs.getString("answer");
+	}
+	
+	public static void storeQuestion(Connection con, int questionNumber, int quizId, String question, String answer) throws SQLException {
+		int questionId = Question.storeQuestion(con, quizId, questionNumber, type);
+		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + type + " VALUES(?, ?, ?);");
+		pStmt.setInt(1, questionId);
+		pStmt.setString(2, question);
+		pStmt.setString(3, answer);
+		pStmt.executeUpdate();
 	}
 	
 	@Override

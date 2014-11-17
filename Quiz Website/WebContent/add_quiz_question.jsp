@@ -18,24 +18,29 @@
     <h1>Create A Quiz</h1>
     <p>Step 2: Add Questions</p>
   </div>
-  <h3>Question <span id="questionNumber"><%= request.getSession().getAttribute("question-num") %></span></h3>
-  <div>
-	<% String errorText = (String) request.getAttribute("SQLerror"); %>
-	<% if (errorText != null ) { %>
-		<div class="alert alert-danger"><%= errorText %></div>
-	<% } %>
-  </div>
-  <div class="select-box form-group">
-  <% QuestionType[] types = QuestionType.getQuestionTypes((Statement) getServletContext().getAttribute("statement")); %>
-	  <select class="form-control" id="question-selector">
-		  <option value="" disabled selected>Select Question Type</option>
-		  <% for (QuestionType qt : types) { %>
-		  	<option value="<%= qt.getType() %>"><%= qt.getName() %></option>
-		  <% }  %>
-	  </select>
-  </div>
-  <div id="form-container">
-  </div>
+  <div class="float">
+	  <h3>Question <span id="questionNumber"><%= request.getSession().getAttribute("question-num") %></span></h3>
+	  <div>
+		<% String errorText = (String) request.getAttribute("SQLerror"); %>
+		<% if (errorText != null ) { %>
+			<div class="alert alert-danger"><%= errorText %></div>
+		<% } %>
+	  </div>
+	  <div class="select-box form-group">
+	  <% QuestionType[] types = QuestionType.getQuestionTypes((Statement) getServletContext().getAttribute("statement")); %>
+		  <select class="form-control" id="question-selector">
+			  <option value="" disabled selected>Select Question Type</option>
+			  <% for (QuestionType qt : types) { %>
+			  	<option value="<%= qt.getType() %>"><%= qt.getName() %></option>
+			  <% }  %>
+		  </select>
+	  </div>
+	  <div id="form-container">
+	  </div>
+	</div>
+	<div id="image-container" class="float">
+		<!--<img id="question-image" src="http://upload.wikimedia.org/wikipedia/en/thumb/b/b7/Stanford_University_seal_2003.svg/1024px-Stanford_University_seal_2003.svg.png" alt="Stanford">-->
+	</div>
 </div>
 </body>
 </html>

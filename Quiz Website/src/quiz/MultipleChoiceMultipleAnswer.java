@@ -3,11 +3,11 @@ package quiz;
 import java.sql.*;
 import java.util.*;
 
-public class MultipleChoice extends Question {
+public class MultipleChoiceMultipleAnswer extends Question {
 	
-	public static final String type = "multiple_choice";
+	public static final String type = "multiple_choice_multiple_answer";
 	private static final String answersTable = "multiple_choice_answers";
-	public static final int type_id = 3;
+	public static final int type_id = 6;
 	private int questionNumber;
 	private int questionID;
 	private String question;
@@ -15,27 +15,36 @@ public class MultipleChoice extends Question {
 	
 	public static void storeQuestion(Connection con, int quizId,
 			int questionNumber, String question,
-			String[] options, int answerIndex) throws SQLException {
+			String[] options, String[] answers) throws SQLException {
 		int questionId = Question.storeQuestion(con, quizId, questionNumber, type);
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + type + " VALUES(?, ?);");
 		pStmt.setInt(1, questionId);
 		pStmt.setString(2, question);
 		pStmt.executeUpdate();
-		storeOptions(con, questionId, options, answerIndex);
+		storeOptions(con, questionId, options, answers);
 	}
 
 	private static void storeOptions(Connection con, int questionId, 
-		String[] options, int answerIndex) throws SQLException {
+		String[] options, String[] stringAnswers) throws SQLException {
+		ArrayList<Integer> answers = answersToList(stringAnswers);
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO " + answersTable +  " VALUES(NULL, ?, ?, ?);");
 		for (int i = 0; i < options.length; i++) {
 			pStmt.setInt(1, questionId);
 			pStmt.setString(2, options[i]);
-			pStmt.setBoolean(3, i == answerIndex);
+			pStmt.setBoolean(3, answers.contains(i + 1));
 			pStmt.executeUpdate();
 		}
 	}
+	
+	private static ArrayList<Integer> answersToList(String[] correctStrings) {
+		ArrayList<Integer> correctInts = new ArrayList<Integer>(correctStrings.length);
+		for (String s : correctStrings) {
+			correctInts.add(Integer.parseInt(s));
+		}
+		return correctInts;
+	}
 
-	public MultipleChoice(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+	public MultipleChoiceMultipleAnswer(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
