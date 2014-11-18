@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public class MultipleChoice extends Question {
-	
+
 	public static final String type = "multiple_choice";
 	private static final String answersTable = "multiple_choice_answers";
 	public static final int type_id = 3;
@@ -35,24 +35,26 @@ public class MultipleChoice extends Question {
 		}
 	}
 
-	public MultipleChoice(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+	public MultipleChoice(DBConnection con, int theQuestionID, int theQuestionNumber) throws SQLException {
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
+		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
-		question = rs.getString("question");
-		
+		if (rs.next()) {
+			question = rs.getString("question");
+		}
 		answer = new HashMap<String, Boolean>();
-		
+
 		setAnswers(stmt);
 	}
-	
+
 	private void setAnswers(Statement stmt) throws SQLException {
 		ResultSet rs = stmt.executeQuery("select * from " + answersTable + " where question_id = '" + questionID + "'");
 		while(rs.next()) {
 			answer.put(rs.getString("answer"), rs.getBoolean("correct"));
 		}
 	}
-	
+
 	public Map<String, Boolean> getAnswers() {
 		return answer;
 	}
@@ -71,7 +73,7 @@ public class MultipleChoice extends Question {
 	public int getQuestionID() {
 		return questionID;
 	}
-	
+
 	public String getQuestion() {
 		return question;
 	}

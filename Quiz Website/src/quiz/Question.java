@@ -7,6 +7,7 @@ public abstract class Question {
 	public abstract String getType();
 	public abstract int getQuestionNumber();
 	public abstract int getQuestionID();
+	public abstract String getQuestion();
 	
 	public static int storeQuestion(Connection con, int quizId, int questionNum, String type) throws SQLException {
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO questions VALUES(NULL, ?, ?, ?);");

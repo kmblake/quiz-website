@@ -66,9 +66,10 @@ public class AccountManager {
 		
 		ResultSet rs;
 		try {
+
 			String query = "SELECT password, salt from users WHERE username = \"" + user + "\"";
 			rs = stmt.executeQuery(query);
-			
+
 			rs.next();
 			String hash = rs.getString("password");
 			String salt = rs.getString("salt");
