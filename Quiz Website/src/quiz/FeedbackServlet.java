@@ -44,7 +44,7 @@ public class FeedbackServlet extends HttpServlet {
 	}
 
 	private int computeScore(HttpServletRequest request) {
-		int id = (Integer)request.getAttribute("id");
+		int id = Integer.parseInt(request.getParameter("id"));
 		int correct = 0;
 		DBConnection con = (DBConnection)request.getServletContext().getAttribute("connection");
 		Quiz quiz = null;
@@ -62,8 +62,8 @@ public class FeedbackServlet extends HttpServlet {
 				correct++;
 			}
 		}
-		//return correct;
-		return 0;
+		return correct;
+		//return 0;
 	}
 
 }
