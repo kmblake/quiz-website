@@ -1,20 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-    pageEncoding="US-ASCII"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/signin.css" rel="stylesheet">
+<link href="css/stylesheet.css" rel="stylesheet">
 <title>Create Account</title>
 </head>
 <body>
-<h1> The Name <%=request.getParameter("user") %> is Already In Use</h1>
-Please enter another name and password.
 
-<form action="NewAccountServlet" method="post">
-<p>User Name: <input type="text" name="user" /> </p>
-<p>Password:  <input type="text" name="password" />
-<input type="submit" value="Login"/></p>
-</form>
-
-</body>
-</html>
+<div class="container">
+	<form class="create-account-form" action="NewAccountServlet" method="post">
+		<div class="alert alert-danger">The user name <span class="bold"><%=request.getParameter("user") %></span> is already in use.<br>Please choose another user name.</div>
+		<h1>Create New Account</h1>
+		<p>Please enter your information below.</p>
+		<ul class="stripped">
+			<li class="form-item">First Name: <input type="text" name="first" class="nobold" /></li>
+			<li class="form-item">Last Name: <input type="text" name="last" class="nobold" /></li>
+			<li class="form-item">User Name: <input type="text" name="user" class="nobold" /></li>
+			<li class="form-item">Password: <input type="text" name="password" class="nobold" /></li>
+			<li class="form-item nobold"><input class="btn btn-lg btn-primary btn-block" type="submit" value="Create Account" /></li>			
+		</ul>
+	</form>
+</div>
