@@ -57,7 +57,8 @@ public class FeedbackServlet extends HttpServlet {
 		request.setAttribute("questions", questions);
 		for (Question q : questions) {
 			String questionID = Integer.toString(q.getQuestionID());
-			String answer = (String)request.getAttribute(questionID);
+			String answer = (String)request.getParameter(questionID);
+			request.setAttribute(questionID, answer);
 			if (q.isCorrect(answer)) {
 				correct++;
 			}
