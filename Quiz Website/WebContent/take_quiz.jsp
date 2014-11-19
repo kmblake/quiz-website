@@ -15,6 +15,7 @@
 
 <%
 	Quiz quiz = (Quiz) session.getAttribute("quiz");
+	int quizID = quiz.getQuizID();
 	String quizName = quiz.getTitle();
 	String quizDescription = quiz.getQuizDescription();
 	boolean multiplePages = quiz.getIfHasMultiplePages();
@@ -103,7 +104,10 @@
 		}
 		}
 	%>
+	<li class="form-item"><button class="btn btn-primary" type="submit">Submit</button> </li>
+	
 </ul>
+<input name="id" type="hidden" value="<%= quizID %>"/>
 </form>
 </div>
 </div>
