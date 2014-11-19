@@ -17,6 +17,7 @@ public class QuestionResponse extends Question {
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
 		if (rs.next()) {
 			question = rs.getString("question");
+			System.out.println(question);
 			answer = rs.getString("answer");
 		}
 	}
@@ -52,6 +53,10 @@ public class QuestionResponse extends Question {
 
 	public String getAnswer() {
 		return answer;
+	}
+	
+	public boolean isCorrect(String userAnswer) {
+		return userAnswer.equals(this.answer);
 	}
 
 }

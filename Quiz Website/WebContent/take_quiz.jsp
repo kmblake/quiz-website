@@ -13,14 +13,13 @@
 <body>
 <%
 Integer id = Integer.parseInt(request.getParameter("id"));
-System.out.println(id);
 DBConnection con = (DBConnection)application.getAttribute("connection");
 Quiz quiz = new Quiz(id, con);
 ArrayList<Question> questions= quiz.getQuestions();
 %>
 
 <p>Quiz id:<%= id %> </p>
-<p>By: <%= quiz.getCreatedBy() %>"</p>
+<p>By: <%= quiz.getCreatedBy() %></p>
 <%
 for (int i = 0; i < questions.size(); i++) {
 	Question currQuestion = questions.get(i);

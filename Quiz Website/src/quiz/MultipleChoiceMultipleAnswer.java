@@ -84,5 +84,25 @@ public class MultipleChoiceMultipleAnswer extends Question {
 	public String getQuestion() {
 		return question;
 	}
+	
+	public boolean isCorrect(String userAnswer) {
+		return true;
+		//TODO
+	}
+
+	@Override
+	public String getAnswer() {
+		ArrayList<String> answerList = new ArrayList<String>();
+		for (String a : answer.keySet()) {
+			if(answer.get(a))
+				answerList.add(a);
+		}
+		StringBuilder string = new StringBuilder(); 
+		string.append(answerList.get(0));
+		for (int i = 1; i < answerList.size(); i++) {
+			string.append(answerList.get(i));
+		}
+		return string.toString();
+	}
 
 }
