@@ -73,6 +73,10 @@ public class Quiz {
 		public int getQuestionNumber() {
 			return questionNumber;
 		}
+		
+		public void setQuestionNumber(int newNum) {
+			questionNumber = newNum;
+		}
 
 	}
 	public ArrayList<Question> getQuestions() {
@@ -142,6 +146,10 @@ public class Quiz {
 		// Sort or randomize as necessary
 		if(getIfRandomized()) {
 			Collections.shuffle(questionInfo);
+			for(int i=0;i<questionInfo.size();i++) {
+				QuestionInfo currQuestion = questionInfo.get(i);
+				currQuestion.setQuestionNumber(i+1);
+			}
 		} else {
 			Collections.sort(questionInfo, new CustomComparator());
 		}
