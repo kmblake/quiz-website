@@ -18,6 +18,7 @@ Quiz quiz = (Quiz) session.getAttribute("quiz");
 String quizName = quiz.getTitle();
 String quizDescription = quiz.getQuizDescription();
 boolean multiplePages = quiz.getIfHasMultiplePages();
+request.setAttribute("multiple", multiplePages);
 ArrayList<Question> questions = quiz.getQuestions();
 int currQuestion = Integer.parseInt(request.getParameter("current_question"));
 %>
@@ -29,7 +30,7 @@ int currQuestion = Integer.parseInt(request.getParameter("current_question"));
 			<div class="jumbotron">
 				<h1><%= quizName %></h1>
 				<p><%= quizDescription %></p>
-				<form action="TakeQuizServlet" method="post">
+				<form action="FeedbackServlet" method="post">
 					<ul class="stripped">
 					
 				<% int numQuestions = questions.size();
@@ -90,13 +91,6 @@ int currQuestion = Integer.parseInt(request.getParameter("current_question"));
 					}
 				}
 				%>
-						<li class="form-item">Description:</li>
-						<li class="form-item"><textarea style="font-weight: normal"rows="4" cols="75" name="description"></textarea>
-						<li class="form-item">Randomly order the questions: <input type="checkbox" name="randomized"></li>
-						<li class="form-item">Present each question on one page: <input type="checkbox" name="multiple_pages"></li>
-						<li class="form-item">Provide immediate feedback after each question: <input type="checkbox" name="immediate_feedback"></li>
-						<li class="form-item">Allow the quiz to be taken in practice mode: <input type="checkbox" name="practice_mode"></li>
-						<li class="form-item"><button class="btn btn-primary" type="submit">Add A Question</button>
 					</ul>
 				</form> 
 			</div>
