@@ -25,7 +25,7 @@ request.setAttribute("current_question", 0);
 <p>Quiz id:<%= id%>
 <p>By: <%= quiz.getCreatedBy() %></p>
 <p>Description: <%= quiz.getQuizDescription() %></p>
-<form action="TakeQuizServlet" method="post">
+<form action="take_quiz.jsp">
 <input type="submit" value="Take Quiz"/>
 </form>
 </body>
