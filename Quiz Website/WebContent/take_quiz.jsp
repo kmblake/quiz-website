@@ -36,12 +36,13 @@
 
 	<%
 		int numQuestions = questions.size();
-		if (!multiplePages) {
+		if (multiplePages) {
 			numQuestions = 1;
 		}
 		for (int i = currQuestion; i < currQuestion + numQuestions; i++) {
 			Question toPrint = questions.get(i);
 			String type = toPrint.getType();
+			int questionID = toPrint.getQuestionID();
 	%>
 
 	<li>Question <%=i + 1%></li>
@@ -51,7 +52,7 @@
 	<li><%=toPrint.getQuestion()%>
 	<li>
 	<li class="form-item">Response: <input type="text"
-		class="title-input" name="question_<%=i + 1%>_response"></li>
+		class="title-input" name="<%= questionID %>"></li>
 
 	<%
 		} else if (type.equals("fill_in_the_blank")) {
@@ -62,7 +63,7 @@
 						question.length());
 	%>
 	<li class="form-item"><%=firstPart%><input type="text"
-		class="title-input" name="question_<%=i + 1%>_response">
+		class="title-input" name="<%= questionID %>">
 	finalPart</li>
 	<%
 		} else if (type.equals("multiple_choice")) {
@@ -78,7 +79,7 @@
 	%>
 	
 	<li class="form-item"><%=answer%> <input type="checkbox"
-		name="question_<%=i + 1%>_response"></li>
+		name="<%= questionID %>"></li>
 	<%
 		}
 	%>
@@ -91,7 +92,7 @@
 
 	<li><img id="image" src="<%=img%>" /></li>
 	<li class="form-item">Response: <input type="text"
-		class="title-input" name="question_<%=i + 1%>_response"></li>
+		class="title-input" name="<%= questionID %>"></li>
 
 	<%
 		} else if (type.equals("multiple_answer")) {
@@ -99,7 +100,7 @@
 	<li><%=toPrint.getQuestion()%>
 	<li>
 	<li class="form-item">Response: <input type="text"
-		class="title-input" name="question_<%=i + 1%>_response"></li>
+		class="title-input" name="<%= questionID %>"></li>
 	<%
 		}
 		}
