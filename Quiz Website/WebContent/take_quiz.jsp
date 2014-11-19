@@ -20,8 +20,7 @@
 	boolean multiplePages = quiz.getIfHasMultiplePages();
 	request.setAttribute("multiple", multiplePages);
 	ArrayList<Question> questions = quiz.getQuestions();
-	int currQuestion = Integer.parseInt((String)request
-			.getAttribute("current_question"));
+	int currQuestion = (Integer)session.getAttribute("current_question");
 %>
 
 <title><%=quizName%></title>

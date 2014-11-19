@@ -19,7 +19,7 @@ session.setAttribute("id", id);
 DBConnection con = (DBConnection)application.getAttribute("connection");
 Quiz quiz = new Quiz(id, con);
 session.setAttribute("quiz", quiz);
-request.setAttribute("current_question", 0);
+session.setAttribute("current_question", 0);
 
 %>
 <p>Quiz id:<%= id%>
