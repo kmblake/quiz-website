@@ -138,7 +138,7 @@ public class Quiz {
 
 		ArrayList<QuestionInfo> questionInfo = new ArrayList<QuestionInfo>();
 		while(questionRS.next()) {
-			QuestionInfo newQuestion = new QuestionInfo(questionRS.getInt("quiz_id"), questionRS.getString("question_type"), questionRS.getInt("question_number"));
+			QuestionInfo newQuestion = new QuestionInfo(questionRS.getInt("question_id"), questionRS.getString("question_type"), questionRS.getInt("question_number"));
 			questionInfo.add(newQuestion);
 		}
 
@@ -177,6 +177,7 @@ public class Quiz {
 				questionsArray.add(new MultipleAnswer(con, questionID, questionNumber));
 			}
 		}
+		questions = questionsArray;
 	}
 }
 

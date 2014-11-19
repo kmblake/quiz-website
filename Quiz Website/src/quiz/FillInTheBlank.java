@@ -59,4 +59,8 @@ public class FillInTheBlank extends Question {
 		return answer;
 	}
 
+	public boolean isCorrect(String userAnswer) {
+		return userAnswer.equals(this.answer);
+		//TODO
+	}
 }

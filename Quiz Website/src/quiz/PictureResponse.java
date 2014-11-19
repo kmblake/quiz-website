@@ -64,5 +64,9 @@ public class PictureResponse extends Question {
 		//TODO
 		return "";
 	}
+	
+	public boolean isCorrect(String userAnswer) {
+		return userAnswer.equals(this.answer);
+	}
 
 }
