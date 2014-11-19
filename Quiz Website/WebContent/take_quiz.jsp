@@ -14,7 +14,7 @@
 <link href="css/stylesheet.css" rel="stylesheet">
 
 <%
-Quiz quiz = (Quiz) getServletContext().getAttribute("quiz");
+Quiz quiz = (Quiz) session.getAttribute("quiz");
 String quizName = quiz.getTitle();
 String quizDescription = quiz.getQuizDescription();
 boolean multiplePages = quiz.getIfHasMultiplePages();
@@ -41,22 +41,52 @@ int currQuestion = Integer.parseInt(request.getParameter("current_question"));
 					String type = toPrint.getType();
 					%>
 					
-					<h3>Question <%= i+1 %></h3>
+					<li>Question <%= i+1 %></li>
 					<%
 					if(type.equals("question_response")) {
 						%>
-						<p><%= toPrint.getQuestion() %></p>
+						<li><%= toPrint.getQuestion() %><li>
 						<li class="form-item"> Response: <input type="text" class="title-input" name="question_<%= i+1 %>_response"></li>
 						
 						<%
 					} else if(type.equals("fill_in_the_blank")) {
-						
+						String question = toPrint.getQuestion();
+						int indexOfBlank = question.indexOf("//blank//");
+						String firstPart = question.substring(0,indexOfBlank);
+						String finalPart = question.substring(indexOfBlank+9, question.length());
+						%>
+						<li class="form-item"> <%= firstPart %><input type="text" class="title-input" name="question_<%= i+1 %>_response"> finalPart</li>
+						<%
 					} else if(type.equals("multiple_choice")) {
+						MultipleChoice theQuestion = (MultipleChoice) toPrint;
+						HashMap<String, Boolean> answers = (HashMap<String, Boolean>) theQuestion.getAnswers();
+						%>
+						<li><%= toPrint.getQuestion() %><li>
+						<% 
+						for(Map.Entry<String, Boolean> entry : answers.entrySet()) {
+							String answer = entry.getKey();
+							%>
+							<li class="form-item"><%= answer %> <input type="checkbox" name="question_<%= i+1 %>_response"></li>
+							<%
+						}
+						%>
 						
+						<%
 					} else if(type.equals("picture_response")) {
+						PictureResponse theQuestion = (PictureResponse) toPrint;
+						String img = theQuestion.getImageURL();
 						
+						%>
+						
+						<li><img id="image" src="<%= img %>"/></li>
+						<li class="form-item"> Response: <input type="text" class="title-input" name="question_<%= i+1 %>_response"></li>
+						
+						<%
 					} else if(type.equals("multiple_answer")) {
-						
+						%>
+						<li><%= toPrint.getQuestion() %><li>
+						<li class="form-item"> Response: <input type="text" class="title-input" name="question_<%= i+1 %>_response"></li>
+						<%
 					}
 				}
 				%>
@@ -94,15 +124,13 @@ int currQuestion = Integer.parseInt(request.getParameter("current_question"));
 Integer id = Integer.parseInt(request.getParameter("id"));
 System.out.println(id);
 DBConnection con = (DBConnection)application.getAttribute("connection");
-ArrayList<Question> questions= quiz.getQuestions();
+
 %>
 
 <p>Quiz id:<%= id %></p>
 <p>By: <%= quiz.getCreatedBy() %>"</p>
 <%
 for (int i = 0; i < questions.size(); i++) {
-	Question currQuestion = questions.get(i);
-	out.print("<p>" + currQuestion.getQuestion() + "</p>");
 }
 %>
 </body>
