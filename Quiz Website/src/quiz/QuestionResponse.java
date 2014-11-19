@@ -17,7 +17,6 @@ public class QuestionResponse extends Question {
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
 		if (rs.next()) {
 			question = rs.getString("question");
-			System.out.println(question);
 			answer = rs.getString("answer");
 		}
 	}

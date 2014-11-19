@@ -89,7 +89,6 @@ public class Quiz {
 		ResultSet currRS = temp.executeQuery("select * from users where id = '"
 				+ createdByID + "'");
 		currRS.next();
-		System.out.println(currRS.getString("username"));
 		return currRS.getString("username");
 	}
 

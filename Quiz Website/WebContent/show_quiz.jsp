@@ -18,7 +18,8 @@ Integer id = Integer.parseInt(request.getParameter("id"));
 session.setAttribute("id", id);
 DBConnection con = (DBConnection)application.getAttribute("connection");
 Quiz quiz = new Quiz(id, con);
-request.setAttribute("quiz", quiz);
+session.setAttribute("quiz", quiz);
+request.setAttribute("current_question", 0);
 
 %>
 <p>Quiz id:<%= id%>
