@@ -36,7 +36,7 @@
 
 	<%
 		int numQuestions = questions.size();
-		if (!multiplePages) {
+		if (multiplePages) {
 			numQuestions = 1;
 		}
 		for (int i = currQuestion; i < currQuestion + numQuestions; i++) {
