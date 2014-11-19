@@ -13,8 +13,10 @@ public class Quiz {
 	private DBConnection con;
 	private Statement stmt;
 	private ResultSet rs;
+	private int quizID;
 
-	public Quiz(Integer quizID, DBConnection con) throws SQLException {
+	public Quiz(Integer theQuizID, DBConnection con) throws SQLException {
+		quizID = theQuizID;
 		stmt = con.getStatement();
 		rs = stmt.executeQuery("select * from quizzes where id = '" + quizID
 				+ "'");
@@ -22,6 +24,10 @@ public class Quiz {
 		this.con = con;
 		questions = new ArrayList<Question>();
 		setQuestions(quizID);
+	}
+	
+	public int getQuizID() {
+		return quizID;
 	}
 
 	public static int createQuiz(Connection con, String title, String description,String username,
