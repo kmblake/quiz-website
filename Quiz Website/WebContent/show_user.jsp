@@ -7,7 +7,9 @@
 	Statement stmt = c.getStatement();
 	User u = new User(Integer.parseInt(request.getParameter("id")), stmt);
 %>
-<% boolean isFriend = false;  %>
+<% boolean isFriend = false;  
+	boolean pendingRequest = true;
+%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -23,6 +25,8 @@
 				<%= u.getFullName() %>
 				<% if (isFriend) { %>
 					<span class="label label-info right">Friends</span>
+				<% } else if (pendingRequest) { %>
+					<span class="label label-info right">Friend Request Pending</span>
 				<% } else { %>
 					<a class="btn btn-lg btn-success right" href="#">Send Friend Request</a>
 				<% } %>
@@ -36,7 +40,7 @@
 			<% if (isFriend) { %>
 				<h3>Recently Taken Quizzes:</h3>
 				<h3>Recently Created Quizzes:</h3>
-			<% } else { %>
+			<% } else if (!pendingRequest) { %>
 				<p class="notification">In order to see more information about this person, send them a friend request!</p>
 			<% } %>
 		</div>
