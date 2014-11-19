@@ -103,35 +103,3 @@ int currQuestion = Integer.parseInt(request.getParameter("current_question"));
 		</div>
 	</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<body>
-<%
-Integer id = Integer.parseInt(request.getParameter("id"));
-System.out.println(id);
-DBConnection con = (DBConnection)application.getAttribute("connection");
-
-%>
-
-<p>Quiz id:<%= id %></p>
-<p>By: <%= quiz.getCreatedBy() %>"</p>
-<%
-for (int i = 0; i < questions.size(); i++) {
-}
-%>
-</body>
-</html>
