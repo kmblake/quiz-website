@@ -46,6 +46,15 @@
 	width: 50%
 }
 
+.bold {
+	font-weight: bold;
+}
+
+.create-account-form {
+	max-width: 400px;
+	padding: 15px;
+	margin: 0 auto;
+}
 #question-image {
 	width: 500px;
 	margin: 20px;
