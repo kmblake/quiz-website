@@ -84,8 +84,7 @@ public class MultipleAnswer extends Question {
 	}
 	
 	public boolean isCorrect(String userAnswer) {
-		return true;
-		//TODO
+		return answers.contains(userAnswer);
 	}
 
 	@Override

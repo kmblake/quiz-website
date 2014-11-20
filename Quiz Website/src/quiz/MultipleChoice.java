@@ -45,10 +45,11 @@ public class MultipleChoice extends Question {
 		}
 		answer = new HashMap<String, Boolean>();
 
-		setAnswers(stmt);
+		setAnswers(con);
 	}
 
-	private void setAnswers(Statement stmt) throws SQLException {
+	private void setAnswers(DBConnection con) throws SQLException {
+		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from " + answersTable + " where question_id = '" + questionID + "'");
 		while(rs.next()) {
 			answer.put(rs.getString("answer"), rs.getBoolean("correct"));
@@ -79,7 +80,10 @@ public class MultipleChoice extends Question {
 	}
 	
 	public boolean isCorrect(String userAnswer) {
-		return userAnswer.equals(this.answer);
+		if (answer.containsKey(userAnswer)) {
+			return answer.get(userAnswer);
+		}
+		return false;
 	}
 
 	@Override
