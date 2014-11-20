@@ -78,8 +78,9 @@
 					String answer = entry.getKey();
 	%>
 	
-	<li class="form-item"><%=answer%> <input type="checkbox"
-		name="<%= questionID %>"></li>
+	<li class="form-item"><%=answer%> <input type="radio"
+		name="<%= questionID %>" value="<%= answer %>"></li>
+		
 	<%
 		}
 	%>
