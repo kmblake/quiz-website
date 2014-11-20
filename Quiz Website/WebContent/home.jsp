@@ -19,11 +19,12 @@
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
-		<a class="navbar-brand" href="#">Quiz Website</a>
+		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
 		<div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav navbar-right">
-	          <li><a href="#">Logout</a></li>
+	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
 	          <li><a href="#">Messages</a></li>
+	          <li><a href="home.jsp">Home</a></li>
 	        </ul>
 	        <form class="navbar-form navbar-right">
 	          <input type="text" class="form-control" placeholder="Search...">

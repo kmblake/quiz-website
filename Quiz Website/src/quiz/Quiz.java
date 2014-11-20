@@ -24,13 +24,10 @@ public class Quiz {
 		setQuestions(quizID);
 	}
 
-	public static int createQuiz(Connection con, String title, String description,String username,
+	public static int createQuiz(Connection con, String title, String description,int user_id,
 			boolean randomized, boolean multiple_pages,
 			boolean immediate_feedback, boolean practice_mode) throws SQLException {
 		Statement statement = con.createStatement();
-		ResultSet rs = statement.executeQuery("select id from users where username = '" + username + "'");
-		rs.first();
-		int user_id = rs.getInt("id");
 		String created_on = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO quizzes(title, created_by, created_on, " +
 				"description, randomized, multiple_pages, immediate_feedback, " +
@@ -44,7 +41,7 @@ public class Quiz {
 		pStmt.setBoolean(7, immediate_feedback);
 		pStmt.setBoolean(8, practice_mode);
 		pStmt.executeUpdate();
-		rs = statement.executeQuery("SELECT LAST_INSERT_ID()");
+		ResultSet rs = statement.executeQuery("SELECT LAST_INSERT_ID()");
 		rs.first();
 
 		return rs.getInt("LAST_INSERT_ID()");

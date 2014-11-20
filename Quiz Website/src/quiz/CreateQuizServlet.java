@@ -35,21 +35,15 @@ public class CreateQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Statement stmt = (Statement) getServletContext().getAttribute("statement");
 		DBConnection c = (DBConnection) getServletContext().getAttribute("connection");
 		Connection con = c.getConnection();
-		String username = (String) request.getSession().getAttribute("user"); //TODO: Ask Bryant about this
-		if (username == null) username = "jdoe"; //TODO: DELETE THIS LINE
-//		request.setAttribute("SQLerror", "Oops, it looks like there was an error and your quiz didn't save.  Please try again.");
-//		RequestDispatcher dispatch = request.getRequestDispatcher("create_quiz.jsp");
-//		dispatch.forward(request, response);
+		User user = (User) request.getSession().getAttribute("user"); //TODO: Ask Bryant about this
+		int userId = user.getId();
 		try {
 			
-			int quizId = Quiz.createQuiz(con, request.getParameter("title"), request.getParameter("description"), username,
+			int quizId = Quiz.createQuiz(con, request.getParameter("title"), request.getParameter("description"), userId,
 					request.getParameter("randomized") != null, request.getParameter("multiple_pages") != null,
 					request.getParameter("immediate_feedback") != null, request.getParameter("practice_mode") != null);
-//			QuestionType[] questionTypes = QuestionType.getQuestionTypes(stmt);
-//			request.setAttribute("question_types", questionTypes);
 			request.getSession().setAttribute("quiz-id", quizId);
 			request.getSession().setAttribute("question-num", 1);
 			RequestDispatcher dispatch = request.getRequestDispatcher("add_quiz_question.jsp");

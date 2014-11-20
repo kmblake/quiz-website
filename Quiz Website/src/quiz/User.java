@@ -31,4 +31,8 @@ public class User {
 			return "Error";
 		}
 	}
+	
+	public int getId() {
+		return id;
+	}
 }
