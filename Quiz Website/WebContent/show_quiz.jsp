@@ -17,6 +17,13 @@ session.setAttribute("current_question", 0);
 
 %>
 
+<script>
+function setParams() {
+	HttpSession session = request.getSession();
+	session.setAttribute("time_started", System.currentTimeMillis());
+}
+</script>
+
 <head>
 		<meta charset="ISO-8859-1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +45,7 @@ session.setAttribute("current_question", 0);
 						<% if(quiz.getIfPracticeMode()) { %>
 						<li class="form-item">Take the quiz in practice mode: <input type="checkbox" name="practice_mode"></li>
 						<% } %>
-						<li class="form-item"><button class="btn btn-primary" type="submit">Take Quiz</button>
+						<li class="form-item"><button class="btn btn-primary" onclick="setParams()" type="submit">Take Quiz</button>
 					</ul>
 				</form>
 			</div>
