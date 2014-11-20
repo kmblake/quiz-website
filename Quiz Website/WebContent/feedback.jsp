@@ -18,7 +18,7 @@ for (Question q : questions) {
 	String questionID = Integer.toString(q.getQuestionID());
 	String answer = (String)request.getAttribute(questionID);
 	out.println("Your Answer: " + answer);
-	out.println("Correct Answer: " + q.getAnswer());
+	out.println("Correct Answer(s): " + q.getAnswer());
 }
 
 %>
