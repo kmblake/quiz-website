@@ -64,7 +64,7 @@
 	%>
 	<li class="form-item"><%=firstPart%><input type="text"
 		class="title-input" name="<%= questionID %>">
-	finalPart</li>
+	<%= finalPart %></li>
 	<%
 		} else if (type.equals("multiple_choice")) {
 				MultipleChoice theQuestion = (MultipleChoice) toPrint;
@@ -78,8 +78,9 @@
 					String answer = entry.getKey();
 	%>
 	
-	<li class="form-item"><%=answer%> <input type="checkbox"
-		name="<%= questionID %>"></li>
+	<li class="form-item"><%=answer%> <input type="radio"
+		name="<%= questionID %>" value="<%= answer %>"></li>
+		
 	<%
 		}
 	%>
