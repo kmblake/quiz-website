@@ -64,7 +64,7 @@
 	%>
 	<li class="form-item"><%=firstPart%><input type="text"
 		class="title-input" name="<%= questionID %>">
-	finalPart</li>
+	<%= finalPart %></li>
 	<%
 		} else if (type.equals("multiple_choice")) {
 				MultipleChoice theQuestion = (MultipleChoice) toPrint;
