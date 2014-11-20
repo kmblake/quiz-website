@@ -1,16 +1,17 @@
 package quiz;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class QuizHistory {
 	
 	private int score;
-	private long time;
+	private Time time;
 	private String user;
 	private Date whenTaken;
 	
 	// Note that time is in milliseconds
-	public QuizHistory(int theScore, long theTime, String theUser, Date whenWasTaken) {
+	public QuizHistory(int theScore, Time theTime, String theUser, Date whenWasTaken) {
 		score = theScore;
 		time = theTime;
 		user = theUser;
@@ -21,7 +22,7 @@ public class QuizHistory {
 		return score;
 	}
 	
-	public long getTime() {
+	public Time getTime() {
 		return time;
 	}
 	

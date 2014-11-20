@@ -11,6 +11,7 @@ public class Quiz {
 
 	private ArrayList<Question> questions;
 	private DBConnection con;
+	private Statement statement;
 	private int quizID;
 	
 	private ArrayList<QuizHistory> history;
@@ -27,6 +28,7 @@ public class Quiz {
 	public Quiz(Integer theQuizID, DBConnection theCon) throws SQLException {
 		quizID = theQuizID;
 		Statement stmt = theCon.getStatement();
+		statement = stmt;
 		ResultSet rs = stmt.executeQuery("select * from quizzes where id = '" + quizID
 				+ "'");
 		rs.next();
@@ -49,8 +51,28 @@ public class Quiz {
 			ResultSet userRS = stmt.executeQuery("select * from users where id = '" + userID
 				+ "'");
 			userRS.next();
-			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getLong("time"), userRS.getString("username"), rs.getDate("taken_on"));
+			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"));
 			history.add(toAdd);
+		}
+		
+		Collections.sort(history, new HistoryComparator());
+	}
+	
+	/**
+	 * Comparator to sort the history for a quiz from best scores to worst
+	 * @author Eric
+	 *
+	 */
+	
+	private class HistoryComparator implements Comparator<QuizHistory> {
+		
+		public int compare(QuizHistory quizOne, QuizHistory quizTwo) {
+			int toReturn =  quizOne.getScore() - quizTwo.getScore();
+			if(toReturn == 0) {
+				// need to figure out how to implement time comparison
+			}
+			
+			return toReturn;
 		}
 	}
 	
@@ -119,12 +141,6 @@ public class Quiz {
 	}
 	
 	private void setInstanceVars(ResultSet rs) throws SQLException {
-		int createdByID = rs.getInt("created_by");
-		Statement temp = con.getStatement();
-		ResultSet currRS = temp.executeQuery("select * from users where id = '"
-				+ createdByID + "'");
-		currRS.next();
-		createdBy =  currRS.getString("username");
 		
 		quizDescription = rs.getString("description");
 		dateCreated = rs.getDate("created_on");
@@ -133,6 +149,12 @@ public class Quiz {
 		immediateFeedback = rs.getBoolean("immediate_feedback");
 		title = rs.getString("title");
 		practiceMode = rs.getBoolean("practice_mode");
+		
+		int createdByID = rs.getInt("created_by");
+		ResultSet currRS = statement.executeQuery("select * from users where id = '"
+				+ createdByID + "'");
+		currRS.next();
+		createdBy = currRS.getString("username");
 	}
 
 	public String getCreatedBy() throws SQLException {
