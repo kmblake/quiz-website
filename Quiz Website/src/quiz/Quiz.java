@@ -11,19 +11,47 @@ public class Quiz {
 
 	private ArrayList<Question> questions;
 	private DBConnection con;
-	private Statement stmt;
-	private ResultSet rs;
 	private int quizID;
+	
+	private ArrayList<QuizHistory> history;
+	private String createdBy;
+	private String quizDescription;
+	private Date dateCreated;
+	private boolean multiplePages;
+	private boolean randomized;
+	private boolean immediateFeedback;
+	private String title;
+	private boolean practiceMode;
+	
 
-	public Quiz(Integer theQuizID, DBConnection con) throws SQLException {
+	public Quiz(Integer theQuizID, DBConnection theCon) throws SQLException {
 		quizID = theQuizID;
-		stmt = con.getStatement();
-		rs = stmt.executeQuery("select * from quizzes where id = '" + quizID
+		Statement stmt = theCon.getStatement();
+		ResultSet rs = stmt.executeQuery("select * from quizzes where id = '" + quizID
 				+ "'");
 		rs.next();
-		this.con = con;
+		setInstanceVars(rs);
+		con = theCon;
 		questions = new ArrayList<Question>();
 		setQuestions(quizID);
+		setHistory(theCon);
+	}
+	
+	private void setHistory(DBConnection con) throws SQLException {
+		Statement stmt = con.getStatement();
+		ResultSet rs = stmt.executeQuery("select * from quiz_history where id = '" + quizID
+				+ "'");
+		
+		history = new ArrayList<QuizHistory>();
+		
+		while(rs.next()) {
+			int userID = rs.getInt("user_id");
+			ResultSet userRS = stmt.executeQuery("select * from users where id = '" + userID
+				+ "'");
+			userRS.next();
+			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getLong("time"), userRS.getString("username"), rs.getDate("taken_on"));
+			history.add(toAdd);
+		}
 	}
 	
 	public int getQuizID() {
@@ -85,45 +113,58 @@ public class Quiz {
 		}
 
 	}
+	
 	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
-
-	public String getCreatedBy() throws SQLException {
+	
+	private void setInstanceVars(ResultSet rs) throws SQLException {
 		int createdByID = rs.getInt("created_by");
 		Statement temp = con.getStatement();
 		ResultSet currRS = temp.executeQuery("select * from users where id = '"
 				+ createdByID + "'");
 		currRS.next();
-		return currRS.getString("username");
+		createdBy =  currRS.getString("username");
+		
+		quizDescription = rs.getString("description");
+		dateCreated = rs.getDate("created_on");
+		multiplePages = rs.getBoolean("multiple_pages");
+		randomized = rs.getBoolean("randomized");
+		immediateFeedback = rs.getBoolean("immediate_feedback");
+		title = rs.getString("title");
+		practiceMode = rs.getBoolean("practice_mode");
+	}
+
+	public String getCreatedBy() throws SQLException {
+		return createdBy;
 	}
 
 	public String getQuizDescription() throws SQLException {
-		return rs.getString("description");
+		return quizDescription;
 	}
 
 	public Date getDateCreated() throws SQLException {
-		return rs.getDate("created_on");
+		return dateCreated;
 	}
 
 	public boolean getIfHasMultiplePages() throws SQLException {
-		return rs.getBoolean("multiple_pages");
+		return multiplePages;
 	}
 
 	public boolean getIfRandomized() throws SQLException {
-		return rs.getBoolean("randomized");
+		return randomized;
 	}
 
 	public boolean getIfImmediateFeedback() throws SQLException {
-		return rs.getBoolean("immediate_feedback");
+		return immediateFeedback;
 	}
 
 	public String getTitle() throws SQLException {
-		return rs.getString("title");
+		return title;
 	}
 
 	public boolean getIfPracticeMode() throws SQLException {
-		return rs.getBoolean("practice_mode");
+		return practiceMode;
 	}
 
 	/**
@@ -184,6 +225,10 @@ public class Quiz {
 			}
 		}
 		questions = questionsArray;
+	}
+	
+	public ArrayList<QuizHistory> getHistory() {
+		return history;
 	}
 }
 
