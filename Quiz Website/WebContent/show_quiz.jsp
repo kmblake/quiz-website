@@ -40,8 +40,78 @@ session.setAttribute("current_question", 0);
 						<% } %>
 						<li class="form-item"><button class="btn btn-primary" type="submit">Take Quiz</button>
 					</ul>
-				</form> 
+				</form>
 			</div>
+			<div class="quiz-history">
+			<h3>Top Scorers</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Score</th>
+          <th>Time</th>
+          <th>Username</th>
+          <th>Date Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+			ArrayList<QuizHistory> history = quiz.getHistory();
+			ArrayList<QuizHistory> yourHistory = new ArrayList<QuizHistory>();
+			String currUser = (String) session.getAttribute("user");
+			for(int i=0; i<history.size();i++) {
+				QuizHistory currentHistory = history.get(i);
+				if(currentHistory.getUser().equals(currUser)) yourHistory.add(currentHistory);
+				%>
+				<tr>
+          <td><%= i+1 %></td>
+          <td><%= currentHistory.getScore() %></td>
+          <td><%= currentHistory.getTime() %></td>
+          <td><%= currentHistory.getUser() %></td>
+          <td><%= currentHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+			}
+			%>
+			
+			</tbody>
+			</table>
+			</div>
+			
+			
+			<div class="your-history">
+			<h3>Your Best Scores:</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Score</th>
+          <th>Time</th>
+          <th>Date Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+			for(int i=0; i<yourHistory.size();i++) {
+				QuizHistory currentYourHistory = yourHistory.get(i);
+				%>
+				<tr>
+          <td><%= i+1 %></td>
+          <td><%= currentYourHistory.getScore() %></td>
+          <td><%= currentYourHistory.getTime() %></td>
+          <td><%= currentYourHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+			}
+			%>
+			
+			</tbody>
+			</table>
+			</div>
+			
+			
 		</div>
 	</body>
 </html>

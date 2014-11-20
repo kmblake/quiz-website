@@ -184,6 +184,10 @@ public class Quiz {
 	public String getTitle() throws SQLException {
 		return title;
 	}
+	
+	public int getLength() {
+		return questions.size();
+	}
 
 	public boolean getIfPracticeMode() throws SQLException {
 		return practiceMode;
