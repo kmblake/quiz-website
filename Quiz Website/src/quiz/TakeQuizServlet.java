@@ -1,3 +1,4 @@
+package quiz;
 
 
 import java.io.IOException;
@@ -72,11 +73,14 @@ public class TakeQuizServlet extends HttpServlet {
 		
 		if(multiplePages) {
 			boolean immediateFeedback = quiz.getIfImmediateFeedback();
+			
 		} else {
 			for(int i=1;i<questions.size();i++) {
 				printAQuestion(questions.get(i), response);
 			}
 		}
+		
+		printFooterInfo(response);
 	}
 
 	private void printHeaderInfo(Quiz quiz, HttpServletResponse response) throws IOException, SQLException {

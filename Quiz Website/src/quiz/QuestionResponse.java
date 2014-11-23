@@ -53,5 +53,9 @@ public class QuestionResponse extends Question {
 	public String getAnswer() {
 		return answer;
 	}
+	
+	public boolean isCorrect(String userAnswer) {
+		return userAnswer.equals(this.answer);
+	}
 
 }

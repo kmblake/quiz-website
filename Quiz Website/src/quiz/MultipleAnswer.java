@@ -82,5 +82,19 @@ public class MultipleAnswer extends Question {
 	public int getQuestionID() {
 		return questionID;
 	}
+	
+	public boolean isCorrect(String userAnswer) {
+		return true;
+		//TODO
+	}
 
+	@Override
+	public String getAnswer() {
+		StringBuilder string = new StringBuilder(); 
+		string.append(answers.get(0));
+		for (int i = 1; i < answers.size(); i++) {
+			string.append(answers.get(i));
+		}
+		return string.toString();
+	}
 }

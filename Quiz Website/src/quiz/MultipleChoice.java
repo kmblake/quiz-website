@@ -77,5 +77,18 @@ public class MultipleChoice extends Question {
 	public String getQuestion() {
 		return question;
 	}
+	
+	public boolean isCorrect(String userAnswer) {
+		return userAnswer.equals(this.answer);
+	}
+
+	@Override
+	public String getAnswer() {
+		for (String a : answer.keySet()) {
+			if(answer.get(a))
+				return a;
+		}
+		return null;
+	}
 
 }
