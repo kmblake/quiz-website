@@ -26,7 +26,7 @@ CREATE TABLE quiz_history (
     user_id INTEGER,
     quiz_id INTEGER,
     score INTEGER,
-    time DOUBLE,
+    time TIME,
     taken_on DATETIME,
     PRIMARY KEY(id)
 );

@@ -50,11 +50,29 @@
 	font-weight: bold;
 }
 
+.right {
+	float: right;
+}
+
 .create-account-form {
 	max-width: 400px;
 	padding: 15px;
 	margin: 0 auto;
 }
+
+.home-container {
+	margin-top: 50px;
+}
+
+.notification {
+	margin-top: 15px;
+	font-size: 18px;
+}
+
+.navbar-search {
+	width: 350px !important;
+}
+
 #question-image {
 	width: 500px;
 	margin: 20px;
@@ -69,4 +87,8 @@
 #form-container {
 	display: inline-block;
 	max-width: 500px
+}
+
+#challenge-button {
+	margin-right: 10px;
 }
