@@ -20,7 +20,7 @@ public class SearchResult {
 		return id;
 	}
 
-	public String getTitle() {
+	public String getName() {
 		return name;
 	}
 	

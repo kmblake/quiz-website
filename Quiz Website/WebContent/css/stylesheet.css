@@ -69,6 +69,10 @@
 	font-size: 18px;
 }
 
+.navbar-search {
+	width: 350px !important;
+}
+
 #question-image {
 	width: 500px;
 	margin: 20px;

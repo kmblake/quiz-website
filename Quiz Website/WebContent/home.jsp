@@ -26,8 +26,8 @@
 	          <li><a href="#">Messages</a></li>
 	          <li><a href="home.jsp">Home</a></li>
 	        </ul>
-	        <form class="navbar-form navbar-right">
-	          <input type="text" class="form-control" placeholder="Search...">
+	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
+	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
 	        </form>
     	</div>
 	</div>

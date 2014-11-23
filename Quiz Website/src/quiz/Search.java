@@ -14,10 +14,8 @@ public class Search {
 		this.stmt = stmt;
 		if (filter == USERS_ONLY) {
 			updateUserResults(query);
-			quizResults = new SearchResult[0];
 		} else if (filter == QUIZZES_ONLY) {
 			updateQuizResults(query);
-			userResults = new SearchResult[0];
 		} else if (filter == BOTH) {
 			updateUserResults(query);
 			updateQuizResults(query);
@@ -34,11 +32,11 @@ public class Search {
 
 	private void updateUserResults(String query) {
 		try {
-			String sqlQuery = "SELECT id, first_name, last_name, username from users WHERE first_name like %"
+			String sqlQuery = "SELECT id, first_name, last_name, username from users WHERE first_name like '%"
 					+ query
-					+ "% OR last_name like %"
+					+ "%' OR last_name like '%"
 					+ query
-					+ "% OR username like %" + query + "%";
+					+ "%' OR username like '%" + query + "%'";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			if (rs.last()) {
 				userResults = new SearchResult[rs.getRow()];
@@ -46,7 +44,7 @@ public class Search {
 				rs.beforeFirst();
 				while (rs.next()) {
 					userResults[i] = new SearchResult(rs.getInt("id"),
-							rs.getString("first_name") + rs.getString("last_name"), rs.getString("username"));
+							rs.getString("first_name") + " " + rs.getString("last_name"), rs.getString("username"));
 					i++;
 				}
 			} else {
@@ -61,8 +59,8 @@ public class Search {
 
 	private void updateQuizResults(String query) {
 		try {
-			String sqlQuery = "SELECT id, title from quizzes WHERE title like %"
-					+ query + "%";
+			String sqlQuery = "SELECT id, title from quizzes WHERE title like '%"
+					+ query + "%'";
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			if (rs.last()) {
 				quizResults = new SearchResult[rs.getRow()];
@@ -70,7 +68,7 @@ public class Search {
 				rs.beforeFirst();
 				while (rs.next()) {
 					quizResults[i] = new SearchResult(rs.getInt("id"),
-							rs.getString("name"));
+							rs.getString("title"));
 					i++;
 				}
 			} else {

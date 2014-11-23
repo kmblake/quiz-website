@@ -5,10 +5,13 @@
 
 <% 	DBConnection c = (DBConnection) getServletContext().getAttribute("connection");
 	Statement stmt = c.getStatement();
-	User u = new User(Integer.parseInt(request.getParameter("id")), stmt);
+	int id = Integer.parseInt(request.getParameter("id"));
+	User u = new User(id, stmt);
 %>
 <% boolean isFriend = false;  
-	boolean pendingRequest = true;
+	boolean pendingRequest = false;
+	
+	if ( ((User) request.getSession().getAttribute("user")).getId() == id) response.sendRedirect("home.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">

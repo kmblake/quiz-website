@@ -3,6 +3,7 @@ package quiz;
 import java.io.IOException;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,13 +36,17 @@ public class SearchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String filterString = request.getParameter("query");
+		String filterString = request.getParameter("filter");
 		int filter = (filterString == null) ? Search.BOTH : Integer.parseInt(filterString);
 		String query = request.getParameter("query");
 		Search s = new Search((Statement) getServletContext().getAttribute("statement"), query, filter);
 		request.setAttribute("quizResults", s.getQuizResults());
 		request.setAttribute("userResults", s.getUserResults());
 		request.setAttribute("term", query);
+		request.setAttribute("oldFilter", filter);
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("search.jsp");
+		dispatch.forward(request, response);
 	}
 
 }

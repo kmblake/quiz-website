@@ -9,6 +9,6 @@
 		<title>Quiz</title>
 	</head>
 	<body>
-		<p>Quiz id:<%= request.getSession().getAttribute("quiz-id") %>
+		<p>Quiz id:<%= request.getParameter("id") %>
 	</body>
 </html>
