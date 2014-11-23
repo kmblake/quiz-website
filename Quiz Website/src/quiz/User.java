@@ -32,6 +32,18 @@ public class User {
 		}
 	}
 	
+	public String getUsername() {
+		try {
+			ResultSet rs = stmt.executeQuery("select * from users where id = '" + id + "'");
+			rs.next();
+			return rs.getString("username");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Error";
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}
