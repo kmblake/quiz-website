@@ -38,7 +38,7 @@
 				<% if (isFriend) { %>
 					<a id="challenge-button" class="btn btn-lg btn-warning">Challenge</a>
 				<% } %>
-				<a class="btn btn-lg btn-primary">Send Note</a>
+				<a class="btn btn-lg btn-primary" href="<%= "create_message.jsp?recipient_id=" + id %>">Send Note</a>
 			</div>
 			<% if (isFriend) { %>
 				<h3>Recently Taken Quizzes:</h3>
