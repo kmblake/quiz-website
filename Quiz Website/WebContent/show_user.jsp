@@ -34,7 +34,7 @@
 					<% } else { %>
 						<input type="hidden" name="requested_by" value="<%= homeUserId %>">
 						<input type="hidden" name="requested_for" value="<%= id %>">
-						<input type="hidden" name="source" value="<%= Friend.FROM_USER_PAGE %>">
+						<input type="hidden" name="source" value="<%= Friend.REQUEST %>">
 						<button class="btn btn-lg btn-success right" type="submit">Send Friend Request</button>
 					<% } %>
 				</h1>

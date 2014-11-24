@@ -4,10 +4,12 @@
 <%@ page import="quiz.*"%>
 <%@ page import="java.sql.*"%>
 
-<% User currentUser = (User) session.getAttribute("user"); %>
-<% Statement stmt = (Statement) getServletContext().getAttribute("statement"); %>
-<% int userId = currentUser.getId();  %>
-<% Message[] notes = Message.getNotesForRecipient(stmt, userId, Message.NOTE); %>
+<%  User currentUser = (User) session.getAttribute("user"); 
+	Statement stmt = (Statement) getServletContext().getAttribute("statement"); 
+	int userId = currentUser.getId();  
+ 	Message[] notes = Message.getNotesForRecipient(stmt, userId, Message.NOTE); 
+ 	Friend[] friendRequests = Friend.getFriendRequests(stmt, userId);
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -66,6 +68,23 @@
 			<% } %>
 		      </tbody>
 		    </table>	
+		<% } %>
+		
+		<h1>Friend Requests: </h1>
+		<% if (friendRequests.length == 0)  {%>
+			<p>No friend requests<p>
+		<% } else  { %>
+			<ul class="stripped">
+			<% for (Friend f : friendRequests) { %>
+				<li>
+					<form action="FriendRequestServlet" method="post">
+						<input type="hidden" name="id" value="<%= f.getId() %>">
+						<input type="hidden" name="source" value="<%= Friend.APPROVE %>">
+						<div class="friend-request">Request from <a href="<%= "show_user.jsp?id=" + f.getRequestedBy() %>"><%= f.getSender() %></a>: <button class="btn btn-success" type="submit">Approve</button></div>
+					</form>
+				</li>
+			<% } %>
+		    </ul>	
 		<% } %>
 	</div>
 </body>

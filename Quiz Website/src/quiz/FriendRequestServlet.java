@@ -1,8 +1,7 @@
 package quiz;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,22 +36,24 @@ public class FriendRequestServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int requested_by = Integer.parseInt(request.getParameter("requested_by"));
-		int requested_for = Integer.parseInt(request.getParameter("requested_for"));
 		int src = Integer.parseInt(request.getParameter("source"));
-		Connection con = (Connection) ((DBConnection) getServletContext().getAttribute("connection")).getConnection();
-		try {
-			Friend.createRequest(con, requested_by, requested_for);
-			if (src == Friend.FROM_MESSAGES_PAGE) {
-				RequestDispatcher dispatch = request.getRequestDispatcher("show_messages.jsp");
-				dispatch.forward(request, response);
-			} else {
+		if (src == Friend.REQUEST) {
+			int requested_by = Integer.parseInt(request.getParameter("requested_by"));
+			int requested_for = Integer.parseInt(request.getParameter("requested_for"));
+			try {
+				Connection con = (Connection) ((DBConnection) getServletContext().getAttribute("connection")).getConnection();
+				Friend.createRequest(con, requested_by, requested_for);
 				RequestDispatcher dispatch = request.getRequestDispatcher("show_user.jsp?id=" + requested_for);
 				dispatch.forward(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} else if (src == Friend.APPROVE) {
+			int friendship_id = Integer.parseInt(request.getParameter("id"));
+			Statement stmt = (Statement) getServletContext().getAttribute("statement");
+			Friend.approveFriendship(stmt, friendship_id);
+			RequestDispatcher dispatch = request.getRequestDispatcher("show_messages.jsp");
+			dispatch.forward(request, response);
 		}
 	}
 
