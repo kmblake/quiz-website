@@ -18,24 +18,25 @@ public class Message {
 	public static final int FRIEND_REQUEST = 3;
 	public static final int PREVIEW_LENGTH = 300;
 
-	public static Message[] getMessagesForRecipient(Statement stmt,
-			int user_id, int message_type) throws SQLException {
+	public static Message[] getNotesForRecipient(Statement stmt, int user_id,
+			int message_type) throws SQLException {
 		ResultSet rs = stmt
-				.executeQuery("SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.sender = users.id WHERE recipient = "
+				.executeQuery("SELECT m . * , users.username FROM messages AS m INNER JOIN (SELECT * , MAX( sent_on ) AS time_stamp FROM messages WHERE recipient = "
 						+ user_id
-						+ " AND message_type_id = "
-						+ message_type
-						+ " ORDER BY sent_on DESC");
+						+ " AND message_type_id = 1 GROUP BY sender) AS q ON m.sender = q.sender AND m.sent_on = q.time_stamp INNER JOIN users ON m.sender = users.id ");
 		return parseResults(rs);
-		
+
 	}
 	
 	public static Message[] getConversation(Statement stmt, int sender_id, int recipient_id) throws SQLException {
+		stmt.executeUpdate("UPDATE messages SET message_read = 1 WHERE sender = " + sender_id + " AND recipient = " + recipient_id);
 		ResultSet rs = stmt
 		.executeQuery("SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.sender = users.id WHERE recipient IN ("
 				+ sender_id + ", " + recipient_id + ")"
 				+ " AND message_type_id = "
 				+ Message.NOTE
+				+ " AND sender IN ("
+				+ sender_id + ", " + recipient_id + ")"
 				+ " ORDER BY sent_on");
 		return parseResults(rs);
 	}

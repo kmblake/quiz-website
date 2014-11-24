@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,6 +42,9 @@ public class CreateMessageServlet extends HttpServlet {
 		int recipient_id = Integer.parseInt(request.getParameter("recipient_id"));
 		try {
 			Message.createMessage(con, u.getId(), recipient_id, Message.NOTE, request.getParameter("body"));
+			request.setAttribute("notification", "Message sent.");
+			RequestDispatcher dispatch = request.getRequestDispatcher("show_messages.jsp");
+			dispatch.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
