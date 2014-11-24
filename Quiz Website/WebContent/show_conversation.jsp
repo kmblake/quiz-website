@@ -8,7 +8,8 @@
 <% Statement stmt = (Statement) getServletContext().getAttribute("statement"); %>
 <% int userId = currentUser.getId();  %>
 <% int fromId = Integer.parseInt(request.getParameter("from_id")); %>
-<% Message[] notes = Message.getConversation(stmt, fromId, userId); %>
+<% int toId = Integer.parseInt(request.getParameter("to_id")); %>
+<% Message[] notes = Message.getConversation(stmt, fromId, toId); %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

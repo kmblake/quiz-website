@@ -47,13 +47,6 @@
 			<p>No notes<p>
 		<% } else  { %>
 			<table class="table">
-		      <thead>
-		        <tr>
-		          <th>User</th>
-		          <th>Most Recent Note From User</th>
-		          <th>Received</th>
-		        </tr>
-		      </thead>
 		      <tbody>
 			<% for (Message m : notes) { %>
 				<%if (!m.isRead()) { %>
@@ -62,7 +55,7 @@
 		        <tr>
 		        <% } %>
 		          <td><a href="<%= "show_user.jsp?id=" + m.getSenderId() %>"><%= m.getSenderName() %></a></td>
-		          <td><a class="msg-preview" href="<%= "show_conversation.jsp?from_id=" + m.getSenderId() %>"><%= m.getPreview() %></a></td>
+		          <td><a class="msg-preview" href="<%= "show_conversation.jsp?from_id=" + m.getSenderId() + "&to_id=" + m.getRecipientId() %>"><%= m.getPreview() %></a></td>
 		          <td class="received-col"><%= m.getReceivedOn() %></td>
 		        </tr>
 			<% } %>

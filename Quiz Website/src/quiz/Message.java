@@ -23,8 +23,21 @@ public class Message {
 		ResultSet rs = stmt
 				.executeQuery("SELECT m . * , users.username FROM messages AS m INNER JOIN (SELECT * , MAX( sent_on ) AS time_stamp FROM messages WHERE recipient = "
 						+ user_id
-						+ " AND message_type_id = 1 GROUP BY sender) AS q ON m.sender = q.sender AND m.sent_on = q.time_stamp INNER JOIN users ON m.sender = users.id ");
-		return parseResults(rs);
+						+ " OR sender = "
+						+ user_id
+						+ " GROUP BY sender) AS q ON m.sender = q.sender AND m.sent_on = q.time_stamp INNER JOIN users ON m.sender = users.id ");
+		rs.last();
+		int size = rs.getRow();
+		Message[] messages = new Message[size];
+		rs.first();
+		for (int i = 0; i < size; i++) {
+			String sender = rs.getString("username");
+			boolean read = (rs.getInt("sender") == user_id) ? true : rs.getBoolean("message_read"); // make messages sent by user appear as read
+			Message m = new Message(rs.getInt("id"), sender, rs.getInt("sender"), rs.getInt("recipient"), rs.getString("body"), read, rs.getTimestamp("sent_on"));
+			messages[i] = m;
+			rs.next();
+		}
+		return messages;
 
 	}
 	
@@ -33,8 +46,6 @@ public class Message {
 		ResultSet rs = stmt
 		.executeQuery("SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.sender = users.id WHERE recipient IN ("
 				+ sender_id + ", " + recipient_id + ")"
-				+ " AND message_type_id = "
-				+ Message.NOTE
 				+ " AND sender IN ("
 				+ sender_id + ", " + recipient_id + ")"
 				+ " ORDER BY sent_on");
@@ -61,13 +72,12 @@ public class Message {
 		String created_on = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 				.format(Calendar.getInstance().getTime());
 		PreparedStatement pStmt = con
-				.prepareStatement("INSERT INTO messages VALUES (NULL, ?, ?, ?, ?, ?, ?)");
+				.prepareStatement("INSERT INTO messages VALUES (NULL, ?, ?, ?, ?, ?)");
 		pStmt.setInt(1, sender_id);
 		pStmt.setInt(2, recipient_id);
-		pStmt.setInt(3, type);
-		pStmt.setString(4, body);
-		pStmt.setString(5, created_on);
-		pStmt.setBoolean(6, false);
+		pStmt.setString(3, body);
+		pStmt.setString(4, created_on);
+		pStmt.setBoolean(5, false);
 		pStmt.executeUpdate();
 		ResultSet rs = statement.executeQuery("SELECT LAST_INSERT_ID()");
 		rs.first();
@@ -84,10 +94,6 @@ public class Message {
 		this.read = read;
 		SimpleDateFormat stringForm = new SimpleDateFormat("MM-dd-yyyy hh:mm a");
 		this.sent_on = stringForm.format(sent_on);
-	}
-
-	public int getType() {
-		return NOTE;
 	}
 
 	public int getId() {
