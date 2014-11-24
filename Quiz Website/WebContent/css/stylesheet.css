@@ -73,6 +73,18 @@
 	width: 350px !important;
 }
 
+.received-col {
+	min-width: 100px
+}
+
+.msg-preview {
+	color: black;
+}
+
+.shaded-row {
+	background-color: #f9f9f9;
+}
+
 #question-image {
 	width: 500px;
 	margin: 20px;

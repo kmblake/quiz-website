@@ -3,7 +3,6 @@ package quiz;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
 public class Message {
 	private int id;
@@ -17,6 +16,7 @@ public class Message {
 	public static final int NOTE = 1;
 	public static final int CHALLENGE = 2;
 	public static final int FRIEND_REQUEST = 3;
+	public static final int PREVIEW_LENGTH = 300;
 
 	public static Message[] getMessagesForRecipient(Statement stmt,
 			int user_id, int message_type) throws SQLException {
@@ -26,6 +26,21 @@ public class Message {
 						+ " AND message_type_id = "
 						+ message_type
 						+ " ORDER BY sent_on DESC");
+		return parseResults(rs);
+		
+	}
+	
+	public static Message[] getConversation(Statement stmt, int sender_id, int recipient_id) throws SQLException {
+		ResultSet rs = stmt
+		.executeQuery("SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.sender = users.id WHERE recipient IN ("
+				+ sender_id + ", " + recipient_id + ")"
+				+ " AND message_type_id = "
+				+ Message.NOTE
+				+ " ORDER BY sent_on");
+		return parseResults(rs);
+	}
+	
+	private static Message[] parseResults(ResultSet rs) throws SQLException {
 		rs.last();
 		int size = rs.getRow();
 		Message[] messages = new Message[size];
@@ -100,6 +115,14 @@ public class Message {
 	
 	public String getReceivedOn() {
 		return sent_on;
+	}
+	
+	public String getPreview() {
+		if (body.length() < PREVIEW_LENGTH) {
+			return body;
+		} else {
+			return body.substring(0, PREVIEW_LENGTH) + "...";
+		}
 	}
 
 }
