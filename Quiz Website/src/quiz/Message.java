@@ -18,27 +18,13 @@ public class Message {
 	public static final int FRIEND_REQUEST = 3;
 	public static final int PREVIEW_LENGTH = 300;
 
-	public static Message[] getNotesForRecipient(Statement stmt, int user_id,
+	public static Message[] getNotesForRecipient(Connection con, int user_id,
 			int message_type) throws SQLException {
-		ResultSet rs = stmt
+		ResultSet rs = con.createStatement()
 				.executeQuery("SELECT m . * , users.username FROM messages AS m INNER JOIN (SELECT * , MAX( sent_on ) AS time_stamp FROM messages WHERE recipient = "
 						+ user_id
-						+ " OR sender = "
-						+ user_id
 						+ " GROUP BY sender) AS q ON m.sender = q.sender AND m.sent_on = q.time_stamp INNER JOIN users ON m.sender = users.id ");
-		rs.last();
-		int size = rs.getRow();
-		Message[] messages = new Message[size];
-		rs.first();
-		for (int i = 0; i < size; i++) {
-			String sender = rs.getString("username");
-			boolean read = (rs.getInt("sender") == user_id) ? true : rs.getBoolean("message_read"); // make messages sent by user appear as read
-			Message m = new Message(rs.getInt("id"), sender, rs.getInt("sender"), rs.getInt("recipient"), rs.getString("body"), read, rs.getTimestamp("sent_on"));
-			messages[i] = m;
-			rs.next();
-		}
-		return messages;
-
+		return parseResults(rs);
 	}
 	
 	public static Message[] getConversation(Statement stmt, int sender_id, int recipient_id) throws SQLException {

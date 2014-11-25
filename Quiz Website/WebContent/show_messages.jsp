@@ -8,7 +8,7 @@
 	Statement stmt = (Statement) getServletContext().getAttribute("statement"); 
 	Connection con = (Connection) ((DBConnection) getServletContext().getAttribute("connection")).getConnection();
 	int userId = currentUser.getId();  
- 	Message[] notes = Message.getNotesForRecipient(stmt, userId, Message.NOTE); 
+ 	Message[] notes = Message.getNotesForRecipient(con, userId, Message.NOTE); 
  	Friend[] friendRequests = Friend.getFriendRequests(stmt, userId);
  	Challenge[] challenges = Challenge.getChallenges(con, userId);
 %>

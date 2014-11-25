@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Challenge {
-	private static final int OLD_CHALLENGE_LIMIT = 5;
 	
 	private int id;
 	private int quiz_id;
