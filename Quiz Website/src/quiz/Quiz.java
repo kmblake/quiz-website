@@ -48,7 +48,8 @@ public class Quiz {
 		
 		while(rs.next()) {
 			int userID = rs.getInt("user_id");
-			ResultSet userRS = stmt.executeQuery("select * from users where id = '" + userID
+			Statement stmtB = con.getStatement();
+			ResultSet userRS = stmtB.executeQuery("select * from users where id = '" + userID
 				+ "'");
 			userRS.next();
 			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"));

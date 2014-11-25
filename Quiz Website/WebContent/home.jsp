@@ -23,7 +23,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav navbar-right">
 	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
-	          <li><a href="#">Messages</a></li>
+	          <li><a href="show_messages.jsp">Messages</a></li>
 	          <li><a href="home.jsp">Home</a></li>
 	        </ul>
 	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">

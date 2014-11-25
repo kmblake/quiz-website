@@ -38,4 +38,8 @@ public class QuizIndex {
 	public Set<Integer> getKeys() {
 		return index.keySet();
 	}
+	
+	public HashMap<Integer, String> getIndex() {
+		return index;
+	}
 }
