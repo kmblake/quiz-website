@@ -20,7 +20,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/stylesheet.css" rel="stylesheet">
-		<title>Insert title here</title>
+		<title><%= u.getFullName() %></title>
 	</head>
 	<body>
 		<div class="container">
@@ -39,9 +39,13 @@
 					<% } %>
 				</h1>
 			</form>
+			<% String notification = (String) request.getAttribute("notification"); %>
+			<% if (notification != null ) { %>
+			<div class="alert alert-success"><%= notification %></div>
+			<% } %>
 			<div class="message-buttons">
 				<% if (friendshipStatus == Friend.FRIENDS) { %>
-					<a id="challenge-button" class="btn btn-lg btn-warning">Challenge</a>
+					<a id="challenge-button" class="btn btn-lg btn-warning" href="<%= "create_challenge.jsp?recipient_id=" + id %>">Challenge</a>
 				<% } %>
 				<a class="btn btn-lg btn-primary" href="<%= "create_message.jsp?recipient_id=" + id %>">Send Note</a>
 			</div>

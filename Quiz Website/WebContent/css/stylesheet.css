@@ -90,6 +90,10 @@
 	margin-bottom: 10px;
 }
 
+.spaced {
+	margin-bottom: 5px;
+}
+
 #question-image {
 	width: 500px;
 	margin: 20px;

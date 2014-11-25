@@ -25,7 +25,6 @@ public class Friend {
 		pStmt.setInt(2, requested_for);
 		pStmt.setBoolean(3, false);
 		pStmt.setString(4, created_on);
-		System.out.println(pStmt);
 		pStmt.executeUpdate();
 	}
 	

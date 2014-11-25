@@ -6,9 +6,11 @@
 
 <%  User currentUser = (User) session.getAttribute("user"); 
 	Statement stmt = (Statement) getServletContext().getAttribute("statement"); 
+	Connection con = (Connection) ((DBConnection) getServletContext().getAttribute("connection")).getConnection();
 	int userId = currentUser.getId();  
  	Message[] notes = Message.getNotesForRecipient(stmt, userId, Message.NOTE); 
  	Friend[] friendRequests = Friend.getFriendRequests(stmt, userId);
+ 	Challenge[] challenges = Challenge.getChallenges(con, userId);
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -79,6 +81,18 @@
 			<% } %>
 		    </ul>	
 		<% } %>
+		
+		<h1>Challenges: </h1>
+		<ul class="stripped">
+			<% for (Challenge c : challenges) { %>
+				<% if (c.getChallengerBestScore() == 0) { %>
+					<li class="spaced">Your friend <a href="<%= "show_user.jsp?id=" + c.getChallengerId() %>"><%= c.getChallengerName() %></a> challenged you to take 
+						<a href="<%= "show_quiz.jsp?id=" + c.getQuizId() %>"><%= c.getQuizName() %></a> on <%= c.getDateChallenged() %>, but <%= c.getChallengerName() %> has not yet taken this quiz.</li>
+				<% } else { %>
+					<li class="spaced">Your friend <a href="<%= "show_user.jsp?id=" + c.getChallengerId() %>"><%= c.getChallengerName() %></a> challenged you to take <a href="<%= "show_quiz.jsp?id=" + c.getQuizId() %>"><%= c.getQuizName() %></a> on <%= c.getDateChallenged() %>.  <%= c.getChallengerName() %>'s best score on this quiz was <%= c.getChallengerBestScore() %>.</li>
+				<% } %>
+			<% } %>
+		</ul>
 	</div>
 </body>
 </html>
