@@ -17,14 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/FeedbackServlet")
 public class FeedbackServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FeedbackServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FeedbackServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,10 +37,17 @@ public class FeedbackServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int score = computeScore(request);
-		request.setAttribute("score", score);
-		RequestDispatcher dispatch = request.getRequestDispatcher("feedback.jsp");
-		dispatch.forward(request, response);	
+		boolean multiple = (Boolean)request.getAttribute("multiple");
+		if (multiple) {
+			int score = computeScore(request);
+			request.setAttribute("score", score);
+			RequestDispatcher dispatch = request.getRequestDispatcher("feedback.jsp");
+			dispatch.forward(request, response);	
+		}
+		else {
+			RequestDispatcher dispatch = request.getRequestDispatcher("");
+
+		}
 	}
 
 	private int computeScore(HttpServletRequest request) {
