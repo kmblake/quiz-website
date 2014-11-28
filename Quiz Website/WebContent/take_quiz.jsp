@@ -32,8 +32,9 @@
 <h1><%=quizName%></h1>
 <p><%=quizDescription%></p>
 <form action="FeedbackServlet" method="post">
-<ul class="stripped">
-
+</div>
+<ul class="list-unstyled">
+	<div>
 	<%
 		int numQuestions = questions.size();
 		if (multiplePages) {
@@ -106,12 +107,13 @@
 		}
 		}
 	%>
+	</div>
 	<li class="form-item"><button class="btn btn-primary" type="submit">Submit</button> </li>
 	
 </ul>
 <input name="id" type="hidden" value="<%= quizID %>"/>
 </form>
-</div>
+
 </div>
 </body>
 </html>
