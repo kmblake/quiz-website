@@ -19,9 +19,13 @@
 	String quizName = quiz.getTitle();
 	String quizDescription = quiz.getQuizDescription();
 	boolean multiplePages = quiz.getIfHasMultiplePages();
-	request.setAttribute("multiple", multiplePages);
+	session.setAttribute("multiple", multiplePages);
+	boolean immediate = quiz.getIfImmediateFeedback();
+	session.setAttribute("immediate", immediate);
 	ArrayList<Question> questions = quiz.getQuestions();
 	int currQuestion = (Integer)session.getAttribute("current_question");
+	if (currQuestion == 0)
+		session.setAttribute("time_started", System.currentTimeMillis());
 %>
 
 <title><%=quizName%></title>
@@ -63,8 +67,7 @@
 						question.length());
 	%>
 	<li class="form-item"><%=firstPart%><input type="text"
-		class="title-input" name="<%= questionID %>">
-	<%= finalPart %></li>
+		class="title-input" name="<%= questionID %>"> <%= finalPart %></li>
 	<%
 		} else if (type.equals("multiple_choice")) {
 				MultipleChoice theQuestion = (MultipleChoice) toPrint;
@@ -80,7 +83,7 @@
 	
 	<li class="form-item"><%=answer%> <input type="radio"
 		name="<%= questionID %>" value="<%= answer %>"></li>
-		
+
 	<%
 		}
 	%>
@@ -106,11 +109,12 @@
 		}
 		}
 	%>
-	<li class="form-item"><button class="btn btn-primary" type="submit">Submit</button> </li>
-	
+	<li class="form-item">
+	<button class="btn btn-primary" type="submit">Submit</button>
+	</li>
+
 </ul>
-<input name="id" type="hidden" value="<%= quizID %>"/>
-</form>
+<input name="id" type="hidden" value="<%= quizID %>" /></form>
 </div>
 </div>
 </body>
