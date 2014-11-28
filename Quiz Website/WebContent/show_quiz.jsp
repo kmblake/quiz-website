@@ -21,13 +21,7 @@ long time_started = 0;
 
 <script>
 function setParams() {
-<<<<<<< HEAD
 	time_started = System.currentTimeMillis();
-	
-=======
-	HttpSession session = request.getSession();
-	session.setAttribute("time_started", System.currentTimeMillis());
->>>>>>> master
 }
 </script>
 
@@ -54,10 +48,8 @@ function setParams() {
 						<% } %>
 						<li class="form-item"><button class="btn btn-primary" onclick="setParams()" type="submit">Take Quiz</button>
 					</ul>
-<<<<<<< HEAD
 					<input name="time_started" type="hidden" value=<%=time_started%>>
-=======
->>>>>>> master
+
 				</form>
 			</div>
 			<div class="quiz-history">

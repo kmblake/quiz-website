@@ -93,10 +93,10 @@ public class FeedbackServlet extends HttpServlet {
 		}
 	}
 
-	private int getTimeElapsed(HttpSession session) {
+	private long getTimeElapsed(HttpSession session) {
 		long time_started = (Long)session.getAttribute("time_started");
 		long time_elapsed = System.currentTimeMillis() - time_started;
-		return (int)(time_elapsed / 1000);
+		return time_elapsed;
 	}
 	
 	private int computeScore(HttpServletRequest request, Quiz quiz) {
