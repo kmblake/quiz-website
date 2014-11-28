@@ -15,13 +15,14 @@ Quiz quiz = new Quiz(id, con);
 session.setAttribute("quiz", quiz);
 session.setAttribute("current_question", 0);
 session.setAttribute("score", 0);
+long time_started = 0;
 
 %>
 
 <script>
 function setParams() {
-	HttpSession session = request.getSession();
-	session.setAttribute("time_started", System.currentTimeMillis());
+	time_started = System.currentTimeMillis();
+	
 }
 </script>
 
@@ -48,6 +49,7 @@ function setParams() {
 						<% } %>
 						<li class="form-item"><button class="btn btn-primary" onclick="setParams()" type="submit">Take Quiz</button>
 					</ul>
+					<input name="time_started" type="hidden" value=<%=time_started%>>
 				</form>
 			</div>
 			<div class="quiz-history">

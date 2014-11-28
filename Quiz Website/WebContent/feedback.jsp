@@ -11,6 +11,7 @@
 </head>
 <body>
 You got <%=session.getAttribute("score") %> correct!
+Time elapsed: <%=session.getAttribute("time_elapsed") %> seconds
 <%
 ArrayList<Question> questions = (ArrayList<Question>)session.getAttribute("questions");
 for (Question q : questions) {

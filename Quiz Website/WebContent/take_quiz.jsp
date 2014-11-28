@@ -24,6 +24,8 @@
 	session.setAttribute("immediate", immediate);
 	ArrayList<Question> questions = quiz.getQuestions();
 	int currQuestion = (Integer)session.getAttribute("current_question");
+	if (currQuestion == 0)
+		session.setAttribute("time_started", System.currentTimeMillis());
 %>
 
 <title><%=quizName%></title>
