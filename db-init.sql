@@ -26,7 +26,7 @@ CREATE TABLE quiz_history (
     user_id INTEGER,
     quiz_id INTEGER,
     score INTEGER,
-    time DOUBLE,
+    time TIME,
     taken_on DATETIME,
     PRIMARY KEY(id)
 );
@@ -36,9 +36,21 @@ DROP TABLE IF EXISTS friends;
 
 CREATE TABLE friends (
     id INTEGER NOT NULL AUTO_INCREMENT,
+    message_id INTEGER,
     requested_by INTEGER,
     requested_for INTEGER,
     approved BOOLEAN,
+    PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS challenges;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE challenges (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    challnged_user INTEGER,
+    challenged_by INTEGER,
+    accepted BOOLEAN,
     PRIMARY KEY(id)
 );
 
@@ -63,6 +75,8 @@ CREATE TABLE messages (
     recipient INTEGER,
     message_type_id INTEGER,
     body TEXT,
+    sent_on DATETIME,
+    message_read BOOLEAN,
     PRIMARY KEY(id)
 );
 

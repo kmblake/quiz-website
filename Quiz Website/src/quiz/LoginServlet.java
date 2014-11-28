@@ -1,6 +1,8 @@
 package quiz;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,11 +41,17 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		AccountManager manager = (AccountManager)this.getServletContext().getAttribute("manager");
-		String user = request.getParameter("user");
+		String username = request.getParameter("user");
 		String password = request.getParameter("password");
-		if (manager.passwordMatches(user, password)) {
+		if (manager.passwordMatches(username, password)) {
 			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
+			User currentUser;
+			try {
+				currentUser = new User(username, (Statement) getServletContext().getAttribute("statement"));
+				session.setAttribute("user", currentUser);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
 			dispatch.forward(request, response);
 		}

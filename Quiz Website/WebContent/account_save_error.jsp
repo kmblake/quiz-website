@@ -12,7 +12,7 @@
 
 <div class="container">
 	<form class="create-account-form" action="NewAccountServlet" method="post">
-		<div class="alert alert-danger">The user name <span class="bold"><%=request.getParameter("user") %></span> is already in use.<br>Please choose another user name.</div>
+		<div class="alert alert-danger"><%=request.getAttribute("errorText") %></div>
 		<h1>Create New Account</h1>
 		<p>Please enter your information below.</p>
 		<ul class="stripped">

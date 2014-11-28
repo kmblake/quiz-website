@@ -19,7 +19,9 @@
 	String quizName = quiz.getTitle();
 	String quizDescription = quiz.getQuizDescription();
 	boolean multiplePages = quiz.getIfHasMultiplePages();
-	request.setAttribute("multiple", multiplePages);
+	session.setAttribute("multiple", multiplePages);
+	boolean immediate = quiz.getIfImmediateFeedback();
+	session.setAttribute("immediate", immediate);
 	ArrayList<Question> questions = quiz.getQuestions();
 	int currQuestion = (Integer)session.getAttribute("current_question");
 %>
