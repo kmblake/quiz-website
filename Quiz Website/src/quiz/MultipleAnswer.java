@@ -84,8 +84,7 @@ public class MultipleAnswer extends Question {
 	}
 	
 	public boolean isCorrect(String userAnswer) {
-		return true;
-		//TODO
+		return answers.contains(userAnswer);
 	}
 
 	@Override
@@ -93,7 +92,7 @@ public class MultipleAnswer extends Question {
 		StringBuilder string = new StringBuilder(); 
 		string.append(answers.get(0));
 		for (int i = 1; i < answers.size(); i++) {
-			string.append(answers.get(i));
+			string.append(", " + answers.get(i));
 		}
 		return string.toString();
 	}
