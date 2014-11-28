@@ -65,7 +65,8 @@ function setParams() {
 			<% 
 			ArrayList<QuizHistory> history = quiz.getHistory();
 			ArrayList<QuizHistory> yourHistory = new ArrayList<QuizHistory>();
-			String currUser = (String) ((User) session.getAttribute("user")).getUsername();
+			User theUser = (User) session.getAttribute("user");
+			String currUser = theUser.getUsername();
 			for(int i=0; i<history.size();i++) {
 				QuizHistory currentHistory = history.get(i);
 				if(currentHistory.getUser().equals(currUser)) yourHistory.add(currentHistory);
