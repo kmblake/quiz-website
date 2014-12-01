@@ -56,7 +56,6 @@
 	  </div>
 	</div>
 	<div id="image-container" class="float">
-		<!--<img id="question-image" src="http://upload.wikimedia.org/wikipedia/en/thumb/b/b7/Stanford_University_seal_2003.svg/1024px-Stanford_University_seal_2003.svg.png" alt="Stanford">-->
 	</div>
 </div>
 </body>
