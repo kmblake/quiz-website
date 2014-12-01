@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="quiz.*"%>
 <%@ page import ="java.sql.Statement" %>
+<%@ page import ="java.util.*" %>
 
 <% 	DBConnection c = (DBConnection) getServletContext().getAttribute("connection");
 	Statement stmt = c.getStatement();
@@ -68,6 +69,38 @@
 			</div>
 			<% if (friendshipStatus == Friend.FRIENDS) { %>
 				<h3>Recently Taken Quizzes:</h3>
+				<table class="table table-striped">
+      <thead>
+        <tr>
+        	<th>Quiz</th>
+          <th>Score</th>
+          <th>Time</th>
+          <th>Date Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+			ArrayList<QuizHistory> history = u.getRecentlyTakenQuizzes();
+			for(int i=0; i<history.size();i++) {
+				QuizHistory currentHistory = history.get(i);
+				if(i<5) {
+				%>
+				<tr>
+          <td><%= currentHistory.getQuizName() %></td>
+          <td><%= currentHistory.getScore() %></td>
+          <td><%= currentHistory.getTime() %></td>
+          <td><%= currentHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+				}
+			}
+			%>
+			
+			</tbody>
+			</table>
+				
+				
 				<h3>Recently Created Quizzes:</h3>
 			<% } else if (friendshipStatus == Friend.NOT_FRIENDS) { %>
 				<p class="notification">In order to see more information about this person, send them a friend request!</p>

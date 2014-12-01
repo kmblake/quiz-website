@@ -3,10 +3,12 @@ package quiz;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class User {
 	private Statement stmt;
 	private int id;
+	private String theUsername;
 	
 	public User(int id, Statement stmt) {
 		this.stmt = stmt;
@@ -15,6 +17,7 @@ public class User {
 	
 	public User(String username, Statement stmt) throws SQLException {
 		this.stmt = stmt;
+		theUsername = username;
 		ResultSet rs = stmt.executeQuery("select id from users where username = '" + username + "'");
 		rs.next();
 		id = rs.getInt("id");
@@ -42,6 +45,18 @@ public class User {
 			e.printStackTrace();
 			return "Error";
 		}
+	}
+	
+	public ArrayList<QuizHistory> getRecentlyTakenQuizzes() throws SQLException {
+		ResultSet rs = stmt.executeQuery("select * from quiz_history inner join quizzes " +
+				"on quiz_history.quiz_id=quizzes.id  where user_id = " + id + " order by taken_on desc");
+		
+		ArrayList<QuizHistory> recentlyTakenQuizzes = new ArrayList<QuizHistory>();
+		while(rs.next()) {
+			QuizHistory currHistory = new QuizHistory(rs.getInt("score"), rs.getTime("time"), theUsername, rs.getDate("taken_on"), id, rs.getString("title"));
+			recentlyTakenQuizzes.add(currHistory);
+		}
+		return recentlyTakenQuizzes;
 	}
 	
 	public int getId() {

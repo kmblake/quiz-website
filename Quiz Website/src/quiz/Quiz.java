@@ -52,7 +52,7 @@ public class Quiz {
 			ResultSet userRS = stmtB.executeQuery("select * from users where id = '" + userID
 				+ "'");
 			userRS.next();
-			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"), userID);
+			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"), userID, title);
 			history.add(toAdd);
 		}
 		
