@@ -43,35 +43,31 @@ public class AddQuestionServlet extends HttpServlet {
 		int quizId = (Integer) request.getSession().getAttribute("quiz-id");
 		String[] answers;
 		try {
+			answers = getOptions(request);
 			switch (questionType) {
 			case QuestionResponse.type_id: 
-				answers = getOptions(request);
 				QuestionResponse.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
 				break;
 				
 			case FillInTheBlank.type_id:
-				answers = getOptions(request);
 				FillInTheBlank.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
 				break;
 			
 			case MultipleChoice.type_id:
-				String[] options = getOptions(request);
 				int answerIndex = Integer.parseInt(request.getParameter("correct-answer"));
-				MultipleChoice.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), options, answerIndex - 1);
+				MultipleChoice.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers, answerIndex - 1);
 				break;
 				
 			case PictureResponse.type_id:
-				PictureResponse.storeQuestion(con, questionNumber, quizId, request.getParameter("question"), request.getParameter("answer"));
+				PictureResponse.storeQuestion(con, questionNumber, quizId, request.getParameter("question"), answers);
 				break;
 				
 			case MultipleAnswer.type_id:
-				answers = getOptions(request);
 				MultipleAnswer.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
 				break;
 				
 			case MultipleChoiceMultipleAnswer.type_id:
-				String[] maOptions = getOptions(request);
-				MultipleChoiceMultipleAnswer.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), maOptions, request.getParameterValues("correct"));
+				MultipleChoiceMultipleAnswer.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers, request.getParameterValues("correct"));
 			}
 				
 			questionNumber++;
