@@ -50,7 +50,8 @@ public class AddQuestionServlet extends HttpServlet {
 				break;
 				
 			case FillInTheBlank.type_id:
-				FillInTheBlank.storeQuestion(con, questionNumber, quizId, request.getParameter("question"), request.getParameter("answer"));
+				answers = getOptions(request);
+				FillInTheBlank.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
 				break;
 			
 			case MultipleChoice.type_id:
