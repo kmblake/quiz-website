@@ -9,13 +9,17 @@ public class QuizHistory {
 	private Time time;
 	private String user;
 	private Date whenTaken;
+	private int userID;
+	private String quizName;
 	
 	// Note that time is in milliseconds
-	public QuizHistory(int theScore, Time theTime, String theUser, Date whenWasTaken) {
+	public QuizHistory(int theScore, Time theTime, String theUser, Date whenWasTaken, int theUserID, String theQuizName) {
 		score = theScore;
 		time = theTime;
 		user = theUser;
 		whenTaken = whenWasTaken;
+		userID = theUserID;
+		quizName = theQuizName;
 	}
 	
 	// Once they've taken a quiz call this constructor to update the database
@@ -27,6 +31,10 @@ public class QuizHistory {
 		pStmt.setTime(4, updateTime);
 		pStmt.setString(5, updateWhenTaken);
 		pStmt.executeUpdate();
+	}
+	
+	public int getUserID() {
+		return userID;
 	}
 	
 	public int getScore() {
@@ -43,6 +51,10 @@ public class QuizHistory {
 	
 	public Date getWhenTaken() {
 		return whenTaken;
+	}
+	
+	public String getQuizName() {
+		return quizName;
 	}
 	
 }

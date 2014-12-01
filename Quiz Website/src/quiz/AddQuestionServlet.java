@@ -78,7 +78,8 @@ public class AddQuestionServlet extends HttpServlet {
 				dispatch = request.getRequestDispatcher("add_quiz_question.jsp");
 			} else {
 				request.getSession().removeAttribute("question-num");
-				dispatch = request.getRequestDispatcher("show_quiz.jsp");
+				request.getSession().removeAttribute("quiz-id");
+				dispatch = request.getRequestDispatcher("show_quiz.jsp?id=" + quizId);
 			}
 			dispatch.forward(request, response);
 		} catch (SQLException e) {
