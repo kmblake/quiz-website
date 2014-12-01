@@ -20,7 +20,7 @@ function addMCOption() {
 <form action="AddQuestionServlet" method="post">
 	<input type="hidden" name="question-type" value="<%= QuestionResponse.type_id %>">
 	<input id="done-input" type="hidden" name="done" value="0">
-	<input id="answer-count" type="hidden" name="num-answers" value="0">
+	<input id="answer-count" type="hidden" name="num-answers" value="1">
 	<ul class="stripped">
 		<li class="form-item">Question:</li>
 		<li class="form-item"><textarea id="textarea" style="font-weight: normal" rows="4" cols="79" name="question"></textarea>

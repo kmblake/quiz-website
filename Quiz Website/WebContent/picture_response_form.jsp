@@ -20,7 +20,7 @@ function addMCOption() {
 <form action="AddQuestionServlet" method="post">
 	<input type="hidden" name="question-type" value="<%= PictureResponse.type_id %>">
 	<input id="done-input" type="hidden" name="done" value="0">
-	<input id="answer-count" type="hidden" name="num-answers" value="0">
+	<input id="answer-count" type="hidden" name="num-answers" value="1">
 	<ul class="stripped">
 		<li class="form-item">Picture URL: 
 			<span style="font-weight: normal">Paste the URL of the picture you want to include here </span>
