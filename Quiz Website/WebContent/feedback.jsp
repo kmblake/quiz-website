@@ -9,6 +9,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/stylesheet.css" rel="stylesheet">
+
 <title>Feedback</title>
 </head>
 <body>

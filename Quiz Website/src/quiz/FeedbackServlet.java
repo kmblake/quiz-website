@@ -98,22 +98,5 @@ public class FeedbackServlet extends HttpServlet {
 		long time_elapsed = System.currentTimeMillis() - time_started;
 		return time_elapsed;
 	}
-	
-	private int computeScore(HttpServletRequest request, Quiz quiz) {
-
-		/*int correct = 0;
-		HttpSession session = request.getSession();
-
-		for (Question q : questions) {
-			String questionID = Integer.toString(q.getQuestionID());
-			String answer = (String)request.getParameter(questionID);
-			session.setAttribute(questionID, answer);
-			if (q.isCorrect(answer)) {
-				correct++;
-			}
-		}
-		return correct;*/
-		return 0;
-	}
 
 }
