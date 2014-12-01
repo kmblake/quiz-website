@@ -59,6 +59,18 @@ public class User {
 		return recentlyTakenQuizzes;
 	}
 	
+	public ArrayList<QuizHistory> getRecentlyCreatedQuizzes() throws SQLException {
+		ResultSet rs = stmt.executeQuery("select * from quizzes where created_by = " + id + " order by created_on desc");
+		ArrayList<QuizHistory> recentlyCreatedQuizzes = new ArrayList<QuizHistory>();
+		
+		while(rs.next()) {
+			QuizHistory currHistory = new QuizHistory(0, null, theUsername, rs.getDate("created_on"), id, rs.getString("title"));
+			recentlyCreatedQuizzes.add(currHistory);
+		}
+		
+		return recentlyCreatedQuizzes;
+	}
+	
 	public int getId() {
 		return id;
 	}

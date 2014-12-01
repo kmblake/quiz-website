@@ -101,7 +101,38 @@
 			</table>
 				
 				
-				<h3>Recently Created Quizzes:</h3>
+	<h3>Recently Created Quizzes:</h3>
+	
+	<table class="table table-striped">
+      <thead>
+        <tr>
+        	<th>Quiz</th>
+          <th>Date Created</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+			ArrayList<QuizHistory> created = u.getRecentlyCreatedQuizzes();
+			for(int i=0; i<created.size();i++) {
+				QuizHistory currentHistory = created.get(i);
+				if(i<5) {
+				%>
+				<tr>
+          <td><%= currentHistory.getQuizName() %></td>
+          <td><%= currentHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+				}
+			}
+			%>
+			
+			</tbody>
+			</table>
+				
+				
+				
+				
 			<% } else if (friendshipStatus == Friend.NOT_FRIENDS) { %>
 				<p class="notification">In order to see more information about this person, send them a friend request!</p>
 			<% } %>
