@@ -42,7 +42,7 @@ public class Quiz {
 	private void setHistory(DBConnection con) throws SQLException {
 		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from quiz_history where quiz_id = '" + quizID
-				+ "'");
+				+ "' limit 5");
 		
 		history = new ArrayList<QuizHistory>();
 		
