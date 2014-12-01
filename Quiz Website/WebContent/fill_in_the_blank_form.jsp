@@ -20,7 +20,7 @@ function addMCOption() {
 <form action="AddQuestionServlet" method="post">
 	<input type="hidden" name="question-type" value="<%= FillInTheBlank.type_id %>">
 	<input id="done-input" type="hidden" name="done" value="0">
-	<input id="answer-count" type="hidden" name="num-answers" value="0">
+	<input id="answer-count" type="hidden" name="num-answers" value="1">
 	<ul class="stripped">
 		<li class="form-item">Statement: 
 			<span style="font-weight: normal">Click the blank button to enter the blank where you want it.  Only one blank per statement is supported! </span>
