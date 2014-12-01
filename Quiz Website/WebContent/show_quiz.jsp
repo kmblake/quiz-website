@@ -28,6 +28,22 @@ long time_started = 0;
 		<title><%= quiz.getTitle() %></title>
 	</head>
 	<body>
+	<div class="navbar navbar-inverse navbar-static-top">
+	<div class="container">
+		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
+		<div id="navbar" class="navbar-collapse collapse">
+	        <ul class="nav navbar-nav navbar-right">
+	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
+	          <li><a href="show_messages.jsp">Messages</a></li>
+	          <li><a href="home.jsp">Home</a></li>
+	        </ul>
+	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
+	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
+	        </form>
+    	</div>
+	</div>
+</div>
+	
 		<div class="container">
 			<div class="jumbotron">
 				<h1><%= quiz.getTitle() %></h1>
@@ -65,16 +81,18 @@ long time_started = 0;
 			for(int i=0; i<history.size();i++) {
 				QuizHistory currentHistory = history.get(i);
 				if(currentHistory.getUser().equals(currUser)) yourHistory.add(currentHistory);
+				if(i<5) {
 				%>
 				<tr>
           <td><%= i+1 %></td>
           <td><%= currentHistory.getScore() %></td>
           <td><%= currentHistory.getTime() %></td>
-          <td><%= currentHistory.getUser() %></td>
+          <td><a href="<%= "show_user.jsp?id=" + currentHistory.getUserID() %>"><%= currentHistory.getUser() %></a></td>
           <td><%= currentHistory.getWhenTaken() %></td>
         </tr>
 				
 				<%
+				}
 			}
 			%>
 			

@@ -17,7 +17,7 @@
 	<title>Quiz Website</title>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
 		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
 		<div id="navbar" class="navbar-collapse collapse">
@@ -42,13 +42,13 @@
 	DBConnection con = (DBConnection) application
 			.getAttribute("connection");
 	index.loadAllQuizzes();
-	for (Integer id : index.getKeys()) {
-		Quiz quiz = new Quiz(id, con);
-
-		String link = "<a href= \"show_quiz.jsp?id=" + id + "\">"
-				+ quiz.getTitle() + "</a>";
-		out.println("<li> " + link + "</li>");
-	}
+	//for (Integer id : index.getKeys()) {
+	//	Quiz quiz = new Quiz(id, con);
+//
+	//	String link = "<a href= \"show_quiz.jsp?id=" + id + "\">"
+	//			+ quiz.getTitle() + "</a>";
+	//	out.println("<li> " + link + "</li>");
+//	}
 %>
 </div>
 
