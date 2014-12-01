@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="quiz.*"%>
 <%@ page import ="java.sql.Statement" %>
+<%@ page import ="java.util.*" %>
 
 <% 	DBConnection c = (DBConnection) getServletContext().getAttribute("connection");
 	Statement stmt = c.getStatement();
@@ -23,6 +24,23 @@
 		<title><%= u.getFullName() %></title>
 	</head>
 	<body>
+	
+	<div class="navbar navbar-inverse navbar-static-top">
+	<div class="container">
+		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
+		<div id="navbar" class="navbar-collapse collapse">
+	        <ul class="nav navbar-nav navbar-right">
+	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
+	          <li><a href="show_messages.jsp">Messages</a></li>
+	          <li><a href="home.jsp">Home</a></li>
+	        </ul>
+	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
+	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
+	        </form>
+    	</div>
+	</div>
+</div>
+	
 		<div class="container">
 			<form action="FriendRequestServlet" method="post">
 				<h1 class="page-header">
@@ -51,7 +69,70 @@
 			</div>
 			<% if (friendshipStatus == Friend.FRIENDS) { %>
 				<h3>Recently Taken Quizzes:</h3>
-				<h3>Recently Created Quizzes:</h3>
+				<table class="table table-striped">
+      <thead>
+        <tr>
+        	<th>Quiz</th>
+          <th>Score</th>
+          <th>Time</th>
+          <th>Date Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+			ArrayList<QuizHistory> history = u.getRecentlyTakenQuizzes();
+			for(int i=0; i<history.size();i++) {
+				QuizHistory currentHistory = history.get(i);
+				if(i<5) {
+				%>
+				<tr>
+          <td><%= currentHistory.getQuizName() %></td>
+          <td><%= currentHistory.getScore() %></td>
+          <td><%= currentHistory.getTime() %></td>
+          <td><%= currentHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+				}
+			}
+			%>
+			
+			</tbody>
+			</table>
+				
+				
+	<h3>Recently Created Quizzes:</h3>
+	
+	<table class="table table-striped">
+      <thead>
+        <tr>
+        	<th>Quiz</th>
+          <th>Date Created</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+			ArrayList<QuizHistory> created = u.getRecentlyCreatedQuizzes();
+			for(int i=0; i<created.size();i++) {
+				QuizHistory currentHistory = created.get(i);
+				if(i<5) {
+				%>
+				<tr>
+          <td><%= currentHistory.getQuizName() %></td>
+          <td><%= currentHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+				}
+			}
+			%>
+			
+			</tbody>
+			</table>
+				
+				
+				
+				
 			<% } else if (friendshipStatus == Friend.NOT_FRIENDS) { %>
 				<p class="notification">In order to see more information about this person, send them a friend request!</p>
 			<% } %>
