@@ -27,7 +27,7 @@ public class QuestionResponse extends Question {
 		}
 		answers = new ArrayList<String>();
 
-		setAnswers(stmt);
+		setAnswers(con.getStatement());
 	}
 
 	public static void storeQuestion(Connection con, int quizId,
@@ -80,13 +80,14 @@ public class QuestionResponse extends Question {
 	public int getQuestionID() {
 		return questionID;
 	}
-	
+
 	public boolean isCorrect(String userAnswer) {
 		return answers.contains(userAnswer);
 	}
 
 	@Override
 	public String getAnswer() {
+		
 		StringBuilder string = new StringBuilder(); 
 		string.append(answers.get(0));
 		for (int i = 1; i < answers.size(); i++) {
