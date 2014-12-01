@@ -41,7 +41,7 @@ public class Quiz {
 	
 	private void setHistory(DBConnection con) throws SQLException {
 		Statement stmt = con.getStatement();
-		ResultSet rs = stmt.executeQuery("select * from quiz_history where id = '" + quizID
+		ResultSet rs = stmt.executeQuery("select * from quiz_history where quiz_id = '" + quizID
 				+ "'");
 		
 		history = new ArrayList<QuizHistory>();
@@ -68,9 +68,11 @@ public class Quiz {
 	private class HistoryComparator implements Comparator<QuizHistory> {
 		
 		public int compare(QuizHistory quizOne, QuizHistory quizTwo) {
-			int toReturn =  quizOne.getScore() - quizTwo.getScore();
+			int toReturn =  quizTwo.getScore() - quizOne.getScore();
 			if(toReturn == 0) {
-				// need to figure out how to implement time comparison
+				Time time1 = quizOne.getTime();
+				Time time2 = quizTwo.getTime();
+				return time1.compareTo(time2);
 			}
 			
 			return toReturn;
