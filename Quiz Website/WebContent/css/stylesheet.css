@@ -94,6 +94,14 @@
 	margin-bottom: 5px;
 }
 
+.right-justified {
+	text-align: right;
+}
+
+.larger-font {
+	font-size: 20px;
+}
+
 #question-image {
 	width: 500px;
 	margin: 20px;

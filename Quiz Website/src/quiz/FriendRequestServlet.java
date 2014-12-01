@@ -68,6 +68,16 @@ public class FriendRequestServlet extends HttpServlet {
 				RequestDispatcher dispatch = request.getRequestDispatcher("show_user.jsp?id=" + requested_for);
 				dispatch.forward(request, response);
 			}
+		} else if (src == Friend.DENY) {
+			Statement stmt = (Statement) getServletContext().getAttribute("statement");
+			int friendship_id = Integer.parseInt(request.getParameter("id"));
+			try {
+				Friend.deny(stmt, friendship_id);
+				RequestDispatcher dispatch = request.getRequestDispatcher("show_messages.jsp");
+				dispatch.forward(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

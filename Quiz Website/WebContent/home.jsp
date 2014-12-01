@@ -33,22 +33,49 @@
 	</div>
 </div>
 
-<div class="container home-container">
+<div class="container">
 	<h1 class="page-header"><%= currentUser.getFullName() %></h1>
-	<a href="create_quiz.jsp"> Create Quiz</a>
+	<div class="row">
+		<div class="col-md-8 larger-font">Try out a new quiz, <%= currentUser.getFirstName() %>!</div>
+		<div class="col-md-4 right-justified">4 Friend Requests<br>1 Challenge<br>No new messages</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<h2>Popular Quizzes:</h2>
+			Presidents Quiz<br>Complex Quiz
+		</div>
+		<div class="col-md-6">
+			<h2>Recently Created Quizzes:</h2>
+			Authors Quiz<br>Presidents Quiz
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<h2>Quizzes You Took Recently:</h2>
+			Presidents Quiz<br>Complex Quiz
+		</div>
+		<div class="col-md-6">
+			<h2>Quizzes You Created Recently:</h2>
+			Authors Quiz<br>Presidents Quiz<br>
+			<a href="create_quiz.jsp" class="btn btn-large btn-success"> Create A New Quiz</a>
+		</div>
+	</div>
+	<div class="row">
+		<h2>News Feed:</h2>
+		<p>Gordon recently took Presidents Quiz</p>
+	</div>
 <%
 	QuizIndex index = (QuizIndex) application.getAttribute("index");
 	Statement stmt = (Statement) application.getAttribute("statement");
 	DBConnection con = (DBConnection) application
 			.getAttribute("connection");
 	index.loadAllQuizzes();
-	//for (Integer id : index.getKeys()) {
-	//	Quiz quiz = new Quiz(id, con);
-//
-	//	String link = "<a href= \"show_quiz.jsp?id=" + id + "\">"
-	//			+ quiz.getTitle() + "</a>";
-	//	out.println("<li> " + link + "</li>");
-//	}
+	for (Integer id : index.getKeys()) {
+	Quiz quiz = new Quiz(id, con);
+	String link = "<a href= \"show_quiz.jsp?id=" + id + "\">"
+				+ quiz.getTitle() + "</a>";
+	out.println("<li> " + link + "</li>");
+}
 %>
 </div>
 

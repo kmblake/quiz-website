@@ -35,6 +35,18 @@ public class User {
 		}
 	}
 	
+	public String getFirstName() {
+		try {
+			ResultSet rs = stmt.executeQuery("select first_name from users where id = '" + id + "'");
+			rs.next();
+			return rs.getString("first_name");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Error";
+		}
+	}
+	
 	public String getUsername() {
 		try {
 			ResultSet rs = stmt.executeQuery("select * from users where id = '" + id + "'");
