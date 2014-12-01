@@ -19,13 +19,13 @@ public class QuizHistory {
 	}
 	
 	// Once they've taken a quiz call this constructor to update the database
-	public QuizHistory(Connection con, Date updateWhenTaken, int updateUser, Time updateTime, int updateScore, int quizID) throws SQLException {
+	public QuizHistory(Connection con, String updateWhenTaken, int updateUser, Time updateTime, int updateScore, int quizID) throws SQLException {
 		PreparedStatement pStmt = con.prepareStatement("INSERT INTO quiz_history VALUES (NULL, ?, ?, ?, ?, ?)");
 		pStmt.setInt(1, updateUser);
 		pStmt.setInt(2, quizID);
 		pStmt.setInt(3, updateScore);
 		pStmt.setTime(4, updateTime);
-		pStmt.setDate(5, (java.sql.Date) updateWhenTaken);
+		pStmt.setString(5, updateWhenTaken);
 		pStmt.executeUpdate();
 	}
 	

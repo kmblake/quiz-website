@@ -16,11 +16,14 @@
 	DBConnection dbCon = (DBConnection) application
 			.getAttribute("connection");
 	Connection con = dbCon.getConnection();
-	java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+	String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 	User homeUser = (User) session.getAttribute("user");
 	int homeUserId = homeUser.getId();
 	long elapsed = (Long) session.getAttribute("time_elapsed");
 	Time time = new Time(elapsed);
+	TimeZone timeZone = TimeZone.getDefault();
+	int offset = timeZone.getRawOffset();
+	time = new Time(elapsed - offset);
 	int score = (Integer) session.getAttribute("score");
 	Quiz quiz = (Quiz) session.getAttribute("quiz");
 	int quizID = quiz.getQuizID();
