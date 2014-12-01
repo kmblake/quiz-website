@@ -19,12 +19,6 @@ long time_started = 0;
 
 %>
 
-<script>
-function setParams() {
-	time_started = System.currentTimeMillis();
-}
-</script>
-
 <head>
 		<meta charset="ISO-8859-1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,9 +40,8 @@ function setParams() {
 						<% if(quiz.getIfPracticeMode()) { %>
 						<li class="form-item">Take the quiz in practice mode: <input type="checkbox" name="practice_mode"></li>
 						<% } %>
-						<li class="form-item"><button class="btn btn-primary" onclick="setParams()" type="submit">Take Quiz</button>
+						<li class="form-item"><button class="btn btn-primary" type="submit">Take Quiz</button>
 					</ul>
-					<input name="time_started" type="hidden" value=<%=time_started%>>
 
 				</form>
 			</div>
