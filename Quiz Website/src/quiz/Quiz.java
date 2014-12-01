@@ -42,7 +42,7 @@ public class Quiz {
 	private void setHistory(DBConnection con) throws SQLException {
 		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from quiz_history where quiz_id = '" + quizID
-				+ "' limit 5");
+				+ "'");
 		
 		history = new ArrayList<QuizHistory>();
 		
@@ -52,7 +52,7 @@ public class Quiz {
 			ResultSet userRS = stmtB.executeQuery("select * from users where id = '" + userID
 				+ "'");
 			userRS.next();
-			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"));
+			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"), userID);
 			history.add(toAdd);
 		}
 		

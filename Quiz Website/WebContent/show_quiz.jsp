@@ -72,16 +72,18 @@ function setParams() {
 			for(int i=0; i<history.size();i++) {
 				QuizHistory currentHistory = history.get(i);
 				if(currentHistory.getUser().equals(currUser)) yourHistory.add(currentHistory);
+				if(i<5) {
 				%>
 				<tr>
           <td><%= i+1 %></td>
           <td><%= currentHistory.getScore() %></td>
           <td><%= currentHistory.getTime() %></td>
-          <td><%= currentHistory.getUser() %></td>
+          <td><a href="show_user.jsp" id=<%= currentHistory.getUserID() %>><%= currentHistory.getUser() %></a></td>
           <td><%= currentHistory.getWhenTaken() %></td>
         </tr>
 				
 				<%
+				}
 			}
 			%>
 			
