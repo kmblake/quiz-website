@@ -31,6 +31,23 @@
 <title><%=quizName%></title>
 </head>
 <body>
+
+<div class="navbar navbar-inverse navbar-static-top">
+	<div class="container">
+		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
+		<div id="navbar" class="navbar-collapse collapse">
+	        <ul class="nav navbar-nav navbar-right">
+	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
+	          <li><a href="show_messages.jsp">Messages</a></li>
+	          <li><a href="home.jsp">Home</a></li>
+	        </ul>
+	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
+	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
+	        </form>
+    	</div>
+	</div>
+</div>
+
 <div class="container">
 <div class="jumbotron">
 <h1><%=quizName%></h1>
