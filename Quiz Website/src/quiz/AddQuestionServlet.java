@@ -41,10 +41,12 @@ public class AddQuestionServlet extends HttpServlet {
 		int questionType = Integer.parseInt(request.getParameter("question-type"));
 		int questionNumber = (Integer) request.getSession().getAttribute("question-num");
 		int quizId = (Integer) request.getSession().getAttribute("quiz-id");
+		String[] answers;
 		try {
 			switch (questionType) {
 			case QuestionResponse.type_id: 
-				QuestionResponse.storeQuestion(con, questionNumber, quizId, request.getParameter("question"), request.getParameter("answer"));
+				answers = getOptions(request);
+				QuestionResponse.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
 				break;
 				
 			case FillInTheBlank.type_id:
@@ -62,7 +64,7 @@ public class AddQuestionServlet extends HttpServlet {
 				break;
 				
 			case MultipleAnswer.type_id:
-				String[] answers = getOptions(request);
+				answers = getOptions(request);
 				MultipleAnswer.storeQuestion(con, quizId, questionNumber, request.getParameter("question"), answers);
 				break;
 				
