@@ -39,20 +39,20 @@
 <div class="jumbotron">
 <h1>You got <%=score%> correct!</h1>
 <p>Time elapsed: <%=(int) (elapsed / 1000)%> seconds</p>
-<ul class="stripped">
-<%
- 	ArrayList<Question> questions = (ArrayList<Question>) session
- 			.getAttribute("questions");
- 	for (Question q : questions) {
- 		out.println("<p>" + q.getQuestion() + "</p>");
- 		String questionID = Integer.toString(q.getQuestionID());
- 		String answer = (String) session.getAttribute(questionID);
- 		out.println("Your Answer: " + answer);
- 		out.println("Correct Answer(s): " + q.getAnswer());
+<dl>
+	<%
+		ArrayList<Question> questions = (ArrayList<Question>) session
+				.getAttribute("questions");
+		for (Question q : questions) {
+			out.println("<dt>" + q.getQuestion() + "</dt>");
+			String questionID = Integer.toString(q.getQuestionID());
+			String answer = (String) session.getAttribute(questionID);
+			out.println("<dd>Your Answer: " + answer);
+			out.println("<br>Correct Answer(s): " + q.getAnswer() + "</span></dd>");
 
- 	}
-%>
-</ul>
+		}
+	%>
+</dl>
 
 </div>
 </div>
