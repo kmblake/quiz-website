@@ -10,6 +10,7 @@ public class Friend {
 	public static final int PENDING_REQUEST = 3;
 	public static final int FRIENDS = 4;
 	public static final int NOT_FRIENDS = 5;
+	public static final int UNFRIEND = 6;
 	
 	private int id;
 	private int requested_by;
@@ -73,6 +74,10 @@ public class Friend {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static void unfriend(Statement stmt, int idA, int idB) throws SQLException {
+		stmt.executeUpdate("DELETE FROM friends WHERE requested_by IN (" + idA + ", " +  idB + ") AND requested_for IN (" + idA + ", " +  idB + ")");
 	}
 	
 	public Friend(int id, int requested_by, String sender) {
