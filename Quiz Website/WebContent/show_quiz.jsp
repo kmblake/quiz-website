@@ -54,7 +54,7 @@ long time_started = 0;
 				<form action="take_quiz.jsp">
 					<ul class="stripped">
 						<% if(quiz.getIfPracticeMode()) { %>
-						<li class="form-item">Take the quiz in practice mode: <input type="checkbox" name="practice_mode"></li>
+						<li class="form-item">Take the quiz in practice mode: <input type="checkbox" name="practice_mode" value = "on"></li>
 						<% } %>
 						<li class="form-item"><button class="btn btn-primary" type="submit">Take Quiz</button>
 					</ul>

@@ -47,6 +47,7 @@ public class FeedbackServlet extends HttpServlet {
 		session.setAttribute("questions", questions);
 
 		boolean multiple = (Boolean)session.getAttribute("multiple");
+		boolean practice = (Boolean)session.getAttribute("practice");
 		RequestDispatcher dispatch = null;
 		if (!multiple) {
 			for (Question q : questions) {
@@ -75,7 +76,7 @@ public class FeedbackServlet extends HttpServlet {
 			session.setAttribute("score", (Integer)session.getAttribute("score") + correct);
 
 			boolean immediate = (Boolean)session.getAttribute("immediate");
-			if(curr_question + 1 >= quiz.getLength()) {
+			if(curr_question + 1 >= quiz.getLength() && !(immediate && practice)) {
 				session.setAttribute("time_elapsed", getTimeElapsed(session));
 				dispatch = request.getRequestDispatcher("feedback.jsp");
 			}
@@ -97,23 +98,6 @@ public class FeedbackServlet extends HttpServlet {
 		long time_started = (Long)session.getAttribute("time_started");
 		long time_elapsed = System.currentTimeMillis() - time_started;
 		return time_elapsed;
-	}
-	
-	private int computeScore(HttpServletRequest request, Quiz quiz) {
-
-		/*int correct = 0;
-		HttpSession session = request.getSession();
-
-		for (Question q : questions) {
-			String questionID = Integer.toString(q.getQuestionID());
-			String answer = (String)request.getParameter(questionID);
-			session.setAttribute(questionID, answer);
-			if (q.isCorrect(answer)) {
-				correct++;
-			}
-		}
-		return correct;*/
-		return 0;
 	}
 
 }
