@@ -22,10 +22,24 @@
 	session.setAttribute("multiple", multiplePages);
 	boolean immediate = quiz.getIfImmediateFeedback();
 	session.setAttribute("immediate", immediate);
+
 	ArrayList<Question> questions = quiz.getQuestions();
-	int currQuestion = (Integer)session.getAttribute("current_question");
-	if (currQuestion == 0)
+	int currQuestion = (Integer) session.getAttribute("current_question");
+	String practiceMode = (String) request
+			.getParameter("practice_mode");
+	if (practiceMode != null) {
 		session.setAttribute("time_started", System.currentTimeMillis());
+		boolean practice = practiceMode.equals("on");
+		session.setAttribute("practice", practice);
+		if (practice) {
+			ArrayList<Integer> correctAnswers = new ArrayList<Integer>();
+			for (int i = 0; i < questions.size(); i++) {
+				correctAnswers.add(0);
+			}
+			session.setAttribute("correctAnswers", correctAnswers);
+		}
+		session.setAttribute("repeat", false);
+	}
 %>
 
 <title><%=quizName%></title>
@@ -33,19 +47,20 @@
 <body>
 
 <div class="navbar navbar-inverse navbar-static-top">
-	<div class="container">
-		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
-		<div id="navbar" class="navbar-collapse collapse">
-	        <ul class="nav navbar-nav navbar-right">
-	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
-	          <li><a href="show_messages.jsp">Messages</a></li>
-	          <li><a href="home.jsp">Home</a></li>
-	        </ul>
-	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
-	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
-	        </form>
-    	</div>
-	</div>
+<div class="container"><a class="navbar-brand" href="home.jsp">Quiz
+Website</a>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav navbar-right">
+	<li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
+	<li><a href="show_messages.jsp">Messages</a></li>
+	<li><a href="home.jsp">Home</a></li>
+</ul>
+<form action="SearchServlet" method="post"
+	class="navbar-form navbar-right"><input type="text"
+	class="navbar-search form-control" name="query"
+	placeholder="Search for quiz or user..."></form>
+</div>
+</div>
 </div>
 
 <div class="container">
@@ -74,7 +89,7 @@
 	<li><%=toPrint.getQuestion()%>
 	<li>
 	<li class="form-item">Response: <input type="text"
-		class="title-input" name="<%= questionID %>"></li>
+		class="title-input" name="<%=questionID%>"></li>
 
 	<%
 		} else if (type.equals("fill_in_the_blank")) {
@@ -85,7 +100,7 @@
 						question.length());
 	%>
 	<li class="form-item"><%=firstPart%><input type="text"
-		class="title-input" name="<%= questionID %>"> <%= finalPart %></li>
+		class="title-input" name="<%=questionID%>"> <%=finalPart%></li>
 	<%
 		} else if (type.equals("multiple_choice")) {
 				MultipleChoice theQuestion = (MultipleChoice) toPrint;
@@ -100,21 +115,19 @@
 	%>
 	
 	<li class="form-item"><%=answer%> <input type="radio"
-		name="<%= questionID %>" value="<%= answer %>"></li>
+		name="<%=questionID%>" value="<%=answer%>"></li>
 
 	<%
 		}
-	%>
-
-	<%
-		} else if (type.equals("picture_response")) {
-				PictureResponse theQuestion = (PictureResponse) toPrint;
-				String img = theQuestion.getImageURL();
-	%>
+	%> <%
+ 	} else if (type.equals("picture_response")) {
+ 			PictureResponse theQuestion = (PictureResponse) toPrint;
+ 			String img = theQuestion.getImageURL();
+ %>
 
 	<li><img id="image" src="<%=img%>" /></li>
 	<li class="form-item">Response: <input type="text"
-		class="title-input" name="<%= questionID %>"></li>
+		class="title-input" name="<%=questionID%>"></li>
 
 	<%
 		} else if (type.equals("multiple_answer")) {
@@ -122,16 +135,18 @@
 	<li><%=toPrint.getQuestion()%>
 	<li>
 	<li class="form-item">Response: <input type="text"
-		class="title-input" name="<%= questionID %>"></li>
+		class="title-input" name="<%=questionID%>"></li>
 	<%
 		}
 		}
 	%>
 	</div>
-	<li class="form-item"><button class="btn btn-primary" type="submit">Submit</button> </li>
-	
+	<li class="form-item">
+	<button class="btn btn-primary" type="submit">Submit</button>
+	</li>
+
 </ul>
-<input name="id" type="hidden" value="<%= quizID %>"/>
+<input name="id" type="hidden" value="<%=quizID%>" />
 </form>
 
 

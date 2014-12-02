@@ -41,7 +41,12 @@ Website</a>
 	Question q = questions.get(curr_question);
 	String questionID = Integer.toString(q.getQuestionID());
 	String answer = (String) session.getAttribute(questionID);
-	
+	ArrayList<Integer> correctAnswers = (ArrayList<Integer>) session
+			.getAttribute("correctAnswers");
+	boolean practice = (Boolean)session.getAttribute("practice");
+	boolean repeat = (Boolean)session.getAttribute("repeat");
+
+
 	if (q.isCorrect(answer)) {
 		out.println("<h1>Correct!</h1>");
 	} else {
@@ -52,8 +57,49 @@ Website</a>
 	out.println("<br>Correct Answer(s): " + q.getAnswer()
 			+ "</span></dd>");
 
-	session.setAttribute("current_question", curr_question + 1);
-	out.println("<p> <a href=\"take_quiz.jsp\">Next Question</a></p>");	
+	
+	boolean done = false;
+	int nextQuestion = -1;
+	if (curr_question + 1 == questions.size()) {
+		repeat = true;
+		session.setAttribute("repeat", false);
+	}
+	if (practice) {
+		if(q.isCorrect(answer)) {
+			correctAnswers.set(curr_question, correctAnswers.get(curr_question) + 1);
+		}
+		Quiz quiz = (Quiz) session.getAttribute("quiz");
+		for (int i = 0; i < questions.size(); i++) {
+			if (correctAnswers.get(i) < 3) {
+				nextQuestion = i;
+				break;
+			}
+		}
+		if (nextQuestion == -1) {
+			done = true;
+			out.println("<p>Congratulations! You have mastered this quiz in practice mode!</p>");
+		} else {
+			if (quiz.getIfRandomized() && !repeat) {
+				Random random = new Random();
+				nextQuestion = random.nextInt(questions.size());
+				while (correctAnswers.get(nextQuestion) >= 3) {
+					nextQuestion = random.nextInt(questions.size());
+				}
+			}
+			else {
+				nextQuestion = (curr_question + 1) % questions.size();
+				while (correctAnswers.get(nextQuestion) >= 3) {
+					nextQuestion = (nextQuestion + 1) % questions.size();
+				}
+			}
+		}
+	} else {
+		nextQuestion = curr_question + 1;
+	}
+	session.setAttribute("current_question", nextQuestion);
+	if (!done) {
+		out.println("<p> <a href=\"take_quiz.jsp\">Next Question</a></p>");
+	}
 %>
 </div>
 </div>
