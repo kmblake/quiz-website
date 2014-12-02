@@ -1,9 +1,15 @@
 package quiz;
 
-import java.sql.*;
+//import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 import javax.servlet.ServletContext;
 
@@ -16,8 +22,11 @@ public class Quiz {
 	
 	private ArrayList<QuizHistory> history;
 	private String createdBy;
+	private int theCreatedByID;
+	
 	private String quizDescription;
 	private Date dateCreated;
+	private String formattedDateCreated;
 	private boolean multiplePages;
 	private boolean randomized;
 	private boolean immediateFeedback;
@@ -52,7 +61,7 @@ public class Quiz {
 			ResultSet userRS = stmtB.executeQuery("select * from users where id = '" + userID
 				+ "'");
 			userRS.next();
-			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"), userID, title);
+			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getTimestamp("taken_on"), userID, title);
 			history.add(toAdd);
 		}
 		
@@ -143,7 +152,10 @@ public class Quiz {
 	private void setInstanceVars(ResultSet rs) throws SQLException {
 		
 		quizDescription = rs.getString("description");
-		dateCreated = rs.getDate("created_on");
+		dateCreated = rs.getTimestamp("created_on");
+		DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
+		formattedDateCreated = dateTimeInstance.format(dateCreated);
+		
 		multiplePages = rs.getBoolean("multiple_pages");
 		randomized = rs.getBoolean("randomized");
 		immediateFeedback = rs.getBoolean("immediate_feedback");
@@ -151,6 +163,8 @@ public class Quiz {
 		practiceMode = rs.getBoolean("practice_mode");
 		
 		int createdByID = rs.getInt("created_by");
+		theCreatedByID = createdByID;
+		
 		ResultSet currRS = statement.executeQuery("select * from users where id = '"
 				+ createdByID + "'");
 		currRS.next();
@@ -160,6 +174,10 @@ public class Quiz {
 	public String getCreatedBy() throws SQLException {
 		return createdBy;
 	}
+	
+	public int getCreatedByID() {
+		return theCreatedByID;
+	}
 
 	public String getQuizDescription() throws SQLException {
 		return quizDescription;
@@ -167,6 +185,10 @@ public class Quiz {
 
 	public Date getDateCreated() throws SQLException {
 		return dateCreated;
+	}
+	
+	public String getFormattedDateCreated() {
+		return formattedDateCreated;
 	}
 
 	public boolean getIfHasMultiplePages() throws SQLException {
