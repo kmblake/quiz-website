@@ -6,6 +6,7 @@
 
 <% User currentUser = (User) session.getAttribute("user");
 Statement stmt = (Statement) getServletContext().getAttribute("statement"); 
+DBConnection dbCon = (DBConnection) getServletContext().getAttribute("connection"); 
 int user_id = currentUser.getId();
 %>
 
@@ -47,22 +48,42 @@ int user_id = currentUser.getId();
 	</div>
 	<div class="row">
 		<div class="col-md-6">
+			<% Quiz[] popular_quizzes = Quiz.topQuizzes(dbCon, Quiz.MOST_POPULAR); %>
 			<h2>Popular Quizzes:</h2>
-			Presidents Quiz<br>Complex Quiz
+			<ul class="stripped">
+			<% for (Quiz q : popular_quizzes) { %>
+				<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
+			<% } %>
+			</ul>
 		</div>
 		<div class="col-md-6">
+			<% Quiz[] recent_quizzes = Quiz.topQuizzes(dbCon, Quiz.MOST_RECENT); %>
 			<h2>Recently Created Quizzes:</h2>
-			Authors Quiz<br>Presidents Quiz
+			<ul class="stripped">
+			<% for (Quiz q : recent_quizzes) { %>
+				<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
+			<% } %>
+			</ul>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6">
+			<% Quiz[] your_taken_quizzes = currentUser.recentlyTakenQuizzes(dbCon); %>
 			<h2>Quizzes You Took Recently:</h2>
-			Presidents Quiz<br>Complex Quiz
+			<ul class="stripped">
+			<% for (Quiz q : your_taken_quizzes) { %>
+				<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
+			<% } %>
+			</ul>
 		</div>
 		<div class="col-md-6">
+			<% Quiz[] your_created_quizzes = currentUser.recentlyCreatedQuizzes(dbCon); %>
 			<h2>Quizzes You Created Recently:</h2>
-			Authors Quiz<br>Presidents Quiz<br>
+			<ul class="stripped">
+			<% for (Quiz q : your_created_quizzes) { %>
+				<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
+			<% } %>
+			</ul>
 			<a href="create_quiz.jsp" class="btn btn-large btn-success"> Create A New Quiz</a>
 		</div>
 	</div>

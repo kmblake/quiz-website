@@ -86,4 +86,34 @@ public class User {
 	public int getId() {
 		return id;
 	}
+	
+	public Quiz[] recentlyTakenQuizzes(DBConnection con) {
+		String query = "SELECT quiz_id FROM `quiz_history` WHERE user_id = " + id + " GROUP BY quiz_id ORDER BY taken_on DESC LIMIT 5";
+		return quizQuery(con, query);
+	}
+	
+	public Quiz[] recentlyCreatedQuizzes(DBConnection con) {
+		String query = "SELECT id AS quiz_id FROM `quizzes` WHERE created_by = " + id + " ORDER BY created_on DESC LIMIT 5";
+		return quizQuery(con, query);
+	}
+	
+	private Quiz[] quizQuery(DBConnection con, String query) {
+		ResultSet rs;
+		try {
+			rs = con.getStatement().executeQuery(query);
+			rs.last();
+			int numRows = rs.getRow();
+			rs.first();
+			Quiz[] quizzes = new Quiz[numRows];
+			for (int i = 0; i < numRows; i++) {
+				int quiz_id = rs.getInt("quiz_id");
+				quizzes[i] = new Quiz(quiz_id, con);
+				rs.next();
+			}
+			return quizzes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

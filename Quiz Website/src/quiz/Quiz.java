@@ -24,6 +24,33 @@ public class Quiz {
 	private String title;
 	private boolean practiceMode;
 	
+	public static final int MOST_POPULAR = 1;
+	public static final int MOST_RECENT = 2;
+	
+	public static Quiz[] topQuizzes(DBConnection con, int type) {
+		ResultSet rs;
+		try {
+			if (type == MOST_POPULAR) {
+				rs = con.getConnection().createStatement().executeQuery("SELECT qh.quiz_id, COUNT(qh.quiz_id) AS times_taken FROM quiz_history AS qh GROUP BY quiz_id  ORDER BY times_taken DESC LIMIT 5");
+			} else {
+				// type must be MOST_RECENT
+				rs = con.getConnection().createStatement().executeQuery("SELECT id AS quiz_id FROM quizzes ORDER BY created_on DESC LIMIT 5");
+			}
+			rs.last();
+			int numRows = rs.getRow();
+			rs.first();
+			Quiz[] quizzes = new Quiz[numRows];
+			for (int i = 0; i < numRows; i++) {
+				int quiz_id = rs.getInt("quiz_id");
+				quizzes[i] = new Quiz(quiz_id, con);
+				rs.next();
+			}
+			return quizzes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public Quiz(Integer theQuizID, DBConnection theCon) throws SQLException {
 		quizID = theQuizID;
