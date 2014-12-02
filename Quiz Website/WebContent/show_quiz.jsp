@@ -5,6 +5,7 @@
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.util.Collections"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.TimeZone"%>
 	<%@ page import="quiz.*"%>
 
 <!DOCTYPE html>
@@ -74,11 +75,20 @@ long time_started = 0;
 					topRecentPerformers.add(currentHistory);
 				}
 			}
+			if(numTakers != 0) {
+				averageTime = averageTime/numTakers;
+				averageScore = averageScore/numTakers;
+				averageScore = Math.round(averageScore*100.0)/100.0;
+			}
 			
-			averageTime = averageTime/numTakers;
 			Time averageTimeTaken = new Time(averageTime);
-			averageScore = averageScore/numTakers;
-			averageScore = Math.round(averageScore*100.0)/100.0;
+			if(numTakers == 0) {
+				TimeZone timeZone = TimeZone.getDefault();
+				int offset = timeZone.getRawOffset();
+				averageTimeTaken = new Time(averageTime - offset);
+			}
+			
+			
 			
 			Collections.sort(recentHistory);
 			%>
@@ -87,7 +97,7 @@ long time_started = 0;
 		<div class="container">
 			<div class="jumbotron">
 				<h1><%= quiz.getTitle() %></h1>
-				<p>Created by: <a href="<%= "show_user.jsp?id=" + quiz.getCreatedByID() %>"><%= quiz.getCreatedBy() %></a> on <%= quiz.getDateCreated() %></p>
+				<p>Created by: <a href="<%= "show_user.jsp?id=" + quiz.getCreatedByID() %>"><%= quiz.getCreatedBy() %></a> on <%= quiz.getFormattedDateCreated() %></p>
 				<p><%= quiz.getQuizDescription() %></p>
 				<p>Average Time: <%= averageTimeTaken %></p>
 				<p>Average Score: <%= averageScore %></p>
@@ -126,7 +136,7 @@ long time_started = 0;
           <td><%= currentHistory.getScore() %></td>
           <td><%= currentHistory.getTime() %></td>
           <td><a href="<%= "show_user.jsp?id=" + currentHistory.getUserID() %>"><%= currentHistory.getUser() %></a></td>
-          <td><%= currentHistory.getWhenTaken() %></td>
+          <td><%= currentHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%
@@ -159,7 +169,7 @@ long time_started = 0;
           <td><%= i+1 %></td>
           <td><%= currentYourHistory.getScore() %></td>
           <td><%= currentYourHistory.getTime() %></td>
-          <td><%= currentYourHistory.getWhenTaken() %></td>
+          <td><%= currentYourHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%
@@ -193,7 +203,7 @@ long time_started = 0;
           <td><%= currentHistory.getScore() %></td>
           <td><%= currentHistory.getTime() %></td>
           <td><a href="<%= "show_user.jsp?id=" + currentHistory.getUserID() %>"><%= currentHistory.getUser() %></a></td>
-          <td><%= currentHistory.getWhenTaken() %></td>
+          <td><%= currentHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%
@@ -229,7 +239,7 @@ long time_started = 0;
           <td><%= currentHistory.getScore() %></td>
           <td><%= currentHistory.getTime() %></td>
           <td><a href="<%= "show_user.jsp?id=" + currentHistory.getUserID() %>"><%= currentHistory.getUser() %></a></td>
-          <td><%= currentHistory.getWhenTaken() %></td>
+          <td><%= currentHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%

@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class QuizHistory implements Comparable {
@@ -15,6 +18,7 @@ public class QuizHistory implements Comparable {
 	private Date whenTaken;
 	private int userID;
 	private String quizName;
+	private String formattedWhenTaken;
 	
 	// Note that time is in milliseconds
 	public QuizHistory(int theScore, Time theTime, String theUser, Date whenWasTaken, int theUserID, String theQuizName) {
@@ -24,6 +28,9 @@ public class QuizHistory implements Comparable {
 		whenTaken = whenWasTaken;
 		userID = theUserID;
 		quizName = theQuizName;
+		
+		DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
+		formattedWhenTaken = dateTimeInstance.format(whenWasTaken);
 	}
 	
 	
@@ -36,6 +43,10 @@ public class QuizHistory implements Comparable {
 		pStmt.setTime(4, updateTime);
 		pStmt.setString(5, updateWhenTaken);
 		pStmt.executeUpdate();
+	}
+	
+	public String getFormattedWhenTaken() {
+		return formattedWhenTaken;
 	}
 	
 	public int getUserID() {

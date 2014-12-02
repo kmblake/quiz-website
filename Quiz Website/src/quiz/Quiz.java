@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,6 +26,7 @@ public class Quiz {
 	
 	private String quizDescription;
 	private Date dateCreated;
+	private String formattedDateCreated;
 	private boolean multiplePages;
 	private boolean randomized;
 	private boolean immediateFeedback;
@@ -151,6 +153,9 @@ public class Quiz {
 		
 		quizDescription = rs.getString("description");
 		dateCreated = rs.getTimestamp("created_on");
+		DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
+		formattedDateCreated = dateTimeInstance.format(dateCreated);
+		
 		multiplePages = rs.getBoolean("multiple_pages");
 		randomized = rs.getBoolean("randomized");
 		immediateFeedback = rs.getBoolean("immediate_feedback");
@@ -180,6 +185,10 @@ public class Quiz {
 
 	public Date getDateCreated() throws SQLException {
 		return dateCreated;
+	}
+	
+	public String getFormattedDateCreated() {
+		return formattedDateCreated;
 	}
 
 	public boolean getIfHasMultiplePages() throws SQLException {
