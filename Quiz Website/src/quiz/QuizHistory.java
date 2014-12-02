@@ -1,9 +1,13 @@
 package quiz;
 
-import java.sql.*;
+//import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Date;
 
-public class QuizHistory {
+public class QuizHistory implements Comparable {
 	
 	private int score;
 	private Time time;
@@ -21,6 +25,7 @@ public class QuizHistory {
 		userID = theUserID;
 		quizName = theQuizName;
 	}
+	
 	
 	// Once they've taken a quiz call this constructor to update the database
 	public QuizHistory(Connection con, String updateWhenTaken, int updateUser, Time updateTime, int updateScore, int quizID) throws SQLException {
@@ -55,6 +60,12 @@ public class QuizHistory {
 	
 	public String getQuizName() {
 		return quizName;
+	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		QuizHistory other = (QuizHistory) arg0;
+		return other.getWhenTaken().compareTo(whenTaken);
 	}
 	
 }

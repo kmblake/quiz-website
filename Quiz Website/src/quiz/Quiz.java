@@ -1,9 +1,14 @@
 package quiz;
 
-import java.sql.*;
+//import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 import javax.servlet.ServletContext;
 
@@ -54,7 +59,7 @@ public class Quiz {
 			ResultSet userRS = stmtB.executeQuery("select * from users where id = '" + userID
 				+ "'");
 			userRS.next();
-			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getDate("taken_on"), userID, title);
+			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getTimestamp("taken_on"), userID, title);
 			history.add(toAdd);
 		}
 		
@@ -145,7 +150,7 @@ public class Quiz {
 	private void setInstanceVars(ResultSet rs) throws SQLException {
 		
 		quizDescription = rs.getString("description");
-		dateCreated = rs.getDate("created_on");
+		dateCreated = rs.getTimestamp("created_on");
 		multiplePages = rs.getBoolean("multiple_pages");
 		randomized = rs.getBoolean("randomized");
 		immediateFeedback = rs.getBoolean("immediate_feedback");

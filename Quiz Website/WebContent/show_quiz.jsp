@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ page import="java.sql.*"%>
+<%@ page import="java.sql.Time"%>	
 <%@ page import="java.util.Date"%>
 <%@ page import="java.util.Calendar"%>
+<%@ page import="java.util.Collections"%>
 <%@ page import="java.util.ArrayList"%>
 	<%@ page import="quiz.*"%>
 
@@ -78,6 +79,8 @@ long time_started = 0;
 			Time averageTimeTaken = new Time(averageTime);
 			averageScore = averageScore/numTakers;
 			averageScore = Math.round(averageScore*100.0)/100.0;
+			
+			Collections.sort(recentHistory);
 			%>
 
 	
@@ -167,6 +170,76 @@ long time_started = 0;
 			</table>
 			</div>
 			
+			<div class="quiz-history">
+			<h3>Top Recent Performers</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Score</th>
+          <th>Time</th>
+          <th>Username</th>
+          <th>Date Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+				for(int i=0;i<topRecentPerformers.size();i++) {
+					QuizHistory currentHistory = topRecentPerformers.get(i);
+				if(i<5) {
+				%>
+				<tr>
+          <td><%= i+1 %></td>
+          <td><%= currentHistory.getScore() %></td>
+          <td><%= currentHistory.getTime() %></td>
+          <td><a href="<%= "show_user.jsp?id=" + currentHistory.getUserID() %>"><%= currentHistory.getUser() %></a></td>
+          <td><%= currentHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+				}
+			}
+			%>
+			
+			</tbody>
+			</table>
+			</div>
+			
+			
+			<div class="quiz-history">
+			<h3>Recent Performances</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Score</th>
+          <th>Time</th>
+          <th>Username</th>
+          <th>Date Taken</th>
+        </tr>
+      </thead>
+      <tbody>
+			<% 
+				for(int i=0;i<recentHistory.size();i++) {
+					QuizHistory currentHistory = recentHistory.get(i);
+				if(i<5) {
+				%>
+				<tr>
+          <td><%= i+1 %></td>
+          <td><%= currentHistory.getScore() %></td>
+          <td><%= currentHistory.getTime() %></td>
+          <td><a href="<%= "show_user.jsp?id=" + currentHistory.getUserID() %>"><%= currentHistory.getUser() %></a></td>
+          <td><%= currentHistory.getWhenTaken() %></td>
+        </tr>
+				
+				<%
+				}
+			}
+			%>
+			
+			</tbody>
+			</table>
+			</div>
 			
 		</div>
 	</body>
