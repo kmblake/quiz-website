@@ -44,6 +44,32 @@ public class Challenge {
 		return challenges;
 	}
 	
+	public static String recentChallengesSummary(Statement stmt, int user_id) {
+		int rc = recentChallengesCount(stmt, user_id);
+		if (rc == 0) {
+			return "No Recent Challenges";
+		} else if (rc == 1) {
+			return "1 Recent Challenge";
+		} else {
+			return rc + " Recent Challenges";
+		}
+	}
+	
+	public static int recentChallengesCount(Statement stmt, int user_id) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -7);
+		java.util.Date aWeekAgoDate = cal.getTime();
+		String aWeekAgo = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(aWeekAgoDate);
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS count FROM challenges WHERE challenged_user = " + user_id + " AND challenged_on > '" + aWeekAgo + "'");
+			rs.first();
+			return rs.getInt("count");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	public Challenge(Connection con, int id, int quiz_id, int challenger_id, String quiz_name, String challenger_name, Timestamp challenged_on) throws SQLException {
 		this.id = id;
 		this.quiz_id = quiz_id;

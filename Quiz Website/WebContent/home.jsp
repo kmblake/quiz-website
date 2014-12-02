@@ -4,8 +4,10 @@
 <%@ page import="quiz.*"%>
 <%@ page import="java.sql.*"%>
 
-<% User currentUser = (User) session.getAttribute("user"); %>
-
+<% User currentUser = (User) session.getAttribute("user");
+Statement stmt = (Statement) getServletContext().getAttribute("statement"); 
+int user_id = currentUser.getId();
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -36,8 +38,12 @@
 <div class="container">
 	<h1 class="page-header"><%= currentUser.getFullName() %></h1>
 	<div class="row">
-		<div class="col-md-8 larger-font">Try out a new quiz, <%= currentUser.getFirstName() %>!</div>
-		<div class="col-md-4 right-justified">4 Friend Requests<br>1 Challenge<br>No new messages</div>
+		<div class="col-md-9 larger-font">Try out a new quiz, <%= currentUser.getFirstName() %>!</div>
+		<div class="col-md-3">
+			<h4><%= Challenge.recentChallengesSummary(stmt, user_id) %></h4>
+			<h4><%= Friend.friendRequestSummary(stmt, user_id) %></h4>
+			<h4><%= Message.unreadNoteSummary(stmt, user_id) %></h4>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6">
@@ -66,7 +72,6 @@
 	</div>
 <%
 	QuizIndex index = (QuizIndex) application.getAttribute("index");
-	Statement stmt = (Statement) application.getAttribute("statement");
 	DBConnection con = (DBConnection) application
 			.getAttribute("connection");
 	index.loadAllQuizzes();

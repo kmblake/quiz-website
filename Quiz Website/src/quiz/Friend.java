@@ -66,6 +66,30 @@ public class Friend {
 		return requests;
 	}
 	
+	public static String friendRequestSummary(Statement stmt, int user_id) {
+		int rc = getFriendRequestCount(stmt, user_id);
+		if (rc == 0) {
+			return "No Friend Requests";
+		} else if (rc == 1) {
+			return "1 Friend Request";
+		} else {
+			return rc + " Friend Requests";
+		}
+	}
+	
+	public static int getFriendRequestCount(Statement stmt, int user_id) {
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) as count FROM friends AS f WHERE f.requested_for = " + user_id + " AND approved = 0");
+			rs.first();
+			return rs.getInt("count");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		
+		
+	}
+	
 	public static boolean approveFriendship(Statement stmt, int id) {
 		try {
 			stmt.executeUpdate("UPDATE friends SET approved = 1 WHERE id = " + id);
