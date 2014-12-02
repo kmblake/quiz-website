@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 	<%@ page import="java.sql.*"%>
-<%@ page import="java.util.*"%>
+<%@ page import="java.util.Date"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.util.ArrayList"%>
 	<%@ page import="quiz.*"%>
 
 <!DOCTYPE html>
@@ -43,12 +45,49 @@ long time_started = 0;
     	</div>
 	</div>
 </div>
+
+<% 
+			ArrayList<QuizHistory> history = quiz.getHistory();
+			ArrayList<QuizHistory> yourHistory = new ArrayList<QuizHistory>();
+			ArrayList<QuizHistory> recentHistory = new ArrayList<QuizHistory>();
+			ArrayList<QuizHistory> topRecentPerformers = new ArrayList<QuizHistory>();
+			
+			Calendar currCalendar = Calendar.getInstance();
+			currCalendar.add(Calendar.DATE, -1);
+			Date yesterday = currCalendar.getTime();
+			
+			long averageTime = 0;
+			double averageScore = 0;
+			int numTakers = history.size();
+			
+			String currUser = (String) ((User) session.getAttribute("user")).getUsername();
+			for(int i=0; i<numTakers;i++) {
+				QuizHistory currentHistory = history.get(i);
+				Date dateTaken = currentHistory.getWhenTaken();
+				averageTime += currentHistory.getTime().getTime();
+				averageScore += currentHistory.getScore();
+				
+				if(currentHistory.getUser().equals(currUser)) yourHistory.add(currentHistory);
+				if(dateTaken.after(yesterday)) {
+					recentHistory.add(currentHistory);
+					topRecentPerformers.add(currentHistory);
+				}
+			}
+			
+			averageTime = averageTime/numTakers;
+			Time averageTimeTaken = new Time(averageTime);
+			averageScore = averageScore/numTakers;
+			averageScore = Math.round(averageScore*100.0)/100.0;
+			%>
+
 	
 		<div class="container">
 			<div class="jumbotron">
 				<h1><%= quiz.getTitle() %></h1>
-				<p>Created by: <%= quiz.getCreatedBy() %> on <%= quiz.getDateCreated() %></p>
+				<p>Created by: <a href="<%= "show_user.jsp?id=" + quiz.getCreatedByID() %>"><%= quiz.getCreatedBy() %></a> on <%= quiz.getDateCreated() %></p>
 				<p><%= quiz.getQuizDescription() %></p>
+				<p>Average Time: <%= averageTimeTaken %></p>
+				<p>Average Score: <%= averageScore %></p>
 			</div>
 			<div>
 				<form action="take_quiz.jsp">
@@ -75,12 +114,8 @@ long time_started = 0;
       </thead>
       <tbody>
 			<% 
-			ArrayList<QuizHistory> history = quiz.getHistory();
-			ArrayList<QuizHistory> yourHistory = new ArrayList<QuizHistory>();
-			String currUser = (String) ((User) session.getAttribute("user")).getUsername();
-			for(int i=0; i<history.size();i++) {
-				QuizHistory currentHistory = history.get(i);
-				if(currentHistory.getUser().equals(currUser)) yourHistory.add(currentHistory);
+				for(int i=0;i<history.size();i++) {
+					QuizHistory currentHistory = history.get(i);
 				if(i<5) {
 				%>
 				<tr>

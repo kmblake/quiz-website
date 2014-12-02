@@ -16,6 +16,8 @@ public class Quiz {
 	
 	private ArrayList<QuizHistory> history;
 	private String createdBy;
+	private int theCreatedByID;
+	
 	private String quizDescription;
 	private Date dateCreated;
 	private boolean multiplePages;
@@ -151,6 +153,8 @@ public class Quiz {
 		practiceMode = rs.getBoolean("practice_mode");
 		
 		int createdByID = rs.getInt("created_by");
+		theCreatedByID = createdByID;
+		
 		ResultSet currRS = statement.executeQuery("select * from users where id = '"
 				+ createdByID + "'");
 		currRS.next();
@@ -159,6 +163,10 @@ public class Quiz {
 
 	public String getCreatedBy() throws SQLException {
 		return createdBy;
+	}
+	
+	public int getCreatedByID() {
+		return theCreatedByID;
 	}
 
 	public String getQuizDescription() throws SQLException {
