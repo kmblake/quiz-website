@@ -61,7 +61,7 @@ public class Quiz {
 			ResultSet userRS = stmtB.executeQuery("select * from users where id = '" + userID
 				+ "'");
 			userRS.next();
-			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getTimestamp("taken_on"), userID, title);
+			QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), userRS.getString("username"), rs.getTimestamp("taken_on"), userID, title, quizID);
 			history.add(toAdd);
 		}
 		

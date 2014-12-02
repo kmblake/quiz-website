@@ -53,7 +53,7 @@ public class User {
 		
 		ArrayList<QuizHistory> recentlyTakenQuizzes = new ArrayList<QuizHistory>();
 		while(rs.next()) {
-			QuizHistory currHistory = new QuizHistory(rs.getInt("score"), rs.getTime("time"), theUsername, rs.getDate("taken_on"), id, rs.getString("title"));
+			QuizHistory currHistory = new QuizHistory(rs.getInt("score"), rs.getTime("time"), theUsername, rs.getTimestamp("taken_on"), id, rs.getString("title"), rs.getInt("quiz_id"));
 			recentlyTakenQuizzes.add(currHistory);
 		}
 		return recentlyTakenQuizzes;
@@ -64,7 +64,7 @@ public class User {
 		ArrayList<QuizHistory> recentlyCreatedQuizzes = new ArrayList<QuizHistory>();
 		
 		while(rs.next()) {
-			QuizHistory currHistory = new QuizHistory(0, null, theUsername, rs.getDate("created_on"), id, rs.getString("title"));
+			QuizHistory currHistory = new QuizHistory(0, null, theUsername, rs.getTimestamp("created_on"), id, rs.getString("title"), rs.getInt("id"));
 			recentlyCreatedQuizzes.add(currHistory);
 		}
 		
