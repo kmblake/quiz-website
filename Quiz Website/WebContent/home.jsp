@@ -38,14 +38,17 @@ int user_id = currentUser.getId();
 </div>
 
 <div class="container">
-	<h1 class="page-header"><%= currentUser.getFullName() %></h1>
 	<div class="row">
-		<div class="col-md-9 larger-font">Try out a new quiz, <%= currentUser.getFirstName() %>!</div>
+		<div class="col-md-9"><h1 class="page-header"><%= currentUser.getFullName() %></h1></div>
 		<div class="col-md-3">
+			<a id="msgLink" href="show_messages.jsp"> </a>
 			<h4><%= Challenge.recentChallengesSummary(stmt, user_id) %></h4>
 			<h4><%= Friend.friendRequestSummary(stmt, user_id) %></h4>
 			<h4><%= Message.unreadNoteSummary(stmt, user_id) %></h4>
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-9 larger-font">Try out a new quiz, <%= currentUser.getFirstName() %>!</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6">
@@ -86,7 +89,7 @@ int user_id = currentUser.getId();
 			<h2>Quizzes You Created Recently:</h2>
 			<ul class="stripped">
 			<% for (Quiz q : your_created_quizzes) { %>
-				<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
+				<li class=""><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
 			<% } %>
 			</ul>
 			<a href="create_quiz.jsp" class="btn btn-large btn-success"> Create A New Quiz</a>
@@ -95,11 +98,15 @@ int user_id = currentUser.getId();
 	<div class="row">
 		<% ArrayList<NewsItem> news = currentUser.getNewsFeed(); %>
 		<h2>News Feed:</h2>
-		<ul class="stripped">
-			<% for (NewsItem n : news) { %>
-				<li>Your friend <a href="show_user.jsp?id=<%= n.getUserId() %>"><%= n.getUsername() %></a> <%= n.getVerb() %> <a href="show_quiz.jsp?id=<%= n.getQuizId() %>"><%= n.getQuizTitle() %></a> on <%= n.getHappenedOnString() %>.</li>
-			<% } %>
-		</ul>
+		<% if (news.size() > 0) { %>
+			<ul class="list-group ul-striped">
+				<% for (NewsItem n : news) { %>
+					<li class="list-group-item center">Your friend <a href="show_user.jsp?id=<%= n.getUserId() %>"><%= n.getUsername() %></a> <%= n.getVerb() %> <a href="show_quiz.jsp?id=<%= n.getQuizId() %>"><%= n.getQuizTitle() %></a> on <%= n.getHappenedOnString() %>.</li>
+				<% } %>
+			</ul>
+		<% } else { %>
+			<p>Once you have added friends, you will see their recent activity here.  To add a user as a friend, search for them by name or username and click "Send Friend Request" from their user page.</p>
+		<% } %>
 	</div>
 </div>
 
