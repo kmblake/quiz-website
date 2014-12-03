@@ -24,12 +24,15 @@
 	session.setAttribute("immediate", immediate);
 
 	ArrayList<Question> questions = quiz.getQuestions();
-	int currQuestion = (Integer) session.getAttribute("current_question");
+	int currQuestion = (Integer) session
+			.getAttribute("current_question");
 	String practiceMode = (String) request
 			.getParameter("practice_mode");
-	if (practiceMode != null) {
+	if (request.getParameter("start") != null) {
 		session.setAttribute("time_started", System.currentTimeMillis());
-		boolean practice = practiceMode.equals("on");
+		boolean practice = false;
+		if (practiceMode != null)
+			practice = practiceMode.equals("on");
 		session.setAttribute("practice", practice);
 		if (practice) {
 			ArrayList<Integer> correctAnswers = new ArrayList<Integer>();
