@@ -124,7 +124,6 @@ public class User {
 		ResultSet rs;
 		try {
 			String friendsList = getFriendIdsString();
-			System.out.println(friendsList);
 			if (friendsList.length() == 0) return news;
 			 rs = stmt.executeQuery("SELECT quizzes.*, users.username FROM quizzes INNER JOIN users ON quizzes.created_by = users.id WHERE created_by IN " + friendsList + " ORDER BY created_on DESC LIMIT 8");
 			while(rs.next()) {
