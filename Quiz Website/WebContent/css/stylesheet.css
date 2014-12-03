@@ -94,6 +94,18 @@
 	margin-bottom: 5px;
 }
 
+.right-justified {
+	text-align: right;
+}
+
+.larger-font {
+	font-size: 20px;
+}
+
+.ul-striped li:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
 #question-image {
 	width: 500px;
 	margin: 20px;
@@ -112,4 +124,15 @@
 
 #challenge-button {
 	margin-right: 10px;
+}
+
+#msgLink {
+	/* This styling is from http://ctrlq.org/code/19639-turn-div-clickable-link */
+	position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-decoration: none;
+    z-index: 10;
 }

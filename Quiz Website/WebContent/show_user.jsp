@@ -46,7 +46,10 @@
 				<h1 class="page-header">
 					<%= u.getFullName() %>
 					<% if (friendshipStatus == Friend.FRIENDS) { %>
-						<span class="label label-info right">Friends</span>
+						<input type="hidden" name="requested_by" value="<%= homeUserId %>">
+						<input type="hidden" name="requested_for" value="<%= id %>">
+						<input type="hidden" name="source" value="<%= Friend.UNFRIEND %>">
+						<button class="btn btn-lg btn-danger right" type="submit">Unfriend</button>	
 					<% } else if (friendshipStatus == Friend.PENDING_REQUEST) { %>
 						<span class="label label-info right">Friend Request Pending</span>
 					<% } else { %>
@@ -59,7 +62,7 @@
 			</form>
 			<% String notification = (String) request.getAttribute("notification"); %>
 			<% if (notification != null ) { %>
-			<div class="alert alert-success"><%= notification %></div>
+			<div class="alert alert-info"><%= notification %></div>
 			<% } %>
 			<div class="message-buttons">
 				<% if (friendshipStatus == Friend.FRIENDS) { %>
@@ -86,10 +89,10 @@
 				if(i<5) {
 				%>
 				<tr>
-          <td><%= currentHistory.getQuizName() %></td>
+          <td><a href="<%= "show_quiz.jsp?id=" + currentHistory.getQuizID() %>"><%= currentHistory.getQuizName() %></a></td>
           <td><%= currentHistory.getScore() %></td>
           <td><%= currentHistory.getTime() %></td>
-          <td><%= currentHistory.getWhenTaken() %></td>
+          <td><%= currentHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%
@@ -118,8 +121,8 @@
 				if(i<5) {
 				%>
 				<tr>
-          <td><%= currentHistory.getQuizName() %></td>
-          <td><%= currentHistory.getWhenTaken() %></td>
+          <td><a href="<%= "show_quiz.jsp?id=" + currentHistory.getQuizID() %>"><%= currentHistory.getQuizName() %></a></td>
+          <td><%= currentHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%

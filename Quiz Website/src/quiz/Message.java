@@ -70,6 +70,28 @@ public class Message {
 
 		return rs.getInt("LAST_INSERT_ID()");
 	}
+	
+	public static String unreadNoteSummary(Statement stmt, int user_id) {
+		int numUnread = unreadNoteCount(stmt, user_id);
+		if (numUnread == 0) {
+			return "No Unread Notes";
+		} else if (numUnread == 1) {
+			return "1 Unread Note";
+		} else {
+			return numUnread + " Unread Notes";
+		}
+	}
+	
+	public static int unreadNoteCount(Statement stmt, int user_id) {
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) as count FROM messages WHERE message_read = 0 AND recipient = " + user_id);
+			rs.first();
+			return rs.getInt("count");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	public Message(int id, String sender, int sender_id, int recipient_id, String body, boolean read, Timestamp sent_on) {
 		this.id = id;
