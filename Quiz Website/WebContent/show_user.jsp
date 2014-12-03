@@ -89,10 +89,10 @@
 				if(i<5) {
 				%>
 				<tr>
-          <td><%= currentHistory.getQuizName() %></td>
+          <td><a href="<%= "show_quiz.jsp?id=" + currentHistory.getQuizID() %>"><%= currentHistory.getQuizName() %></a></td>
           <td><%= currentHistory.getScore() %></td>
           <td><%= currentHistory.getTime() %></td>
-          <td><%= currentHistory.getWhenTaken() %></td>
+          <td><%= currentHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%
@@ -121,8 +121,8 @@
 				if(i<5) {
 				%>
 				<tr>
-          <td><%= currentHistory.getQuizName() %></td>
-          <td><%= currentHistory.getWhenTaken() %></td>
+          <td><a href="<%= "show_quiz.jsp?id=" + currentHistory.getQuizID() %>"><%= currentHistory.getQuizName() %></a></td>
+          <td><%= currentHistory.getFormattedWhenTaken() %></td>
         </tr>
 				
 				<%

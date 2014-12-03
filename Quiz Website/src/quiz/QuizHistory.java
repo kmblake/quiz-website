@@ -1,9 +1,16 @@
 package quiz;
 
-import java.sql.*;
+//import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
-public class QuizHistory {
+public class QuizHistory implements Comparable {
 	
 	private int score;
 	private Time time;
@@ -11,16 +18,23 @@ public class QuizHistory {
 	private Date whenTaken;
 	private int userID;
 	private String quizName;
+	private int quizID;
+	private String formattedWhenTaken;
 	
 	// Note that time is in milliseconds
-	public QuizHistory(int theScore, Time theTime, String theUser, Date whenWasTaken, int theUserID, String theQuizName) {
+	public QuizHistory(int theScore, Time theTime, String theUser, Date whenWasTaken, int theUserID, String theQuizName, int theQuizID) {
 		score = theScore;
 		time = theTime;
 		user = theUser;
 		whenTaken = whenWasTaken;
 		userID = theUserID;
 		quizName = theQuizName;
+		quizID = theQuizID;
+		
+		DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
+		formattedWhenTaken = dateTimeInstance.format(whenWasTaken);
 	}
+	
 	
 	// Once they've taken a quiz call this constructor to update the database
 	public QuizHistory(Connection con, String updateWhenTaken, int updateUser, Time updateTime, int updateScore, int quizID) throws SQLException {
@@ -31,6 +45,14 @@ public class QuizHistory {
 		pStmt.setTime(4, updateTime);
 		pStmt.setString(5, updateWhenTaken);
 		pStmt.executeUpdate();
+	}
+	
+	public int getQuizID() {
+		return quizID;
+	}
+	
+	public String getFormattedWhenTaken() {
+		return formattedWhenTaken;
 	}
 	
 	public int getUserID() {
@@ -55,6 +77,12 @@ public class QuizHistory {
 	
 	public String getQuizName() {
 		return quizName;
+	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		QuizHistory other = (QuizHistory) arg0;
+		return other.getWhenTaken().compareTo(whenTaken);
 	}
 	
 }
