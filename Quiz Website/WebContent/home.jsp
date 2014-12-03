@@ -3,6 +3,7 @@
 	pageEncoding="US-ASCII"%>
 <%@ page import="quiz.*"%>
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.ArrayList" %>
 
 <% User currentUser = (User) session.getAttribute("user");
 Statement stmt = (Statement) getServletContext().getAttribute("statement"); 
@@ -71,8 +72,12 @@ int user_id = currentUser.getId();
 			<% Quiz[] your_taken_quizzes = currentUser.recentlyTakenQuizzes(dbCon); %>
 			<h2>Quizzes You Took Recently:</h2>
 			<ul class="stripped">
-			<% for (Quiz q : your_taken_quizzes) { %>
-				<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
+			<% if (your_taken_quizzes.length == 0) { %>
+				<li>You haven't taken any quizzes yet.  Try one!</li>
+			<% } else { %>
+				<% for (Quiz q : your_taken_quizzes) { %>
+					<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
+				<% } %>
 			<% } %>
 			</ul>
 		</div>
@@ -88,21 +93,14 @@ int user_id = currentUser.getId();
 		</div>
 	</div>
 	<div class="row">
+		<% ArrayList<NewsItem> news = currentUser.getNewsFeed(); %>
 		<h2>News Feed:</h2>
-		<p>Gordon recently took Presidents Quiz</p>
+		<ul class="stripped">
+			<% for (NewsItem n : news) { %>
+				<li>Your friend <a href="show_user.jsp?id=<%= n.getUserId() %>"><%= n.getUsername() %></a> <%= n.getVerb() %> <a href="show_quiz.jsp?id=<%= n.getQuizId() %>"><%= n.getQuizTitle() %></a> on <%= n.getHappenedOnString() %>.</li>
+			<% } %>
+		</ul>
 	</div>
-<%
-	QuizIndex index = (QuizIndex) application.getAttribute("index");
-	DBConnection con = (DBConnection) application
-			.getAttribute("connection");
-	index.loadAllQuizzes();
-	for (Integer id : index.getKeys()) {
-	Quiz quiz = new Quiz(id, con);
-	String link = "<a href= \"show_quiz.jsp?id=" + id + "\">"
-				+ quiz.getTitle() + "</a>";
-	out.println("<li> " + link + "</li>");
-}
-%>
 </div>
 
 
