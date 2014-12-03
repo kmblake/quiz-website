@@ -10,6 +10,8 @@ public class Friend {
 	public static final int PENDING_REQUEST = 3;
 	public static final int FRIENDS = 4;
 	public static final int NOT_FRIENDS = 5;
+	public static final int UNFRIEND = 6;
+	public static final int DENY = 7;
 	
 	private int id;
 	private int requested_by;
@@ -64,6 +66,30 @@ public class Friend {
 		return requests;
 	}
 	
+	public static String friendRequestSummary(Statement stmt, int user_id) {
+		int rc = getFriendRequestCount(stmt, user_id);
+		if (rc == 0) {
+			return "No Friend Requests";
+		} else if (rc == 1) {
+			return "1 Friend Request";
+		} else {
+			return rc + " Friend Requests";
+		}
+	}
+	
+	public static int getFriendRequestCount(Statement stmt, int user_id) {
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) as count FROM friends AS f WHERE f.requested_for = " + user_id + " AND approved = 0");
+			rs.first();
+			return rs.getInt("count");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		
+		
+	}
+	
 	public static boolean approveFriendship(Statement stmt, int id) {
 		try {
 			stmt.executeUpdate("UPDATE friends SET approved = 1 WHERE id = " + id);
@@ -73,6 +99,14 @@ public class Friend {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static void unfriend(Statement stmt, int idA, int idB) throws SQLException {
+		stmt.executeUpdate("DELETE FROM friends WHERE requested_by IN (" + idA + ", " +  idB + ") AND requested_for IN (" + idA + ", " +  idB + ")");
+	}
+	
+	public static void deny(Statement stmt, int friendship_id) throws SQLException {
+		stmt.executeUpdate("DELETE FROM friends WHERE id = " + friendship_id);
 	}
 	
 	public Friend(int id, int requested_by, String sender) {

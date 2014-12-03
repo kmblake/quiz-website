@@ -20,9 +20,16 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 	<link href="css/stylesheet.css" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 	<title>Messages</title>
 </head>
 <body>
+<script>
+	function onDenyClick(id) {
+		$("#" + id).val(<%= Friend.DENY %>);
+	}
+</script>
+
 	<div class="navbar navbar-inverse navbar-static-top">
 		<div class="container">
 			<a class="navbar-brand" href="home.jsp">Quiz Website</a>
@@ -74,8 +81,11 @@
 				<li>
 					<form action="FriendRequestServlet" method="post">
 						<input type="hidden" name="id" value="<%= f.getId() %>">
-						<input type="hidden" name="source" value="<%= Friend.APPROVE %>">
-						<div class="friend-request">Request from <a href="<%= "show_user.jsp?id=" + f.getRequestedBy() %>"><%= f.getSender() %></a>: <button class="btn btn-success" type="submit">Approve</button></div>
+						<input type="hidden" name="source" id="<%= f.getId() %>" value="<%= Friend.APPROVE %>">
+						<div class="friend-request">Request from <a href="<%= "show_user.jsp?id=" + f.getRequestedBy() %>"><%= f.getSender() %></a>: 
+							<button class="btn btn-success" type="submit">Approve</button>
+							<button class="btn btn-danger" type="submit" onclick="onDenyClick(<%= f.getId() %>)">Deny</button> 
+						</div>
 					</form>
 				</li>
 			<% } %>

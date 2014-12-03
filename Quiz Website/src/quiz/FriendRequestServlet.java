@@ -54,6 +54,30 @@ public class FriendRequestServlet extends HttpServlet {
 			Friend.approveFriendship(stmt, friendship_id);
 			RequestDispatcher dispatch = request.getRequestDispatcher("show_messages.jsp");
 			dispatch.forward(request, response);
+		} else if (src == Friend.UNFRIEND) {
+			int requested_by = Integer.parseInt(request.getParameter("requested_by"));
+			int requested_for = Integer.parseInt(request.getParameter("requested_for"));
+			Statement stmt = (Statement) getServletContext().getAttribute("statement");
+			try {
+				Friend.unfriend(stmt, requested_by, requested_for);
+				RequestDispatcher dispatch = request.getRequestDispatcher("show_user.jsp?id=" + requested_for);
+				dispatch.forward(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				request.setAttribute("notification", "Whoops, there was an error cancelling your friendship.  Please try again.");
+				RequestDispatcher dispatch = request.getRequestDispatcher("show_user.jsp?id=" + requested_for);
+				dispatch.forward(request, response);
+			}
+		} else if (src == Friend.DENY) {
+			Statement stmt = (Statement) getServletContext().getAttribute("statement");
+			int friendship_id = Integer.parseInt(request.getParameter("id"));
+			try {
+				Friend.deny(stmt, friendship_id);
+				RequestDispatcher dispatch = request.getRequestDispatcher("show_messages.jsp");
+				dispatch.forward(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
