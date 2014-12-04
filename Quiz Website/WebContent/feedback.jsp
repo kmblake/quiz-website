@@ -68,7 +68,7 @@
 	 			String image = ((PictureResponse)q).getImageURL();
 
 				%>
-				<img id="image" src="<%=image%>" />
+				<img id="image" class="image-container" src="<%=image%>" />
 			<%}
 			String questionID = Integer.toString(q.getQuestionID());
 			Object answer = session.getAttribute(questionID);

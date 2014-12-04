@@ -81,8 +81,6 @@
 		for (int i = currQuestion; i < currQuestion + numQuestions; i++) {
 			Question toPrint = questions.get(i);
 			String type = toPrint.getType();
-			System.out.println(type);
-			System.out.println("Hello");
 			int questionID = toPrint.getQuestionID();
 	%>
 
@@ -153,7 +151,7 @@
  			String img = theQuestion.getImageURL();
  %>
 
-	<li><img id="image" src="<%=img%>" /></li>
+	<li><img id="image" class="image-container" src="<%=img%>" /></li>
 	<li class="form-item">Response: <input type="text"
 		class="title-input" name="<%=questionID%>"></li>
 
