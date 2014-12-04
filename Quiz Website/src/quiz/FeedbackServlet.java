@@ -109,11 +109,9 @@ public class FeedbackServlet extends HttpServlet {
 		ArrayList<String> userAnswers = new ArrayList<String>();
 		for (int i = 0; i < numOptions; i++) {
 			String a = request.getParameter(q.getQuestionID() + "-" + i);
-			System.out.println(a);
 			if (a != null)
 				userAnswers.add(a);		
 		} 
-		System.out.println(userAnswers);
 		return userAnswers;
 	}
 
