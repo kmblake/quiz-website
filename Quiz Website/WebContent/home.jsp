@@ -81,6 +81,7 @@ int user_id = currentUser.getId();
 				<% for (Quiz q : your_taken_quizzes) { %>
 					<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
 				<% } %>
+					<li><a href="history_summary.jsp" class="btn btn-large btn-primary">View Complete History</a></li>
 			<% } %>
 			</ul>
 		</div>

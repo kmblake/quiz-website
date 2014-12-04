@@ -160,4 +160,21 @@ public class User {
 			return "";
 		}
 	}
+	
+	public ArrayList<QuizHistory> getHistory(DBConnection con) {
+		Statement stmt = con.getStatement();
+		ResultSet rs;
+		try {
+			rs = stmt.executeQuery("SELECT qh.*, q.title from quiz_history AS qh INNER JOIN quizzes AS q ON qh.quiz_id = q.id WHERE user_id = " + id + " ORDER BY taken_on DESC");
+			ArrayList<QuizHistory> history = new ArrayList<QuizHistory>();
+			while(rs.next()) {
+				QuizHistory toAdd = new QuizHistory(rs.getInt("score"), rs.getTime("time"), "", rs.getTimestamp("taken_on"), id, rs.getString("title"), rs.getInt("quiz_id"));
+				history.add(toAdd);
+			}
+			return history;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new ArrayList<QuizHistory>();
+		}
+	}
 }
