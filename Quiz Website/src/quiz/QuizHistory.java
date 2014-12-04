@@ -31,8 +31,9 @@ public class QuizHistory implements Comparable {
 		quizName = theQuizName;
 		quizID = theQuizID;
 		
-		DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
-		formattedWhenTaken = dateTimeInstance.format(whenWasTaken);
+		DateFormat dateInstance = SimpleDateFormat.getDateInstance();
+		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
+		formattedWhenTaken = dateInstance.format(whenWasTaken) + " at " + timeFormat.format(whenWasTaken);
 	}
 	
 	
