@@ -77,6 +77,7 @@
 		if (nextQuestion == -1) {
 			done = true;
 			out.println("<p>Congratulations! You have mastered this quiz in practice mode!</p>");
+			out.println("<a href='show_quiz.jsp?id=" + quiz.getQuizID() + "' class='btn btn-primary'>Return to Quiz Page</a>");
 		} else {
 			if (quiz.getIfRandomized() && !repeat) {
 				Random random = new Random();
