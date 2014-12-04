@@ -24,6 +24,7 @@ int user_id = currentUser.getId();
 <div class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
 		<a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
+		
 		<div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav navbar-right">
 	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
@@ -33,6 +34,7 @@ int user_id = currentUser.getId();
 	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
 	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
 	        </form>
+	        <img src="Workaholics.jpg" alt="Nothing found" class="img-rounded" style="width: 66px; height: 50px;">
     	</div>
 	</div>
 </div>
