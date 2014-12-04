@@ -135,14 +135,16 @@ Website</a>
 	<li><%=toPrint.getQuestion()%>
 	<li>
 	<%
+		int num=0;
 		for (Map.Entry<String, Boolean> entry : answers.entrySet()) {
 					String answer = entry.getKey();
 	%>
 	
 	<li class="form-item"><%=answer%> <input type="checkbox"
-		name="<%=questionID%>" value="<%=answer%>"></li>
+		name="<%=questionID%>-<%=num%>" value="<%=answer%>"></li>
 
 	<%
+			i++;
 		}
 	%>
 	
