@@ -62,9 +62,17 @@ Website</a>
 		ArrayList<Question> questions = (ArrayList<Question>) session
 				.getAttribute("questions");
 		for (Question q : questions) {
-			out.println("<dt>" + q.getQuestion() + "</dt>");
+			if (!q.getType().equals("picture_response"))
+				out.println("<dt>" + q.getQuestion() + "</dt>");
+			else
+			{
+	 			String image = ((PictureResponse)q).getImageURL();
+
+				%>
+				<img id="image" src="<%=image%>" />
+			<%}
 			String questionID = Integer.toString(q.getQuestionID());
-			String answer = (String) session.getAttribute(questionID);
+			Object answer = session.getAttribute(questionID);
 			out.println("<dd>Your Answer: " + answer);
 			out.println("<br>Correct Answer(s): " + q.getAnswer()
 					+ "</span></dd>");

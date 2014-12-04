@@ -108,11 +108,15 @@ public class FeedbackServlet extends HttpServlet {
 		int numOptions = ((MultipleChoiceMultipleAnswer)q).numOptions();
 		ArrayList<String> userAnswers = new ArrayList<String>();
 		for (int i = 0; i < numOptions; i++) {
-			userAnswers.add(request.getParameter(q.getQuestionID() + "-" + i));
+			String a = request.getParameter(q.getQuestionID() + "-" + i);
+			System.out.println(a);
+			if (a != null)
+				userAnswers.add(a);		
 		} 
+		System.out.println(userAnswers);
 		return userAnswers;
 	}
-	
+
 	private long getTimeElapsed(HttpSession session) {
 		long time_started = (Long)session.getAttribute("time_started");
 		long time_elapsed = System.currentTimeMillis() - time_started;
