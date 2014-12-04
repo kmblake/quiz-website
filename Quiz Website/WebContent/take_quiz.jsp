@@ -82,6 +82,8 @@ Website</a>
 		for (int i = currQuestion; i < currQuestion + numQuestions; i++) {
 			Question toPrint = questions.get(i);
 			String type = toPrint.getType();
+			System.out.println(type);
+			System.out.println("Hello");
 			int questionID = toPrint.getQuestionID();
 	%>
 
@@ -122,7 +124,29 @@ Website</a>
 
 	<%
 		}
-	%> <%
+	%> 
+	<%
+		} else if (type.equals("multiple_choice_multiple_answer")) {
+			System.out.println("working");
+				MultipleChoiceMultipleAnswer theQuestion = (MultipleChoiceMultipleAnswer) toPrint;
+				HashMap<String, Boolean> answers = (HashMap<String, Boolean>) theQuestion
+						.getAnswers();
+	%>
+	<li><%=toPrint.getQuestion()%>
+	<li>
+	<%
+		for (Map.Entry<String, Boolean> entry : answers.entrySet()) {
+					String answer = entry.getKey();
+	%>
+	
+	<li class="form-item"><%=answer%> <input type="checkbox"
+		name="<%=questionID%>" value="<%=answer%>"></li>
+
+	<%
+		}
+	%>
+	
+	<%
  	} else if (type.equals("picture_response")) {
  			PictureResponse theQuestion = (PictureResponse) toPrint;
  			String img = theQuestion.getImageURL();
