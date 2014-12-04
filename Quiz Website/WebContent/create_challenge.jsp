@@ -25,7 +25,7 @@
 <body>
 	<div class="navbar navbar-inverse navbar-static-top">
 		<div class="container">
-			<a class="navbar-brand" href="home.jsp">Quiz Website</a>
+			<a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
 			<div id="navbar" class="navbar-collapse collapse">
 		        <ul class="nav navbar-nav navbar-right">
 		          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
