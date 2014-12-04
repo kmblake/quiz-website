@@ -305,5 +305,14 @@ public class Quiz {
 	public ArrayList<QuizHistory> getHistory() {
 		return history;
 	}
+	
+	public void deleteQuiz() throws SQLException {
+		for (Question q : questions) {
+			statement.executeUpdate("DELETE FROM questions WHERE question_id = " + q.getQuestionID());
+		}
+		statement.executeUpdate("DELETE FROM quiz_history WHERE quiz_id = " + quizID);
+		statement.executeUpdate("DELETE FROM challenges WHERE quiz_id = " + quizID);
+		statement.executeUpdate("DELETE FROM quizzes WHERE id = " + quizID);
+	}
 }
 
