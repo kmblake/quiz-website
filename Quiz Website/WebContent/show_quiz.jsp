@@ -56,6 +56,7 @@ Website</a>
 			ArrayList<QuizHistory> recentHistory = new ArrayList<QuizHistory>();
 			ArrayList<QuizHistory> topRecentPerformers = new ArrayList<QuizHistory>();
 			
+			
 			Calendar currCalendar = Calendar.getInstance();
 			currCalendar.add(Calendar.DATE, -1);
 			Date yesterday = currCalendar.getTime();
@@ -122,6 +123,14 @@ on <%= quiz.getFormattedDateCreated() %></p>
 </form>
 </div>
 <div class="quiz-history">
+<%
+int numWhoTookQuiz = history.size();
+if(numWhoTookQuiz==0) {
+%>
+<h3>Top Scorers: No one has taken this quiz yet!</h3>
+<%
+} else {
+%>
 <h3>Top Scorers</h3>
 <table class="table table-striped">
 	<thead>
@@ -135,7 +144,7 @@ on <%= quiz.getFormattedDateCreated() %></p>
 	</thead>
 	<tbody>
 		<% 
-				for(int i=0;i<history.size();i++) {
+				for(int i=0;i<numWhoTookQuiz;i++) {
 					QuizHistory currentHistory = history.get(i);
 				if(i<5) {
 				%>
@@ -157,11 +166,23 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 
 <div class="your-history">
-<h3>Your Best Scores:</h3>
+<%
+int yourNumTakes = yourHistory.size();
+if(numWhoTookQuiz==0) {
+} else if (yourNumTakes==0) {
+%>
+<h3>Your Best Scores: You haven't taken this quiz yet!</h3>
+<%
+} else {
+%>
+<h3>Your Best Scores</h3>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -173,7 +194,7 @@ on <%= quiz.getFormattedDateCreated() %></p>
 	</thead>
 	<tbody>
 		<%
-			for (int i = 0; i < yourHistory.size(); i++) {
+			for (int i = 0; i < yourNumTakes; i++) {
 				QuizHistory currentYourHistory = yourHistory.get(i);
 
 				%>
@@ -190,9 +211,17 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 <div class="quiz-history">
+<%
+int recentNumTakes = recentHistory.size();
+if(recentNumTakes==0) {
+} else {
+%>
 <h3>Top Recent Performers</h3>
 <table class="table table-striped">
 	<thead>
@@ -226,10 +255,21 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 
 <div class="quiz-history">
+<%
+if(numWhoTookQuiz==0) {
+} else if (recentNumTakes==0) {
+%>
+<h3>Recent Performances: No one has taken this quiz recently.</h3>
+<%
+} else {
+%>
 <h3>Recent Performances</h3>
 <table class="table table-striped">
 	<thead>
@@ -264,6 +304,9 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 </div>
