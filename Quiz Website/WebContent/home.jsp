@@ -23,7 +23,7 @@ int user_id = currentUser.getId();
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
-		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
+		<a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
 		<div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav navbar-right">
 	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
@@ -81,6 +81,7 @@ int user_id = currentUser.getId();
 				<% for (Quiz q : your_taken_quizzes) { %>
 					<li><a href="show_quiz.jsp?id=<%= q.getQuizID() %>"><%= q.getTitle() %></a></li>
 				<% } %>
+					<li><a href="history_summary.jsp" class="btn btn-large btn-primary">View Complete History</a></li>
 			<% } %>
 			</ul>
 		</div>

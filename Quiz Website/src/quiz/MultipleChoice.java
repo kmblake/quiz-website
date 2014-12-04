@@ -79,9 +79,9 @@ public class MultipleChoice extends Question {
 		return question;
 	}
 	
-	public boolean isCorrect(String userAnswer) {
-		if (answer.containsKey(userAnswer)) {
-			return answer.get(userAnswer);
+	public boolean isCorrect(Object userAnswer) {
+		if (answer.containsKey((String)userAnswer)) {
+			return answer.get((String)userAnswer);
 		}
 		return false;
 	}

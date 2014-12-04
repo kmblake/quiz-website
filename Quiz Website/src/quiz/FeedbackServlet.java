@@ -52,7 +52,12 @@ public class FeedbackServlet extends HttpServlet {
 		if (!multiple) {
 			for (Question q : questions) {
 				String questionID = Integer.toString(q.getQuestionID());
-				String answer = (String)request.getParameter(questionID);
+				Object answer = null;
+				if (!q.getType().equals("multiple_choice_multiple_answer"))
+					answer = request.getParameter(questionID);
+				else {
+					answer = getMultipleAnswers(request, q);
+				}
 				session.setAttribute(questionID, answer);
 				if (q.isCorrect(answer)) {
 					correct++;
@@ -68,7 +73,12 @@ public class FeedbackServlet extends HttpServlet {
 			Integer curr_question = (Integer)session.getAttribute("current_question");
 			Question q = questions.get(curr_question);
 			String questionID = Integer.toString(q.getQuestionID());
-			String answer = (String)request.getParameter(questionID);
+			Object answer = null;
+			if (!q.getType().equals("multiple_choice_multiple_answer"))
+				answer = request.getParameter(questionID);
+			else {
+				answer = getMultipleAnswers(request, q);
+			}
 			session.setAttribute(questionID, answer);
 			if (q.isCorrect(answer)) {
 				correct++;
@@ -92,6 +102,17 @@ public class FeedbackServlet extends HttpServlet {
 			dispatch.forward(request, response);
 
 		}
+	}
+
+	private ArrayList<String> getMultipleAnswers(HttpServletRequest request, Question q) {
+		int numOptions = ((MultipleChoiceMultipleAnswer)q).numOptions();
+		ArrayList<String> userAnswers = new ArrayList<String>();
+		for (int i = 0; i < numOptions; i++) {
+			String a = request.getParameter(q.getQuestionID() + "-" + i);
+			if (a != null)
+				userAnswers.add(a);		
+		} 
+		return userAnswers;
 	}
 
 	private long getTimeElapsed(HttpSession session) {

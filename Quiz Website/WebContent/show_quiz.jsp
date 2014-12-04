@@ -34,8 +34,7 @@
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
-<div class="container"><a class="navbar-brand" href="home.jsp">Quiz
-Website</a>
+<div class="container"><a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
 <div id="navbar" class="navbar-collapse collapse">
 <ul class="nav navbar-nav navbar-right">
 	<li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
@@ -55,6 +54,7 @@ Website</a>
 			ArrayList<QuizHistory> yourHistory = new ArrayList<QuizHistory>();
 			ArrayList<QuizHistory> recentHistory = new ArrayList<QuizHistory>();
 			ArrayList<QuizHistory> topRecentPerformers = new ArrayList<QuizHistory>();
+			
 			
 			Calendar currCalendar = Calendar.getInstance();
 			currCalendar.add(Calendar.DATE, -1);
@@ -90,8 +90,6 @@ Website</a>
 				averageTimeTaken = new Time(averageTime - offset);
 			}
 			
-			
-			
 			Collections.sort(recentHistory);
 			%>
 
@@ -123,6 +121,14 @@ on <%= quiz.getFormattedDateCreated() %></p>
 </form>
 </div>
 <div class="quiz-history">
+<%
+int numWhoTookQuiz = history.size();
+if(numWhoTookQuiz==0) {
+%>
+<h3>Top Scorers: No one has taken this quiz yet!</h3>
+<%
+} else {
+%>
 <h3>Top Scorers</h3>
 <table class="table table-striped">
 	<thead>
@@ -136,7 +142,7 @@ on <%= quiz.getFormattedDateCreated() %></p>
 	</thead>
 	<tbody>
 		<% 
-				for(int i=0;i<history.size();i++) {
+				for(int i=0;i<numWhoTookQuiz;i++) {
 					QuizHistory currentHistory = history.get(i);
 				if(i<5) {
 				%>
@@ -158,11 +164,23 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 
 <div class="your-history">
-<h3>Your Best Scores:</h3>
+<%
+int yourNumTakes = yourHistory.size();
+if(numWhoTookQuiz==0) {
+} else if (yourNumTakes==0) {
+%>
+<h3>Your Best Scores: You haven't taken this quiz yet!</h3>
+<%
+} else {
+%>
+<h3>Your Best Scores</h3>
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -174,7 +192,7 @@ on <%= quiz.getFormattedDateCreated() %></p>
 	</thead>
 	<tbody>
 		<%
-			for (int i = 0; i < yourHistory.size(); i++) {
+			for (int i = 0; i < yourNumTakes; i++) {
 				QuizHistory currentYourHistory = yourHistory.get(i);
 
 				%>
@@ -191,9 +209,17 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 <div class="quiz-history">
+<%
+int recentNumTakes = recentHistory.size();
+if(recentNumTakes==0) {
+} else {
+%>
 <h3>Top Recent Performers</h3>
 <table class="table table-striped">
 	<thead>
@@ -227,10 +253,21 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 
 <div class="quiz-history">
+<%
+if(numWhoTookQuiz==0) {
+} else if (recentNumTakes==0) {
+%>
+<h3>Recent Performances: No one has taken this quiz recently.</h3>
+<%
+} else {
+%>
 <h3>Recent Performances</h3>
 <table class="table table-striped">
 	<thead>
@@ -265,6 +302,9 @@ on <%= quiz.getFormattedDateCreated() %></p>
 
 	</tbody>
 </table>
+<%
+}
+%>
 </div>
 
 </div>

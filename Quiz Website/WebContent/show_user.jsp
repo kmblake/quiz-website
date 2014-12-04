@@ -27,7 +27,7 @@
 	
 	<div class="navbar navbar-inverse navbar-static-top">
 	<div class="container">
-		<a class="navbar-brand" href="home.jsp">Quiz Website</a>
+		<a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
 		<div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav navbar-right">
 	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
@@ -70,8 +70,17 @@
 				<% } %>
 				<a class="btn btn-lg btn-primary" href="<%= "create_message.jsp?recipient_id=" + id %>">Send Note</a>
 			</div>
-			<% if (friendshipStatus == Friend.FRIENDS) { %>
-				<h3>Recently Taken Quizzes:</h3>
+			<% if (friendshipStatus == Friend.FRIENDS) { 
+				ArrayList<QuizHistory> history = u.getRecentlyTakenQuizzes();
+				int numQuizzesTaken = history.size();
+				if(numQuizzesTaken==0) {
+					%>
+					<h3>Recently Taken Quizzes: <%= u.getFirstName() %> hasn't taken any quizzes recently.</h3>
+					<%
+				} else {
+			%>
+			
+				<h3>Recently Taken Quizzes</h3>
 				<table class="table table-striped">
       <thead>
         <tr>
@@ -83,8 +92,7 @@
       </thead>
       <tbody>
 			<% 
-			ArrayList<QuizHistory> history = u.getRecentlyTakenQuizzes();
-			for(int i=0; i<history.size();i++) {
+			for(int i=0; i<numQuizzesTaken;i++) {
 				QuizHistory currentHistory = history.get(i);
 				if(i<5) {
 				%>
@@ -102,9 +110,21 @@
 			
 			</tbody>
 			</table>
+			
+			<%
+			}
+			%>
 				
-				
-	<h3>Recently Created Quizzes:</h3>
+	<%
+	ArrayList<QuizHistory> created = u.getRecentlyCreatedQuizzes();
+	int numCreatedQuizzes = created.size();
+	if(numCreatedQuizzes==0) {
+		%>
+		<h3>Recently Created Quizzes: <%= u.getFirstName() %> hasn't created any quizzes recently.</h3>
+		<%
+	} else {
+	%>			
+	<h3>Recently Created Quizzes</h3>
 	
 	<table class="table table-striped">
       <thead>
@@ -115,8 +135,7 @@
       </thead>
       <tbody>
 			<% 
-			ArrayList<QuizHistory> created = u.getRecentlyCreatedQuizzes();
-			for(int i=0; i<created.size();i++) {
+			for(int i=0; i<numCreatedQuizzes;i++) {
 				QuizHistory currentHistory = created.get(i);
 				if(i<5) {
 				%>
@@ -132,6 +151,9 @@
 			
 			</tbody>
 			</table>
+			<%
+	}
+			%>
 				
 				
 				

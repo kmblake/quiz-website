@@ -180,8 +180,9 @@ public class Quiz {
 		
 		quizDescription = rs.getString("description");
 		dateCreated = rs.getTimestamp("created_on");
-		DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
-		formattedDateCreated = dateTimeInstance.format(dateCreated);
+		DateFormat dateInstance = SimpleDateFormat.getDateInstance();
+		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
+		formattedDateCreated = dateInstance.format(dateCreated) + " at " + timeFormat.format(dateCreated);
 		
 		multiplePages = rs.getBoolean("multiple_pages");
 		randomized = rs.getBoolean("randomized");

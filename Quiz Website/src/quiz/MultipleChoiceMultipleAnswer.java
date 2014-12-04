@@ -87,9 +87,31 @@ public class MultipleChoiceMultipleAnswer extends Question {
 		return question;
 	}
 	
-	public boolean isCorrect(String userAnswer) {
+	public int numOptions() {
+		return answer.size();
+	}
+	
+	public boolean isCorrect(String answer) {
+		return false;
+		//DO NOT USE. Use other function.
+	}
+	
+	public boolean isCorrect(Object userAnswer) {
+		ArrayList<String> userAnswers = (ArrayList<String>)userAnswer;
+		int correctAnswers = 0;
+		for (Boolean b : answer.values()) {
+			if(b)
+				correctAnswers++;
+		}
+		if(userAnswers.size() != correctAnswers) {
+			return false;
+		}
+		for (int i = 0; i < userAnswers.size(); i++) {
+			if(!answer.get(userAnswers.get(i))) {
+				return false;
+			}
+		}
 		return true;
-		//TODO
 	}
 
 	@Override
@@ -102,7 +124,7 @@ public class MultipleChoiceMultipleAnswer extends Question {
 		StringBuilder string = new StringBuilder(); 
 		string.append(answerList.get(0));
 		for (int i = 1; i < answerList.size(); i++) {
-			string.append(answerList.get(i));
+			string.append(", " + answerList.get(i));
 		}
 		return string.toString();
 	}
