@@ -163,7 +163,7 @@ public class User {
 	
 	public ArrayList<QuizHistory> getHistory(DBConnection con) throws SQLException {
 		Statement stmt = con.getStatement();
-		ResultSet rs = stmt.executeQuery("SELECT qh.*, q.title from quiz_history AS qh INNER JOIN quizzes AS q ON qh.quiz_id = q.id WHERE user_id = " + id + " ORDER BY taken_on DESC)");
+		ResultSet rs = stmt.executeQuery("SELECT qh.*, q.title from quiz_history AS qh INNER JOIN quizzes AS q ON qh.quiz_id = q.id WHERE user_id = " + id + " ORDER BY taken_on DESC");
 		
 		ArrayList<QuizHistory> history = new ArrayList<QuizHistory>();
 		

@@ -26,7 +26,7 @@
 
 	<div class="navbar navbar-inverse navbar-static-top">
 		<div class="container">
-			<a class="navbar-brand" href="home.jsp">Let's Get Quizzical</a>
+			<a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
 			<div id="navbar" class="navbar-collapse collapse">
 		        <ul class="nav navbar-nav navbar-right">
 		          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
@@ -41,37 +41,29 @@
 	</div>
 	
 	<div class="container">
+		<div class="jumbotron"><h1>Your Quiz History</h1></div>
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>#</th>
+					<th>Quiz</th>
 					<th>Score</th>
 					<th>Time</th>
-					<th>Username</th>
 					<th>Date Taken</th>
 				</tr>
 			</thead>
 			<tbody>
 				<% 
-						for(int i=0;i<numWhoTookQuiz;i++) {
+						for(int i=0;i< history.size();i++) {
 							QuizHistory currentHistory = history.get(i);
-						if(i<5) {
 						%>
 				<tr>
-					<td><%= i+1 %></td>
+					<td><a href="<%= "show_quiz.jsp?id=" + currentHistory.getQuizID() %>"><%= currentHistory.getQuizName() %></a></td>
 					<td><%= currentHistory.getScore() %></td>
 					<td><%= currentHistory.getTime() %></td>
-					<td><a
-						href="<%= "show_user.jsp?id=" + currentHistory.getUserID() %>"><%= currentHistory.getUser() %></a></td>
 					<td><%= currentHistory.getFormattedWhenTaken() %></td>
 				</tr>
 		
-				<%
-						}
-					}
-				
-		
-				%>
+				<% } %>
 		
 			</tbody>
 		</table>
