@@ -90,8 +90,6 @@
 				averageTimeTaken = new Time(averageTime - offset);
 			}
 			
-			
-			
 			Collections.sort(recentHistory);
 			%>
 

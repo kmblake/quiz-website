@@ -8,7 +8,7 @@ public abstract class Question {
 	public abstract int getQuestionNumber();
 	public abstract int getQuestionID();
 	public abstract String getQuestion();
-	public abstract boolean isCorrect(String answer);
+	public abstract boolean isCorrect(Object answer);
 	public abstract String getAnswer();
 
 	public static int storeQuestion(Connection con, int quizId, int questionNum, String type) throws SQLException {

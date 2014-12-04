@@ -143,7 +143,7 @@
 		name="<%=questionID%>-<%=num%>" value="<%=answer%>"></li>
 
 	<%
-			i++;
+			num++;
 		}
 	%>
 	
