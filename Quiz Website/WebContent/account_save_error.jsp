@@ -10,22 +10,6 @@
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-static-top">
-	<div class="container">
-		<a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
-		<div id="navbar" class="navbar-collapse collapse">
-	        <ul class="nav navbar-nav navbar-right">
-	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
-	          <li><a href="show_messages.jsp">Messages</a></li>
-	          <li><a href="home.jsp">Home</a></li>
-	        </ul>
-	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
-	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
-	        </form>
-    	</div>
-	</div>
-</div>
-
 <div class="container">
 	<form class="create-account-form" action="NewAccountServlet" method="post">
 		<div class="alert alert-danger"><%=request.getAttribute("errorText") %></div>

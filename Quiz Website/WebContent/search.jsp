@@ -36,6 +36,7 @@ $( document ).ready(function() {
 	          <li><a href="#">Messages</a></li>
 	          <li><a href="home.jsp">Home</a></li>
 	        </ul>
+	        <img src="Workaholics.jpg" alt="Nothing found" class="img-rounded" style="width: 66px; height: 50px;">
     	</div>
 	</div>
 </div>

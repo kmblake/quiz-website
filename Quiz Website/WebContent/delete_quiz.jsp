@@ -35,6 +35,7 @@ HashMap<Integer, String> quizzes = index.getIndex();
 		        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
 		          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
 		        </form>
+		        <img src="Workaholics.jpg" alt="Nothing found" class="img-rounded" style="width: 66px; height: 50px;">
 	    	</div>
 		</div>
 	</div>
