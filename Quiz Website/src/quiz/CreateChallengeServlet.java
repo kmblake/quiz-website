@@ -40,11 +40,12 @@ public class CreateChallengeServlet extends HttpServlet {
 		int challenged_by = Integer.parseInt(request.getParameter("challenged_by"));
 		int challenged_user = Integer.parseInt(request.getParameter("challenged_user"));
 		int quiz_id = Integer.parseInt(request.getParameter("quiz"));
+		String redirect_to = request.getParameter("redirect_to");
 		try {
 			Connection con = (Connection) ((DBConnection) getServletContext().getAttribute("connection")).getConnection();
 			Challenge.createChallenge(con, challenged_user, challenged_by, quiz_id);
 			request.setAttribute("notification", "Your challenge has been issued!");
-			RequestDispatcher dispatch = request.getRequestDispatcher("show_user.jsp?id=" + challenged_user);
+			RequestDispatcher dispatch = request.getRequestDispatcher(redirect_to);
 			dispatch.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();

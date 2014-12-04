@@ -55,7 +55,7 @@
 	  <div id="form-container">
 	  </div>
 	</div>
-	<div id="image-container" class="float">
+	<div id="image-container" class="float image-container">
 	</div>
 </div>
 </body>
