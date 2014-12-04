@@ -117,6 +117,7 @@ on <%= quiz.getFormattedDateCreated() %></p>
 	<% } %>
 	<li class="form-item">
 	<button class="btn btn-primary" type="submit">Take Quiz</button>
+	<a class="btn btn-warning right" href="create_challenge.jsp?quiz_id=<%= id %>">Challenge A Friend</a>
 </ul>
 
 </form>

@@ -160,4 +160,24 @@ public class User {
 			return "";
 		}
 	}
+	
+	public User[] getFriends() {
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT requested_by as friend_id FROM `friends` WHERE requested_for = " + id + " AND approved = 1 UNION SELECT requested_for FROM friends WHERE requested_by = " + id + " AND approved = 1");
+			if (!rs.next()) return new User[0];
+			rs.last();
+			int numFriends = rs.getRow();
+			User[] friends = new User[numFriends];
+			rs.first();
+			for (int i = 0; i < friends.length; i++) {
+				User f = new User(rs.getInt("friend_id"), stmt);
+				friends[i] = f;
+				rs.next();
+			}
+			return friends;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return new User[0];
+		}
+	}
 }
