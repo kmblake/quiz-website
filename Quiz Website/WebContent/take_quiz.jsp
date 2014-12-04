@@ -125,7 +125,6 @@
 	%> 
 	<%
 		} else if (type.equals("multiple_choice_multiple_answer")) {
-			System.out.println("working");
 				MultipleChoiceMultipleAnswer theQuestion = (MultipleChoiceMultipleAnswer) toPrint;
 				HashMap<String, Boolean> answers = (HashMap<String, Boolean>) theQuestion
 						.getAnswers();
