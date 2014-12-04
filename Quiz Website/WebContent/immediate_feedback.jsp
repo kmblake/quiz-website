@@ -40,7 +40,7 @@ Website</a>
 			.getAttribute("current_question");
 	Question q = questions.get(curr_question);
 	String questionID = Integer.toString(q.getQuestionID());
-	String answer = (String) session.getAttribute(questionID);
+	Object answer = session.getAttribute(questionID);
 	ArrayList<Integer> correctAnswers = (ArrayList<Integer>) session
 			.getAttribute("correctAnswers");
 	boolean practice = (Boolean)session.getAttribute("practice");
