@@ -1,6 +1,7 @@
 package quiz;
 
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class NewsItem implements Comparable<NewsItem> {
@@ -49,9 +50,9 @@ public class NewsItem implements Comparable<NewsItem> {
 	}
 	
 	public String getHappenedOnString() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		DateFormat dateInstance = SimpleDateFormat.getDateInstance();
 		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
-		return dateFormat.format(happened_on) + " at " + timeFormat.format(happened_on);
+		return dateInstance.format(happened_on) + " at " + timeFormat.format(happened_on);
 	}
 
 	public int compareTo(NewsItem n) {

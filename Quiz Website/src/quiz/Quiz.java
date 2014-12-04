@@ -298,6 +298,9 @@ public class Quiz {
 			} else if(questionType.equals("multiple_answer")) {
 				questionsArray.add(new MultipleAnswer(con, questionID, questionNumber));
 			}
+			else if(questionType.equals("multiple_choice_multiple_answer")) {
+				questionsArray.add(new MultipleChoiceMultipleAnswer(con, questionID, questionNumber));
+			}
 		}
 		questions = questionsArray;
 	}

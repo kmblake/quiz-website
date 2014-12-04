@@ -44,10 +44,12 @@ public class MultipleChoiceMultipleAnswer extends Question {
 		return correctInts;
 	}
 
-	public MultipleChoiceMultipleAnswer(Statement stmt, int theQuestionID, int theQuestionNumber) throws SQLException {
+	public MultipleChoiceMultipleAnswer(DBConnection con, int theQuestionID, int theQuestionNumber) throws SQLException {
 		questionNumber = theQuestionNumber;
 		questionID = theQuestionID;
+		Statement stmt = con.getStatement();
 		ResultSet rs = stmt.executeQuery("select * from " + type + " where question_id = '" + questionID + "'");
+		rs.next();
 		question = rs.getString("question");
 		
 		answer = new HashMap<String, Boolean>();

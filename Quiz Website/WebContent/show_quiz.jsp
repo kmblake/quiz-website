@@ -50,13 +50,6 @@ Website</a>
 </div>
 </div>
 
-<div class="container">
-<div class="jumbotron">
-<h1><%=quiz.getTitle()%></h1>
-<p>Created by: <%=quiz.getCreatedBy()%> on <%=quiz.getDateCreated()%></p>
-<p><%=quiz.getQuizDescription()%></p>
-</div>
-
 <% 
 			ArrayList<QuizHistory> history = quiz.getHistory();
 			ArrayList<QuizHistory> yourHistory = new ArrayList<QuizHistory>();
