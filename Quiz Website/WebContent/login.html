@@ -15,16 +15,29 @@
     <link href="css/signin.css" rel="stylesheet">
     
     <link href="css/stylesheet.css" rel="stylesheet">
+    <style>
+    body {
+    	background-image: url("Workaholics.jpg");
+    	background-repeat: no-repeat;
+    	background-attachment: fixed;
+    	background-position: center;
+    	}
+    h1, h2, h3 {
+    color: red;
+    text-shadow: 1px 1px 0px gold;
+    class: center;
+    }
+    </style>
   </head>
 
   <body>
   <h1 class="center"><strong>Let's Get Quizzical!</strong></h1>
-  <p class="center">A Quiz Website for the Everyday Man</p>
+  <h3 class="center"><strong>A Quiz Website for the Everyday Man</strong></h3>
 
     <div class="container">
 
       <form class="form-signin" action="LoginServlet" method="post">
-        <h2 class="form-signin-heading">Please Sign In</h2>
+        <h2 class="form-signin-heading" align="center">Please Sign In</h2>
         <input type="text" class="form-control" placeholder="Username" name="user" required autofocus>
         <input type="password" class="form-control" placeholder="Password" name="password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
