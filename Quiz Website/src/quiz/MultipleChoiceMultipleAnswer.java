@@ -85,9 +85,26 @@ public class MultipleChoiceMultipleAnswer extends Question {
 		return question;
 	}
 	
-	public boolean isCorrect(String userAnswer) {
+	public int numOptions() {
+		return answer.size();
+	}
+	
+	public boolean isCorrect(String answer) {
+		return false;
+		//DO NOT USE. Use other function.
+	}
+	
+	public boolean isCorrect(Object userAnswer) {
+		ArrayList<String> userAnswers = (ArrayList<String>)userAnswer;
+		if(userAnswers.size() != answer.size()) {
+			return false;
+		}
+		for (int i = 0; i < userAnswers.size(); i++) {
+			if(!answer.get(userAnswers.get(i))) {
+				return false;
+			}
+		}
 		return true;
-		//TODO
 	}
 
 	@Override
