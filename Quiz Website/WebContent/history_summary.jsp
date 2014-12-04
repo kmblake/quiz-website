@@ -42,6 +42,9 @@
 	
 	<div class="container">
 		<div class="jumbotron"><h1>Your Quiz History</h1></div>
+		<% if (history.size() == 0) { %>
+			<p>No history to show.</p>
+		<% } else { %>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -52,8 +55,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% 
-						for(int i=0;i< history.size();i++) {
+				<% for(int i=0;i< history.size();i++) {
 							QuizHistory currentHistory = history.get(i);
 						%>
 				<tr>
@@ -67,6 +69,7 @@
 		
 			</tbody>
 		</table>
+		<% } %>
 	</div>
 	
 	</body>
