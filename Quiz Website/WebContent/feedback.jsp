@@ -72,6 +72,7 @@ Website</a>
 		}
 	%>
 </dl>
+<a href="show_quiz.jsp?id=<%= quizID %>" class="btn btn-primary">Return to Quiz Page</a>
 </div>
 </div>
 </body>
