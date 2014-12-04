@@ -1,6 +1,7 @@
 package quiz;
 
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -100,8 +101,9 @@ public class Message {
 		this.recipient_id = recipient_id;
 		this.body = body;
 		this.read = read;
-		SimpleDateFormat stringForm = new SimpleDateFormat("MM-dd-yyyy hh:mm a");
-		this.sent_on = stringForm.format(sent_on);
+		DateFormat dateInstance = SimpleDateFormat.getDateInstance();
+		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
+		this.sent_on  = dateInstance.format(sent_on) + " at " + timeFormat.format(sent_on);
 	}
 
 	public int getId() {

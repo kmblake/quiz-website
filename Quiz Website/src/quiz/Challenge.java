@@ -1,6 +1,7 @@
 package quiz;
 
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -79,8 +80,9 @@ public class Challenge {
 		ResultSet rs = con.createStatement().executeQuery("SELECT MAX(score) AS max_score FROM quiz_history WHERE user_id = " + challenger_id + " AND quiz_id = " + quiz_id);
 		rs.next();
 		this.challenger_best_score = rs.getInt("max_score");
-		SimpleDateFormat stringForm = new SimpleDateFormat("MM-dd-yyyy");
-		this.date_challenged = stringForm.format(challenged_on);
+		DateFormat dateInstance = SimpleDateFormat.getDateInstance();
+		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aaa");
+		this.date_challenged =  dateInstance.format(challenged_on) + " at " + timeFormat.format(challenged_on);
 	}
 	
 	public int getQuizId() {
