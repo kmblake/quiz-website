@@ -13,23 +13,6 @@
 		<title>Create Quiz</title>
 	</head>
 	<body>
-	
-	<div class="navbar navbar-inverse navbar-static-top">
-	<div class="container">
-		<a class="navbar-brand" href="home.jsp">Let's Get Quizzical!</a>
-		<div id="navbar" class="navbar-collapse collapse">
-	        <ul class="nav navbar-nav navbar-right">
-	          <li><a href="/Quiz_Website/LogoutServlet">Logout</a></li>
-	          <li><a href="show_messages.jsp">Messages</a></li>
-	          <li><a href="home.jsp">Home</a></li>
-	        </ul>
-	        <form action="SearchServlet" method="post" class="navbar-form navbar-right">
-	          <input type="text" class="navbar-search form-control" name="query" placeholder="Search for quiz or user...">
-	        </form>
-    	</div>
-	</div>
-</div>
-	
 		<div class="container">
 			<div class="jumbotron">
 				<h1>Create A Quiz</h1>
@@ -39,7 +22,7 @@
 			<% if (errorText != null ) { %>
 				<div class="alert alert-danger"><%= errorText %></div>
 			<% } %>
-			<div>
+			<div id="form-container">
 				<form action="CreateQuizServlet" method="post">
 					<ul class="stripped">
 						<li class="form-item">Title: <input type="text" class="title-input" name="title"></li>
@@ -49,7 +32,7 @@
 						<li class="form-item">Present each question on one page: <input type="checkbox" name="multiple_pages"></li>
 						<li class="form-item disabled">Provide immediate feedback after each question: <input type="checkbox" name="immediate_feedback"></li>
 						<li class="form-item disabled">Allow the quiz to be taken in practice mode: <input type="checkbox" name="practice_mode"></li>
-						<li class="form-item"><button class="btn btn-primary" type="submit">Add A Question</button>
+						<li class="form-item"><button class="btn btn-primary" type="submit">Add A Question</button><a href="home.jsp" class="btn btn-danger right">Cancel</a>
 					</ul>
 				</form> 
 			</div>
