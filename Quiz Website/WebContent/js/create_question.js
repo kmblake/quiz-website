@@ -3,8 +3,6 @@ $(document).ready(function() {
 
 	$("#question-selector").change(function() {
 		var questionType = $("#question-selector").val();
-		// alert( "Selection changed to " + questionType );
-		// var questionNum = $("#form-container").data("question-num");
 
 		$.get('QuestionFormServlet', {
 			"question-type" : questionType
