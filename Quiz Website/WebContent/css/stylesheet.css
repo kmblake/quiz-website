@@ -111,6 +111,10 @@
 	max-height: 500px;
 }
 
+.disabled {
+	color: lightgrey;
+}
+
 #question-image {
 	width: 500px;
 	margin: 20px;

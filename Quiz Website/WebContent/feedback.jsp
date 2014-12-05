@@ -74,7 +74,7 @@
 			Object answer = session.getAttribute(questionID);
 			out.println("<dd>Your Answer: " + answer);
 			out.println("<br>Correct Answer(s): " + q.getAnswer()
-					+ "</span></dd>");
+					+ "</span></dd><br>");
 
 		}
 	%>

@@ -8,6 +8,8 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 		<link href="css/stylesheet.css" rel="stylesheet">
+		<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/create_quiz.js"></script>
 		<title>Create Quiz</title>
 	</head>
 	<body>
@@ -45,8 +47,8 @@
 						<li class="form-item"><textarea style="font-weight: normal"rows="4" cols="75" name="description"></textarea>
 						<li class="form-item">Randomly order the questions: <input type="checkbox" name="randomized"></li>
 						<li class="form-item">Present each question on one page: <input type="checkbox" name="multiple_pages"></li>
-						<li class="form-item">Provide immediate feedback after each question: <input type="checkbox" name="immediate_feedback"></li>
-						<li class="form-item">Allow the quiz to be taken in practice mode: <input type="checkbox" name="practice_mode"></li>
+						<li class="form-item disabled">Provide immediate feedback after each question: <input type="checkbox" name="immediate_feedback"></li>
+						<li class="form-item disabled">Allow the quiz to be taken in practice mode: <input type="checkbox" name="practice_mode"></li>
 						<li class="form-item"><button class="btn btn-primary" type="submit">Add A Question</button>
 					</ul>
 				</form> 
