@@ -61,7 +61,7 @@
 	int nextQuestion = -1;
 	if (curr_question + 1 == questions.size()) {
 		repeat = true;
-		session.setAttribute("repeat", false);
+		session.setAttribute("repeat", repeat);
 	}
 	if (practice) {
 		if(q.isCorrect(answer)) {
@@ -79,7 +79,7 @@
 			out.println("<p>Congratulations! You have mastered this quiz in practice mode!</p>");
 			out.println("<a href='show_quiz.jsp?id=" + quiz.getQuizID() + "' class='btn btn-primary'>Return to Quiz Page</a>");
 		} else {
-			if (quiz.getIfRandomized() && !repeat) {
+			if (quiz.getIfRandomized() && repeat) {
 				Random random = new Random();
 				nextQuestion = random.nextInt(questions.size());
 				while (correctAnswers.get(nextQuestion) >= 3) {
